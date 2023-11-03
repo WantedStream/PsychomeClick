@@ -3,50 +3,47 @@ package com.projectclasses;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.pdfbox.text.TextPosition;
+import org.fit.pdfdom.PDFDomTree;
+import org.fit.pdfdom.PDFToHTML;
+import org.w3c.dom.Document;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
 public class PsychometricReader {
 
 
     public static void main(String[] args) throws IOException {
-         URL resource = PsychometricReader.class.getClassLoader().getResource("tests/psychometric_feb_2014_acc.pdf");
-        File f = new File(resource.getFile());
-       PDDocument dc= PDDocument.load(f);
+        URL resource = PsychometricReader.class.getClassLoader().getResource("tests/psychometric_feb_2014_acc.pdf");
+        String outputFilePath = "tests/file.html";
 
-       int noOfPages= dc.getNumberOfPages();
+        File f = new File(resource.getFile());
+        PDDocument dc = PDDocument.load(f);
+
         PDFTextStripper textStripper = new PDFTextStripper();
 
-        String pdfText = textStripper.getText(dc);
-        System.out.println(pdfText);
-        PDPage doc = dc.getPage(0);
-
-        int index = pdfText.indexOf("אנלוגיות");
-        if (index != -1) {
-            System.out.println("Word found at index: " + index);
-        } else {
-            System.out.println("Word not found in the PDF.");
-        }
-        dc.close();
-
-        System.out.println(index+"-<");
-    }
-    public static String convertToUTF8(String s) {
-        String out = null;
         try {
-            out = new String(s.getBytes("UTF-8"), "ISO-8859-1");
-        } catch (java.io.UnsupportedEncodingException e) {
-            return null;
+            PDDocument document = PDDocument.load(f);
+            PDFDomTree parser = new PDFDomTree();
+            PrintWriter writer = new PrintWriter(new FileWriter(outputFilePath));
+            parser.writeText(document, writer);
+            writer.close();
+            document.close();
+            System.out.println("PDF converted to HTML successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return out;
     }
+
+
 }

@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     implementation 'org.apache.pdfbox:pdfbox:2.0.27'
+    implementation 'net.sf.cssbox:pdf2dom-cssbox:2.0.3'
+    implementation 'com.itextpdf:itext7-core:7.1.16'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
