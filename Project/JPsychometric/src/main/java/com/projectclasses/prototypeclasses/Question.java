@@ -19,6 +19,21 @@ public class Question {
         this.isDapar = isDapar;
     }
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "question=" + question +
+                ", answer1=" + answer1 +
+                ", answer2=" + answer2 +
+                ", answer3=" + answer3 +
+                ", answer4=" + answer4 +
+                ", id=" + id +
+                ", difficulty=" + difficulty +
+                ", isDapar=" + isDapar +
+                '}';
+    }
+
+
     public BufferedImage getQuestion() {
         return question;
     }

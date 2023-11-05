@@ -36,4 +36,13 @@ public class Test {
     public void setPoints(short points) {
         this.points = points;
     }
+
+    @Override
+    public String toString() {
+        return "Test{" +
+                "questionList=" + questionList +
+                ", time=" + time +
+                ", points=" + points +
+                '}';
+    }
 }
