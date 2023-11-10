@@ -1,4 +1,4 @@
-package com.projectclasses.prototypeclasses;
+package com.example.psychomeclick;
 
 public class LastSubject extends Subject{
     private int percent=0;
@@ -9,7 +9,7 @@ public class LastSubject extends Subject{
 
 
     public void openQuestion(UserProgress userProgress) {
-        int questionId=userProgress.navigateToQuestion(subjectName);
+        //int questionId=userProgress.navigateToQuestion(subjectName);
 
     }
 }

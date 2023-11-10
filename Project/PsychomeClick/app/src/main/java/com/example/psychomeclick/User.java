@@ -1,4 +1,4 @@
-package com.projectclasses.prototypeclasses;
+package com.example.psychomeclick;
 
 public class User {
     protected String name,email;

@@ -1,14 +1,16 @@
-package com.projectclasses.prototypeclasses;
+package com.example.psychomeclick;
 
-import java.awt.image.BufferedImage;
+import android.graphics.Bitmap;
+
+
 
 public class Question {
-    private BufferedImage question,answer1,answer2,answer3,answer4;
+    private Bitmap question,answer1,answer2,answer3,answer4;
     private static byte rightAnswer;
     private int id,difficulty;
     private boolean isDapar;
 
-    public Question(BufferedImage question, BufferedImage answer1, BufferedImage answer2, BufferedImage answer3, BufferedImage answer4, int id, int difficulty, boolean isDapar) {
+    public Question(Bitmap question, Bitmap answer1, Bitmap answer2, Bitmap answer3, Bitmap answer4, int id, int difficulty, boolean isDapar) {
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;
@@ -34,23 +36,23 @@ public class Question {
     }
 
 
-    public BufferedImage getQuestion() {
+    public Bitmap getQuestion() {
         return question;
     }
 
-    public BufferedImage getAnswer1() {
+    public Bitmap getAnswer1() {
         return answer1;
     }
 
-    public BufferedImage getAnswer2() {
+    public Bitmap getAnswer2() {
         return answer2;
     }
 
-    public BufferedImage getAnswer3() {
+    public Bitmap getAnswer3() {
         return answer3;
     }
 
-    public BufferedImage getAnswer4() {
+    public Bitmap getAnswer4() {
         return answer4;
     }
 
@@ -70,23 +72,23 @@ public class Question {
         return isDapar;
     }
 
-    public void setQuestion(BufferedImage question) {
+    public void setQuestion(Bitmap question) {
         this.question = question;
     }
 
-    public void setAnswer1(BufferedImage answer1) {
+    public void setAnswer1(Bitmap answer1) {
         this.answer1 = answer1;
     }
 
-    public void setAnswer2(BufferedImage answer2) {
+    public void setAnswer2(Bitmap answer2) {
         this.answer2 = answer2;
     }
 
-    public void setAnswer3(BufferedImage answer3) {
+    public void setAnswer3(Bitmap answer3) {
         this.answer3 = answer3;
     }
 
-    public void setAnswer4(BufferedImage answer4) {
+    public void setAnswer4(Bitmap answer4) {
         this.answer4 = answer4;
     }
 

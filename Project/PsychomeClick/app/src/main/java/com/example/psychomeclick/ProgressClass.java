@@ -1,4 +1,4 @@
-package com.projectclasses.prototypeclasses;
+package com.example.psychomeclick;
 
 import java.util.List;
 
