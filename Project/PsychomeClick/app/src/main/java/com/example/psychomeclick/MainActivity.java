@@ -11,7 +11,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UserProgress up = new UserProgress();
-        up.createSave();
+        up.printExistingJsonTree(this);
         System.out.println("aaa");
+
+
     }
 }
