@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.JsonReader;
 
+import androidx.annotation.NonNull;
+
 import com.fasterxml.jackson.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +30,6 @@ public class UserProgress{
     public void navigateToQuestion(String subjectName) {
             //find
 
-
     }
 
     public void createSave(Context context) {
@@ -34,7 +37,10 @@ public class UserProgress{
 
     Map<String, Object> data = new HashMap<>();
         data.put("Quantitative reasoning",new HashMap<>());
-        data.put("Verbal reasoning", new HashMap<>());
+        HashMap VerbalReasoning= new HashMap<>();
+        VerbalReasoning.put("Analogies",new HashMap<>());
+
+        data.put("Verbal reasoning", VerbalReasoning);
         data.put("English", new HashMap<>());
 
     // Specify the file path
@@ -58,24 +64,54 @@ public class UserProgress{
 
 
     }
-    public void addFinalSubject(Context context){
-        AssetManager assetManager= context.getAssets();
+    public JsonNode navigateTo(Context context, String[] paths, boolean printPath){
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("Quantitative reasoning",new HashMap<>());
-        data.put("Verbal reasoning", new HashMap<>());
-        data.put("English", new HashMap<>());
-
-        // Specify the file path
-
-
-        // Create ObjectMapper
         ObjectMapper objectMapper = new ObjectMapper();
+        // Specify the file path
+        File jsonFile = new File(context.getFilesDir(), "progress_folder/user_progress.json");
+        JsonNode jsonNode = null;
 
-        File internalDir = new File(context.getFilesDir(), "progress_folder");
+        try {
+            jsonNode = objectMapper.readTree(fileToString(jsonFile));
+            return navigateToRec(jsonNode, paths,0,printPath);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
 
     }
+
+    private JsonNode navigateToRec( JsonNode jsonNode,String[] paths,int index,boolean printPath){
+        final JsonNode[] toRet = new JsonNode[1];//ליצור מערך פינלי כי לא נותן למשתנה רגיל של JsonNode
+        if (jsonNode.isObject()) {
+            jsonNode.fields().forEachRemaining(entry -> {
+                System.out.println(entry.getKey() +" equals? = "+paths[index]);
+                if (entry.getKey()==paths[index]){
+                         if(printPath)
+                             System.out.println("->"+ entry.getKey());
+                    System.out.println(index+"<"+(paths.length-1));
+
+                    if(index<paths.length-1)
+                        toRet[0] = navigateToRec(entry.getValue() ,paths, index+1,printPath);
+                    else{
+                        toRet[0] =jsonNode;
+                        return;
+                    }
+
+
+                }
+            });
+            if(toRet[0]!=null){
+                return toRet[0];
+            }
+            throw new RuntimeException("invalid json path");
+        } else if (jsonNode.isArray()) {
+            return jsonNode;
+
+        }
+            return null;
+    }
+
     public void printExistingJsonTree(Context context){
         ObjectMapper objectMapper = new ObjectMapper();
 

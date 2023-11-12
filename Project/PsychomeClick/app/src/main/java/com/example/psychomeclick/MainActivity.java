@@ -12,8 +12,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         UserProgress up = new UserProgress();
         up.printExistingJsonTree(this);
+       // up.createSave(this);
         System.out.println("aaa");
-
+        String[] array = {"Verbal reasoning","Analogies"};
+        System.out.println(up.navigateTo(this,array,true));
 
     }
 }
