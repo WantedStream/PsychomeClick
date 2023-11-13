@@ -4,32 +4,27 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.JsonReader;
 
-import androidx.annotation.NonNull;
-
-import com.fasterxml.jackson.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.json.JSONObject;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class UserProgress{
 
     private JsonReader jr;
 
-    public void navigateToQuestion(String subjectName) {
+    public <T,V> void addToPath(Context context, Map.Entry<T,V> subjectEntry, String[] paths) {
             //find
-
+        File jsonFile = new File(context.getFilesDir(), "progress_folder/user_progress.json");
+        JsonNode[] jsNodes =  navigateTo( context,paths,false);
+        ((ObjectNode) jsNodes[1]).put((T) subjectEntry.getKey(), (V) subjectEntry.getValue());
     }
 
     public void createSave(Context context) {
@@ -43,11 +38,8 @@ public class UserProgress{
         data.put("Verbal reasoning", VerbalReasoning);
         data.put("English", new HashMap<>());
 
-    // Specify the file path
 
-
-    // Create ObjectMapper
-    ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         File internalDir = new File(context.getFilesDir(), "progress_folder");
         //internalDir.mkdirs();
@@ -64,7 +56,7 @@ public class UserProgress{
 
 
     }
-    public JsonNode navigateTo(Context context, String[] paths, boolean printPath){
+    public JsonNode[] navigateTo(Context context, String[] paths, boolean printPath){
 
         ObjectMapper objectMapper = new ObjectMapper();
         // Specify the file path
@@ -73,7 +65,9 @@ public class UserProgress{
 
         try {
             jsonNode = objectMapper.readTree(fileToString(jsonFile));
-            return navigateToRec(jsonNode, paths,0,printPath);
+            final JsonNode[] toRet=new JsonNode[2];
+            toRet[0]=jsonNode;
+            return navigateToRec(jsonNode, paths,0,printPath,toRet);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -81,33 +75,31 @@ public class UserProgress{
 
     }
 
-    private JsonNode navigateToRec( JsonNode jsonNode,String[] paths,int index,boolean printPath){
-        final JsonNode[] toRet = new JsonNode[1];//ליצור מערך פינלי כי לא נותן למשתנה רגיל של JsonNode
+    private JsonNode[] navigateToRec( JsonNode jsonNode,String[] paths,int index,boolean printPath,final JsonNode[] toRet){
+        ;//ליצור מערך פינלי כי לא נותן למשתנה רגיל של JsonNode
+
         if (jsonNode.isObject()) {
             jsonNode.fields().forEachRemaining(entry -> {
-                System.out.println(entry.getKey() +" equals? = "+paths[index]);
+               // System.out.println(entry.getKey() +" equals? = "+paths[index]);
                 if (entry.getKey()==paths[index]){
                          if(printPath)
                              System.out.println("->"+ entry.getKey());
-                    System.out.println(index+"<"+(paths.length-1));
+                    //System.out.println(index+"<"+(paths.length-1));
 
                     if(index<paths.length-1)
-                        toRet[0] = navigateToRec(entry.getValue() ,paths, index+1,printPath);
+                        toRet[1] = navigateToRec(entry.getValue() ,paths, index+1,printPath,toRet)[1];
                     else{
-                        toRet[0] =jsonNode;
+                        toRet[1] =jsonNode;
                         return;
                     }
 
 
                 }
             });
-            if(toRet[0]!=null){
-                return toRet[0];
+            if(toRet[1]!=null){
+                return toRet;
             }
             throw new RuntimeException("invalid json path");
-        } else if (jsonNode.isArray()) {
-            return jsonNode;
-
         }
             return null;
     }

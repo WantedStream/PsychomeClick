@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import java.nio.file.Paths;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -11,11 +16,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         UserProgress up = new UserProgress();
-        up.printExistingJsonTree(this);
-       // up.createSave(this);
-        System.out.println("aaa");
         String[] array = {"Verbal reasoning","Analogies"};
-        System.out.println(up.navigateTo(this,array,true));
-
+        //System.out.println(up.navigateTo(this,array,true));
+        Map.Entry<String, HashMap>  entry=   new AbstractMap.SimpleEntry<String, HashMap>("exmpleString", new HashMap<>());
+       up.addToPath(this,entry, array);
     }
 }
