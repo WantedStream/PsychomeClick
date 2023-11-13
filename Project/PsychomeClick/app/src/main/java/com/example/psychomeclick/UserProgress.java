@@ -24,7 +24,7 @@ public class UserProgress{
             //find
         File jsonFile = new File(context.getFilesDir(), "progress_folder/user_progress.json");
         JsonNode[] jsNodes =  navigateTo( context,paths,false);
-        ((ObjectNode) jsNodes[1]).put((T) subjectEntry.getKey(), (V) subjectEntry.getValue());
+        ((ObjectNode) jsNodes[1]).put((String)subjectEntry.getKey(), new JsonNode(subjectEntry.getValue());
     }
 
     public void createSave(Context context) {
