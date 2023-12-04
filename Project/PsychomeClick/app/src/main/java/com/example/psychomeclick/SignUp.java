@@ -9,21 +9,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
-public class SingUp extends AppCompatActivity {
+public class SignUp extends AppCompatActivity {
 
     EditText userNameEt,emailEt,phoneEt,passwordEt,RepeatPasswordEt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sing_in);
+        setContentView(R.layout.activity_sign_up);
         userNameEt=findViewById(R.id.userNameET);
         emailEt=findViewById(R.id.emailET);
         phoneEt=findViewById(R.id.editTextPhone);
         passwordEt=findViewById(R.id.editTextPassword);
         RepeatPasswordEt=findViewById(R.id.editTextPasswordRepeat2);
 
-        findViewById(R.id.signinBT).setOnClickListener(view -> {
-            
+        findViewById(R.id.signupBT).setOnClickListener(view -> {
+
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             HashMap<String,Object>  user = new HashMap<>();
             user.put("username",userNameEt.getText().toString());

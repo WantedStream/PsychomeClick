@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SingUp"
+    tools:context=".SignUp"
     android:background="#C42DC3F1">
 
     <LinearLayout
@@ -17,12 +17,12 @@
 
 
         <TextView
-            android:id="@+id/signinTV"
+            android:id="@+id/signupTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:layout_gravity="center"
-            android:text="SIGN IN"
+            android:text="SIGN UP"
             android:textColor="#09A116"/>
         <TextView
             android:id="@+id/userNameTV"
@@ -133,12 +133,12 @@
             />
 
         <Button
-            android:id="@+id/signinBT"
+            android:id="@+id/signupBT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="40dp"
             android:layout_gravity="center"
-            android:text="Sign in!"
+            android:text="Sign up!"
             android:backgroundTint="#64CC23"/>
         <Button
             android:id="@+id/logInLinkbt"
