@@ -23,7 +23,7 @@ public class SingUp extends AppCompatActivity {
         RepeatPasswordEt=findViewById(R.id.editTextPasswordRepeat2);
 
         findViewById(R.id.signinBT).setOnClickListener(view -> {
-
+            
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             HashMap<String,Object>  user = new HashMap<>();
             user.put("username",userNameEt.getText().toString());
