@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".SingUp"
     android:background="#C42DC3F1">
 
     <LinearLayout
@@ -10,7 +13,7 @@
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:layout_marginHorizontal="70dp"
-      >
+        >
 
 
         <TextView
@@ -46,14 +49,14 @@
             />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25dp"
             android:text="Email" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/emailET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"

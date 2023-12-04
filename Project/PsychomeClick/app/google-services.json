@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "815019394178",
+    "project_id": "psychomeclick",
+    "storage_bucket": "psychomeclick.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815019394178:android:95d02d7e39e0974b37a09b",
+        "android_client_info": {
+          "package_name": "com.example.psychomeclick"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUkGIFJ5xH_-CSB6RAflvT7pKTndUosyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
