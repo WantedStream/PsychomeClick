@@ -7,16 +7,16 @@ import android.graphics.Bitmap;
 public class Question {
     private Bitmap question,answer1,answer2,answer3,answer4;
     private static byte rightAnswer;
-    private int id,difficulty;
+    private int questionTag,difficulty;
     private boolean isDapar;
 
-    public Question(Bitmap question, Bitmap answer1, Bitmap answer2, Bitmap answer3, Bitmap answer4, int id, int difficulty, boolean isDapar) {
+    public Question(Bitmap question, Bitmap answer1, Bitmap answer2, Bitmap answer3, Bitmap answer4, int questionTag, int difficulty, boolean isDapar) {
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
         this.answer4 = answer4;
-        this.id = id;
+        this.questionTag = questionTag;
         this.difficulty = difficulty;
         this.isDapar = isDapar;
     }
@@ -29,7 +29,7 @@ public class Question {
                 ", answer2=" + answer2 +
                 ", answer3=" + answer3 +
                 ", answer4=" + answer4 +
-                ", id=" + id +
+                ", id=" + questionTag +
                 ", difficulty=" + difficulty +
                 ", isDapar=" + isDapar +
                 '}';
@@ -60,8 +60,8 @@ public class Question {
         return rightAnswer;
     }
 
-    public int getId() {
-        return id;
+    public int getQuestionTag() {
+        return questionTag;
     }
 
     public int getDifficulty() {
@@ -96,8 +96,8 @@ public class Question {
         Question.rightAnswer = rightAnswer;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setQuestionTag(int questionTag) {
+        this.questionTag = questionTag;
     }
 
     public void setDifficulty(int difficulty) {
