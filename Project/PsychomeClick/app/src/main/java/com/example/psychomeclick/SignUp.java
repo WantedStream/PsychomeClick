@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.*;
+import kotlin.text.Regex;
 
 public class SignUp extends AppCompatActivity {
 
@@ -23,8 +28,13 @@ public class SignUp extends AppCompatActivity {
         RepeatPasswordEt=findViewById(R.id.editTextPasswordRepeat2);
 
         findViewById(R.id.signupBT).setOnClickListener(view -> {
-
             FirebaseFirestore db = FirebaseFirestore.getInstance();
+           List<String> emailErrors = checkEmail(emailEt.getText().toString(),db);
+
+            for(String errorStr : emailErrors){
+                System.out.println(errorStr);
+            }
+
             HashMap<String,Object>  user = new HashMap<>();
             user.put("username",userNameEt.getText().toString());
             user.put("email",emailEt.getText().toString());
@@ -34,14 +44,36 @@ public class SignUp extends AppCompatActivity {
 
             db.collection("Users").document().set(user);
 
-            db.collection("Users").document("ZOvyUClsrQdipgLNMv0n").get().addOnCompleteListener(t -> {
-                if (t.isSuccessful()){
-                    t.getResult().get("");
-                }
-            });
+           // db.collection("Users").document("ZOvyUClsrQdipgLNMv0n").get().addOnCompleteListener(t -> {
+            //        if (t.isSuccessful()){
+            //       t.getResult().get("");
+            //    }
+            //});
         });
 
 
 
+    }
+    private List<String> checkEmail(String email,FirebaseFirestore db){
+        List<String> errors= new ArrayList<>();
+        Pattern p = Pattern.compile("^[a-zA-z][a-zA-Z0-9+_.-]+@[a-zA-Z][a-zA-Z0-9]+.[a-zA-z]+$");
+        Matcher m = p.matcher(email);
+        boolean b = m.matches();
+        if(b==false){
+            errors.add("email is invalid!");
+
+        }
+
+          db.collection("Users").whereEqualTo("email",email).get().addOnCompleteListener(t -> {
+            if (!t.getResult().isEmpty()){
+                errors.add("This email is already taken!");
+                System.out.println("TAKEEEEEEEN" +" email" + " " +email);
+            }
+            else{
+                System.out.println("not taken");
+            }
+        });
+
+        return errors;
     }
 }

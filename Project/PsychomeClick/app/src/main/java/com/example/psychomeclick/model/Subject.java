@@ -1,9 +1,10 @@
-package com.example.psychomeclick;
+package com.example.psychomeclick.model;
 
 import java.util.List;
 
-public class ProgressClass implements IProgressClass{
+public class Subject implements ISubject{
     List<ISubject> subjects;
+    protected String subjectName;
     @Override
     public List<ISubject> getSubProgress() {
         return null;
@@ -18,8 +19,15 @@ public class ProgressClass implements IProgressClass{
     public int getSubPercents() {
         int percent=1;
         for(ISubject subject:this.subjects){
-            percent+=subject.getSubPercents();
+            int currentpercent=1;
+            currentpercent*=subject.getSubPercents();
+            percent+=currentpercent;
         }
         return percent;
+    }
+
+    @Override
+    public short getSubjectName() {
+        return 0;
     }
 }

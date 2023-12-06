@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import java.nio.file.Paths;
+import com.example.psychomeclick.model.UserProgress;
+
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;

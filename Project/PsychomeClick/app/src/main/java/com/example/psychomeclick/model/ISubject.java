@@ -1,6 +1,4 @@
-package com.example.psychomeclick;
-
-import java.util.List;
+package com.example.psychomeclick.model;
 
 public interface ISubject extends IProgressClass{
     public short getSubjectName();

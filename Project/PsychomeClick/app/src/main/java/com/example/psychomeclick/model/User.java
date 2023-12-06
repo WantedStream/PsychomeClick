@@ -1,4 +1,4 @@
-package com.example.psychomeclick;
+package com.example.psychomeclick.model;
 
 public class User {
     protected String name,email;

@@ -1,4 +1,4 @@
-package com.example.psychomeclick;
+package com.example.psychomeclick.model;
 
 public class LastSubject extends Subject{
     private int percent=0;
