@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -70,27 +74,55 @@ public class SignUp extends AppCompatActivity {
             this.usernameErrors.setText("");
             this.passwordErrors.setText("");
             String username=userNameEt.getText().toString(),email=emailEt.getText().toString(),phone=phoneEt.getText().toString(),password=passwordEt.getText().toString(),pass2=RepeatPasswordEt.getText().toString();
+            System.out.println("aaaaaa");
+
+            if(username.trim().isEmpty()||email.trim().isEmpty()||phone.trim().isEmpty()||password.trim().isEmpty()||pass2.trim().isEmpty())
+            {
+                Toast.makeText(getApplicationContext(),"all fields are required",Toast.LENGTH_SHORT).show();
+                System.out.println("a");
+                return;
+            }
+            System.out.println(username.trim()+"aaaaa");
+
             if(!password.equals(pass2)) {
                 this.passwordErrors.setText("passwords arent the same!");
                 return;
             }
-            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(t -> {
-            HashMap<String, Object> user = new HashMap<>();
-            user.put("username", username);
-            user.put("email", email);
-            user.put("phone", phone);
-            user.put("userprogress", "{}");
-            try {
-                db.collection("Users").document(t.getResult().getUser().getUid()).set(user);
-                Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show();
+            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
 
-            }
-            catch (Exception exception){
-                this.emailErrors.setText((exception+"").substring((exception+"").lastIndexOf(":")+1)+"!");
 
-            }
+                        if (!task.isSuccessful()) {
+                            String str = (task.getException() + "").substring((task.getException() + "").lastIndexOf(":") + 1);
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthWeakPasswordException exception) {
+                                this.passwordErrors.setText(exception.getReason());
+                                this.passwordErrors.requestFocus();
+                            } catch (FirebaseAuthInvalidCredentialsException exception) {
+                                this.emailErrors.setText(exception.getMessage());
+                                this.emailErrors.requestFocus();
+                            } catch (FirebaseAuthUserCollisionException exception) {
+                                this.emailErrors.setText(exception.getMessage());
+                                this.emailErrors.requestFocus();
+                            } catch (Exception exception) {
+                                System.out.println(exception.getMessage());
+                            }
+                        }
+                        else{
+                            HashMap<String, Object> user = new HashMap<>();
+                            user.put("username", username);
+                            user.put("email", email);
+                            user.put("phone", phone);
+                            user.put("userprogress", "{}");
+                            db.collection("Users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(t-> Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show());
+                        }
+                    });
+
+
+
+
         });
-        });
+
     }
 
 
