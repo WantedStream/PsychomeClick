@@ -2,6 +2,7 @@ package com.example.psychomeclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -59,6 +60,9 @@ public class SignUp extends AppCompatActivity {
         this.passwordErrors=findViewById(R.id.passwordErrorTV);
         this.passwordErrors.setText("");
 
+        findViewById(R.id.logInLinkbt).setOnClickListener(v -> {Intent intent = new Intent(this,LogIn.class);
+            startActivity(intent);
+            finish();});
         addBetterButtonFunction();
 
     }
@@ -114,7 +118,15 @@ public class SignUp extends AppCompatActivity {
                             user.put("email", email);
                             user.put("phone", phone);
                             user.put("userprogress", "{}");
-                            db.collection("Users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(t-> Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show());
+                            db.collection("Users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(t-> {
+
+                                Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show();
+                                task.getResult().getUser().sendEmailVerification();
+
+                                 Intent intent = new Intent(this,LogIn.class);
+                                startActivity(intent);
+                                  finish();
+                        });
                         }
                     });
 

@@ -20,6 +20,12 @@ public class UserProgress{
 
     private JsonReader jr;
 
+    public UserProgress(String currentProgress) {
+        this.currentProgress = currentProgress;
+    }
+
+    private String currentProgress;
+
     public <T,V> void addToPath(Context context, Map.Entry<T,V> subjectEntry, String[] paths) {
             //find
         File jsonFile = new File(context.getFilesDir(), "progress_folder/user_progress.json");

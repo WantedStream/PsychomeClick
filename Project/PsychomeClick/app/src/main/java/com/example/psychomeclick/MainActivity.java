@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UserProgress up = new UserProgress();
+        UserProgress up = new UserProgress("");
         String[] array = {"Verbal reasoning","Analogies"};
         //System.out.println(up.navigateTo(this,array,true));
         Map.Entry<String, HashMap>  entry=   new AbstractMap.SimpleEntry<String, HashMap>("exmpleString", new HashMap<>());

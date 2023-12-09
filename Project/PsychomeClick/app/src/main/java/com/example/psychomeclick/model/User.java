@@ -7,12 +7,12 @@ public class User {
     private String password;
     private String phone;
 
-    public User(String name,String email,String phone,String password){
+    public User(String name,String email,String phone,String password,String userProgressstr){
         this.name=name;
         this.email=email;
         this.password=password;
         this.phone=phone;
-        this.userProgress=new UserProgress();
+        this.userProgress=new UserProgress(userProgressstr);
 
     }
 
