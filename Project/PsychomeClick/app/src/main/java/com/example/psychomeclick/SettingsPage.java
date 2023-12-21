@@ -30,7 +30,7 @@ public class SettingsPage extends AppCompatActivity {
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
         this.currentDB.collection("Users").document(this.currentUser.getUid()).get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() != null){
-
+                System.out.println(task.getResult());
                 this.emailEditText.setHint(task.getResult().getString("email"));
                 this.usernameEditText.setHint(task.getResult().getString("username"));
                 this.phoneEditText.setHint(task.getResult().getString("phone"));
@@ -48,7 +48,7 @@ public class SettingsPage extends AppCompatActivity {
             }else{
                 //no user current logged in
                 Toast.makeText(getApplicationContext(),"no user currently logged in",Toast.LENGTH_LONG).show();
-                reloadPage();
+
             }
 
         });
