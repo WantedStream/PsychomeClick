@@ -57,6 +57,10 @@ public class LogIn extends AppCompatActivity {
 
                     });
                 }
+                else{
+                    Toast.makeText(getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
+
+                }
 
             });
         });

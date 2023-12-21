@@ -21,6 +21,9 @@ public class SettingsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
+        this.emailEditText=findViewById(R.id.emailET);
+        this.usernameEditText=findViewById(R.id.usernameET);
+        this.phoneEditText=findViewById(R.id.phoneET);
 
         reloadPage();
 
@@ -30,7 +33,10 @@ public class SettingsPage extends AppCompatActivity {
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
         this.currentDB.collection("Users").document(this.currentUser.getUid()).get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() != null){
-                System.out.println(task.getResult());
+                this.emailEditText.setText("");
+                this.usernameEditText.setText("");
+                this.phoneEditText.setText("");
+
                 this.emailEditText.setHint(task.getResult().getString("email"));
                 this.usernameEditText.setHint(task.getResult().getString("username"));
                 this.phoneEditText.setHint(task.getResult().getString("phone"));
@@ -38,10 +44,29 @@ public class SettingsPage extends AppCompatActivity {
                 findViewById(R.id.updateBtn).setOnClickListener((t)-> {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-                    if(!this.emailEditText.getText().toString().trim().equals(""))
-                        db.collection("Users").document(user.getUid()).update("age" , 38).addOnCompleteListener((co)->{
+
+
+                    String newname=this.usernameEditText.getText().toString(),newemail=this.emailEditText.getText().toString(), newphone=this.phoneEditText.getText().toString();
+
+                    if(newname.trim().equals(""))
+                        newname=this.usernameEditText.getHint().toString();
+
+                    if(newemail.trim().equals(""))
+                        newemail=this.emailEditText.getHint().toString();
+
+                    if(newphone.trim().equals(""))
+                        newphone=this.phoneEditText.getHint().toString();
+                    user.verifyBeforeUpdateEmail(newemail).addOnCompleteListener((etask)->{
+                        
+                    });
+                    db.collection("Users").document(user.getUid()).update("username" ,   newname,"email" ,  newemail,"phone" ,  newphone).addOnCompleteListener((co)->{
+                        if(co.isSuccessful()){
+
+
                             Toast.makeText(getApplicationContext(),"user updated",Toast.LENGTH_SHORT).show();
-                        });
+
+                        }
+                    });
                     reloadPage();
                              });
 
