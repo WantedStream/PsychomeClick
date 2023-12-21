@@ -2,6 +2,7 @@ package com.example.psychomeclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,6 +49,12 @@ public class LogIn extends AppCompatActivity {
                         User user = new User (userTask.getResult().getString("username"),userTask.getResult().getString("email"),userTask.getResult().getString("phone"),this.passwordEt.getText().toString(),userTask.getResult().getString("userProgress"));
                         Toast.makeText(getApplicationContext(),"welcome" +user.toString(),Toast.LENGTH_SHORT).show();
                       System.out.println(user);
+
+
+                      Intent intent = new Intent(this,SettingsPage.class);
+                      startActivity(intent);
+                      finish();
+
                     });
                 }
 
