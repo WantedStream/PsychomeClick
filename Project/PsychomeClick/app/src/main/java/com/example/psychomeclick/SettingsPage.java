@@ -17,6 +17,8 @@ public class SettingsPage extends AppCompatActivity {
     EditText emailEditText,usernameEditText,phoneEditText;
     private FirebaseUser currentUser;
     private FirebaseFirestore currentDB;
+
+    private String finalUsernameStr,finalPhoneStr,finalEmailStr;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,55 +26,62 @@ public class SettingsPage extends AppCompatActivity {
         this.emailEditText=findViewById(R.id.emailET);
         this.usernameEditText=findViewById(R.id.usernameET);
         this.phoneEditText=findViewById(R.id.phoneET);
-
+        this.currentDB = FirebaseFirestore.getInstance();
+        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
         reloadPage();
 
     }
+    private void resetEditTexts(){
+        this.emailEditText.setText("");
+        this.usernameEditText.setText("");
+        this.phoneEditText.setText("");
+    }
+    private void setHints(String emailStr,String usernameStr,String phonestr){
+        this.emailEditText.setHint(task.getResult().getString("email"));
+        this.usernameEditText.setHint(task.getResult().getString("username"));
+        this.phoneEditText.setHint(task.getResult().getString("phone"));
+    }
     private void reloadPage() {
-        this.currentDB = FirebaseFirestore.getInstance();
-        this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         this.currentDB.collection("Users").document(this.currentUser.getUid()).get().addOnCompleteListener(task -> {
             if(task.isSuccessful() && task.getResult() != null){
-                this.emailEditText.setText("");
-                this.usernameEditText.setText("");
-                this.phoneEditText.setText("");
+                resetEditTexts();
 
-                this.emailEditText.setHint(task.getResult().getString("email"));
-                this.usernameEditText.setHint(task.getResult().getString("username"));
-                this.phoneEditText.setHint(task.getResult().getString("phone"));
 
                 findViewById(R.id.updateBtn).setOnClickListener((t)-> {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-
-
-                    String newname=this.usernameEditText.getText().toString(),newemail=this.emailEditText.getText().toString(), newphone=this.phoneEditText.getText().toString();
-
-                    if(newname.trim().equals(""))
-                        newname=this.usernameEditText.getHint().toString();
-
+                    String newemail=this.emailEditText.getText().toString();
                     if(newemail.trim().equals(""))
                         newemail=this.emailEditText.getHint().toString();
-
-                    if(newphone.trim().equals(""))
-                        newphone=this.phoneEditText.getHint().toString();
                     user.verifyBeforeUpdateEmail(newemail).addOnCompleteListener((etask)->{
-                        
-                    });
-                    db.collection("Users").document(user.getUid()).update("username" ,   newname,"email" ,  newemail,"phone" ,  newphone).addOnCompleteListener((co)->{
-                        if(co.isSuccessful()){
+                    if(etask.isSuccessful()){
+                        String newemail2=this.emailEditText.getText().toString();
+                        if(newemail2.trim().equals(""))
+                            newemail2=this.emailEditText.getHint().toString();
 
+                        db.collection("Users").document(user.getUid()).update("email" ,  newemail2).addOnCompleteListener((co)->{
+                            if(co.isSuccessful()){
 
-                            Toast.makeText(getApplicationContext(),"user updated",Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
+                                Toast.makeText(getApplicationContext(),"user updated",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"to make any changes, email must be registered",Toast.LENGTH_SHORT).show();
+                        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener((taskSendVerfication) -> {reloadPage();});
+                    }
                     reloadPage();
                              });
 
+
+
+
+                });
+
             }else{
-                //no user current logged in
                 Toast.makeText(getApplicationContext(),"no user currently logged in",Toast.LENGTH_LONG).show();
+
 
             }
 
