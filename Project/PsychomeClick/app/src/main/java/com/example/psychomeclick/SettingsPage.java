@@ -36,10 +36,10 @@ public class SettingsPage extends AppCompatActivity {
         this.usernameEditText.setText("");
         this.phoneEditText.setText("");
     }
-    private void setHints(String emailStr,String usernameStr,String phonestr){
-        this.emailEditText.setHint(task.getResult().getString("email"));
-        this.usernameEditText.setHint(task.getResult().getString("username"));
-        this.phoneEditText.setHint(task.getResult().getString("phone"));
+    private void setAccountHints(String emailStr,String usernameStr,String phonestr){
+        this.emailEditText.setHint(emailStr);
+        this.usernameEditText.setHint(usernameStr);
+        this.phoneEditText.setHint(phonestr);
     }
     private void reloadPage() {
 

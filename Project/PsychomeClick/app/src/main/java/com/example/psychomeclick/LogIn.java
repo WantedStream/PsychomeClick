@@ -47,11 +47,11 @@ public class LogIn extends AppCompatActivity {
                     System.out.println("hmm");
                   db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
                         User user = new User (userTask.getResult().getString("username"),userTask.getResult().getString("email"),userTask.getResult().getString("phone"),this.passwordEt.getText().toString(),userTask.getResult().getString("userProgress"));
-                        Toast.makeText(getApplicationContext(),"welcome" +user.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"welcome " +user.toString(),Toast.LENGTH_SHORT).show();
                       System.out.println(user);
 
 
-                      Intent intent = new Intent(this,SettingsPage.class);
+                      Intent intent = new Intent(this,UserActivity.class);
                       startActivity(intent);
                       finish();
 
