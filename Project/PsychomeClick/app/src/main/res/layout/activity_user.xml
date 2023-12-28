@@ -20,7 +20,11 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             />
-
+        <FrameLayout
+            android:id="@+id/contentFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
         <Spinner
             android:id="@+id/spinnerTopics"
             android:layout_height="50dp"
