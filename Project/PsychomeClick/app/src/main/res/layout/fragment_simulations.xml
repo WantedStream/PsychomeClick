@@ -8,53 +8,46 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
-
-    <ScrollView
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="false"
-        >
-
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/accountnamefield"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:text="aaaa"/>
-
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/recentMatchTitle"
-                android:textSize="18sp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:text="aaa"/>
+                android:text="@string/hello_blank_fragment" />
+
+        <ScrollView
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp" >
 
 
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:layout_below="@id/textView8"/>
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </RelativeLayout>
 
-    </ScrollView>
-
-
+        </ScrollView>
+    </LinearLayout>
 
 
 </FrameLayout>

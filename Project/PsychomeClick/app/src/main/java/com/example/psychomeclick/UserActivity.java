@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.psychomeclick.model.Constants;
+import com.example.psychomeclick.model.GeneralFragment;
+import com.example.psychomeclick.model.RandomFragment;
 import com.example.psychomeclick.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,14 +41,23 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
         });
 
 
-        Fragment fragment = new ScreenContentFragment();
+        Fragment fragment = new GeneralFragment();
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.contentFragment, fragment);
         transaction.commit();
 
+        setSelectBox();
 
+    }
+    // if(isAdmin(User)){
+//
+       // };
+
+
+
+    private void setSelectBox(){
         Spinner spinner=findViewById(R.id.spinnerTopics);
         // Create the instance of ArrayAdapter
         // having the list of courses
@@ -67,13 +78,6 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
         spinner.setOnItemSelectedListener(this);
         spinner.setAdapter(ad);
     }
-    // if(isAdmin(User)){
-//
-       // };
-
-
-
-
     private boolean isAdmin(FirebaseUser user){
         return Constants.adminList.contains(user.getUid());
     }
@@ -86,27 +90,22 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
         this.current=position;
 
 
-        Intent intent=null;
+        Fragment fragment=null;
+
         switch(topics[position]){
 
-            case "כללי": intent = new Intent(this,UserActivity.class);
-                System.out.println("כללי");
-                startActivity(intent);
-                finish();
+            case "כללי": fragment = new GeneralFragment();
             break;
-            case "סימולציות" : intent = new Intent(this,UserActivity.class);
-                System.out.println("סימולציות");
-                startActivity(intent);
-                finish();
+            case "סימולציות" : fragment = new SimulationsFragment();
             break;
-            case "אקראי": intent = new Intent(this,UserActivity.class);
-                System.out.println("אקראי");
-                startActivity(intent);
-                finish();
+            case "אקראי": fragment = new RandomFragment();
             break;
 
         }
-
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.contentFragment, fragment);
+        transaction.commit();
     }
 
     @Override
