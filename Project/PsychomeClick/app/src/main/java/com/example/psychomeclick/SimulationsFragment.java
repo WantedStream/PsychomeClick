@@ -4,9 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +62,49 @@ public class SimulationsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view =inflater.inflate(R.layout.fragment_simulations, container, false);
+        createButtons(view);
+        return view;
+    }
+    private void createButtons(View view){
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.relativeLayoutTestContainer);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_simulations, container, false);
+        String lastid=null;
+        for (int i = 0; i < 6; i++) {
+            //create button
+            Button btn1 = new Button(view.getContext());
+            btn1.setText("Button number "+i);
+            btn1.setId(View.generateViewId());
+            System.out.println(btn1.getId()+"");
+
+            if(lastid==null)lastid=btn1.getId()+"";
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            //set button properties
+            int marginInPixels = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+            layoutParams.bottomMargin=marginInPixels;
+
+
+            btn1.setLayoutParams(layoutParams);
+            int textSize = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+            btn1.setTextSize(textSize);
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // put code on click operation
+                }
+            });
+            linearLayout.addView(btn1);
+            lastid=btn1.getId()+"";
+
+        }
+
     }
 }
