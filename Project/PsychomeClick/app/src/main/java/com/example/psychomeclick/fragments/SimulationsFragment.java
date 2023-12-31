@@ -1,4 +1,4 @@
-package com.example.psychomeclick;
+package com.example.psychomeclick.fragments;
 
 import android.os.Bundle;
 
@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
+import com.example.psychomeclick.R;
 
 /**
  * A simple {@link Fragment} subclass.

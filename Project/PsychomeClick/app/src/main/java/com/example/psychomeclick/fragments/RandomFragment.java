@@ -1,4 +1,4 @@
-package com.example.psychomeclick.model;
+package com.example.psychomeclick.fragments;
 
 import android.os.Bundle;
 

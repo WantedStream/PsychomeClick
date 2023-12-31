@@ -5,19 +5,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.psychomeclick.fragments.SimulationsFragment;
 import com.example.psychomeclick.model.Constants;
 import com.example.psychomeclick.model.GeneralFragment;
-import com.example.psychomeclick.model.RandomFragment;
-import com.example.psychomeclick.model.User;
+import com.example.psychomeclick.fragments.RandomFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
