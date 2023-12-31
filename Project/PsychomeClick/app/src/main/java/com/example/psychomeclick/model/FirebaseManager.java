@@ -6,10 +6,14 @@ import android.widget.Toast;
 import com.example.psychomeclick.UserActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 public class FirebaseManager {
    static FirebaseFirestore db = FirebaseFirestore.getInstance();
    static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    static FirebaseStorage firebase = FirebaseStorage.getInstance();
+
+    public static User currentUser=null;
         public static void addUsertoFirestoreAndFirebase(User user){
         firebaseAuth.signInWithEmailAndPassword(user.getEmail(),user.getPassword()).addOnCompleteListener(authResultTask -> {
             if(authResultTask.isSuccessful()){
@@ -23,5 +27,8 @@ public class FirebaseManager {
             }
 
         });
+    }
+    public static addQuestiontoDB(){
+
     }
 }
