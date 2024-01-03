@@ -1,12 +1,20 @@
 package com.example.psychomeclick.fragments;
 
+import android.media.Image;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.psychomeclick.R;
 
@@ -26,6 +34,7 @@ public class QuestionListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ImageView question,first,second,third,fourth;
     public QuestionListFragment() {
         // Required empty public constructor
     }
@@ -62,12 +71,35 @@ public class QuestionListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        createStuff();
 
-        return inflater.inflate(R.layout.fragment_question_list, container, false);
+       View view = inflater.inflate(R.layout.fragment_question_list, container, false);
+        createStuff();
+       return view;
     }
 
 
     private voidAddQuestionsToTable(){
 
+    }
+    private void createStuff(){
+        ((Button) getView().findViewById(R.id.addQuestionBtn)).setOnClickListener((btn) -> {
+            chooseImage((ImageView) getView().findViewById(R.id.questingImg));
+        });
+
+        chooseImage();
+    }
+    private void chooseImage(ImageView){
+        // Registers a photo picker activity launcher in multi-select mode.
+// In this example, the app lets the user select up to 5 media files.
+        ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
+                    ( (ImageView)  getView().findViewById(R.id.questingImg)).setImageURI(uris);// load the image to question
+                });
+
+
+       //pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
+        //        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+          //      .build());
     }
 }

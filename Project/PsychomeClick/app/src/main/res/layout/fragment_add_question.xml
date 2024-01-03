@@ -46,7 +46,7 @@
                 android:text="the question" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/questingImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -66,7 +66,7 @@
                 android:text="first answer" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/firstAnswerImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -86,7 +86,7 @@
                 android:text="second answer" />
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/secondImageAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -106,7 +106,7 @@
                 android:text="third answer" />
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/thirdAnswerImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,7 +126,7 @@
                 android:text="fourth answer" />
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/fourthAnswerImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
