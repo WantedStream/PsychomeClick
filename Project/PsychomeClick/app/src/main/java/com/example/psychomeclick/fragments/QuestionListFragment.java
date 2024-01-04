@@ -71,35 +71,19 @@ public class QuestionListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        createStuff();
+
 
        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-        createStuff();
+       createStuff();
+
        return view;
     }
 
 
-    private voidAddQuestionsToTable(){
+    private void voidAddQuestionsToTable(){
 
     }
     private void createStuff(){
-        ((Button) getView().findViewById(R.id.addQuestionBtn)).setOnClickListener((btn) -> {
-            chooseImage((ImageView) getView().findViewById(R.id.questingImg));
-        });
 
-        chooseImage();
-    }
-    private void chooseImage(ImageView){
-        // Registers a photo picker activity launcher in multi-select mode.
-// In this example, the app lets the user select up to 5 media files.
-        ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
-                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
-                    ( (ImageView)  getView().findViewById(R.id.questingImg)).setImageURI(uris);// load the image to question
-                });
-
-
-       //pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
-        //        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-          //      .build());
     }
 }

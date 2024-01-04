@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.example.psychomeclick.fragments.QuestionListFragment;
 
 public class AdminActivity extends AppCompatActivity {
@@ -15,7 +16,12 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-
+        findViewById(R.id.insertQuestionBtn).setOnClickListener((v) ->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new AddQuestionFragment());
+            transaction.commit();
+        });
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.contentFragment, new QuestionListFragment());
