@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,29 +41,30 @@ public class LogIn extends AppCompatActivity {
         this.passwordErrors.setText("");
 
         findViewById(R.id.button).setOnClickListener( View -> {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            firebaseAuth.signInWithEmailAndPassword(this.emailEt.getText().toString(),this.passwordEt.getText().toString()).addOnCompleteListener(authResultTask -> {
-                if(authResultTask.isSuccessful()){
-                    System.out.println("hmm");
-                  db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
-                        User user = new User (userTask.getResult().getString("username"),userTask.getResult().getString("email"),userTask.getResult().getString("phone"),this.passwordEt.getText().toString(),userTask.getResult().getString("userProgress"));
-                        Toast.makeText(getApplicationContext(),"welcome " +user.toString(),Toast.LENGTH_SHORT).show();
-                      System.out.println(user);
-
-
-                      Intent intent = new Intent(this,UserActivity.class);
-                      startActivity(intent);
-                      finish();
-
-                    });
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
-
-                }
-
-            });
+//            FirebaseFirestore db = FirebaseFirestore.getInstance();
+//            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//            firebaseAuth.signInWithEmailAndPassword(this.emailEt.getText().toString(),this.passwordEt.getText().toString()).addOnCompleteListener(authResultTask -> {
+//                if(authResultTask.isSuccessful()){
+//                    System.out.println("hmm");
+//                  db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
+//                        User user = new User (userTask.getResult().getString("username"),userTask.getResult().getString("email"),userTask.getResult().getString("phone"),this.passwordEt.getText().toString(),userTask.getResult().getString("userProgress"));
+//                        Toast.makeText(getApplicationContext(),"welcome " +user.toString(),Toast.LENGTH_SHORT).show();
+//                      System.out.println(user);
+//
+//
+//                      Intent intent = new Intent(this,UserActivity.class);
+//                      startActivity(intent);
+//                      finish();
+//
+//                    });
+//                }
+//                else{
+//                    Toast.makeText(getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
+//
+//                }
+//
+//            });
+            FirebaseManager.logIn(this.emailEt.getText().toString(),this.passwordEt.getText().toString(),this);
         });
     }
 }

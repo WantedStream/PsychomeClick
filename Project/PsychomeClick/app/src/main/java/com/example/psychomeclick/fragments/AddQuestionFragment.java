@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.FirebaseManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -100,21 +102,28 @@ public class AddQuestionFragment extends Fragment {
         //catch(Exception e){
         //    System.out.println(e+"     ERRROR!!!!!!!!!!!!");
        // }
-
+        ImageView questionImg=(ImageView) v.findViewById(R.id.questingImg);
+        ImageView firstAnswerImg = (ImageView) v.findViewById(R.id.firstAnswerImg);
+        ImageView secondAnswerImg = (ImageView) v.findViewById(R.id.secondImageAnswer);
+        ImageView thirdAnswerImg = (ImageView) v.findViewById(R.id.thirdAnswerImg);
+        ImageView fourthAnswerImg =(ImageView) v.findViewById(R.id.fourthAnswerImg);
         ((Button) v.findViewById(R.id.addQuestionBtn)).setOnClickListener((btn) -> {
-            chooseImage((ImageView) v.findViewById(R.id.questingImg));
+            chooseImage(questionImg);
         });
         ((Button) v.findViewById(R.id.addFirstAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage((ImageView) v.findViewById(R.id.firstAnswerImg));
+            chooseImage(firstAnswerImg);
         });
         ((Button) v.findViewById(R.id.addSecondAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage((ImageView) v.findViewById(R.id.secondImageAnswer));
+            chooseImage(secondAnswerImg);
         });
         ((Button) v.findViewById(R.id.addThirdAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage((ImageView) v.findViewById(R.id.thirdAnswerImg));
+            chooseImage(thirdAnswerImg);
         });
         ((Button) v.findViewById(R.id.addFourthAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage((ImageView) v.findViewById(R.id.fourthAnswerImg));
+            chooseImage(fourthAnswerImg);
+        });
+        ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
+            FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),questionImg,firstAnswerImg,secondAnswerImg,thirdAnswerImg,fourthAnswerImg,this);
         });
     }
     private void chooseImage(ImageView img){

@@ -17,14 +17,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/pathTV"
+                android:id="@+id/rightAnswerTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Path" />
 
             <EditText
-                android:id="@+id/pathET"
+                android:id="@+id/rightAnswerET"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -132,5 +132,13 @@
                 android:layout_weight="1"
                 />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/addToStorage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:backgroundTint="#2196F3"/>
     </LinearLayout>
+
 </FrameLayout>
