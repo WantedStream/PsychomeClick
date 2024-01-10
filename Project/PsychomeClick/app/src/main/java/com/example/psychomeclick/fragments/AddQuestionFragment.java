@@ -46,6 +46,21 @@ public class AddQuestionFragment extends Fragment {
    private final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
                this.currentImage.setImageURI(uris);
+               switch(this.currentImage.getId()){
+                   case R.id.questingImg:
+
+                       break;
+                   case R.id.firstAnswerImg:
+
+                       break;
+                   case R.id.secondImageAnswer:
+
+
+                       break;
+                   case R.id.thirdAnswerImg:
+
+
+               }
             });
 
     public AddQuestionFragment() {

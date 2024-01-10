@@ -23,6 +23,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.net.URI;
 import java.util.HashMap;
 
 public class FirebaseManager {
@@ -51,7 +55,7 @@ public class FirebaseManager {
 
 
     }
-    public static void addQuestiontoDB(String correctAnswer,ImageView question, ImageView first, ImageView sec, ImageView third, ImageView forth,Context context){
+    public static void addQuestiontoDB(String correctAnswer, URI question, URI first, URI sec, URI third, URI forth, Context context){
         StorageReference storageRef = firebaseStorage.getReference();
 
 
@@ -83,7 +87,7 @@ public class FirebaseManager {
         });
 
 
-
+);
 
 
 
