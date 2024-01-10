@@ -3,6 +3,7 @@ package com.example.psychomeclick.fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -26,6 +27,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,24 +47,11 @@ public class AddQuestionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ImageView currentImage;
+    private Map<Integer,Uri> imageMap=new HashMap<Integer,Uri>();
    private final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
                this.currentImage.setImageURI(uris);
-               switch(this.currentImage.getId()){
-                   case R.id.questingImg:
-
-                       break;
-                   case R.id.firstAnswerImg:
-
-                       break;
-                   case R.id.secondImageAnswer:
-
-
-                       break;
-                   case R.id.thirdAnswerImg:
-
-
-               }
+                this.imageMap.put(this.currentImage.getId(),uris);
             });
 
     public AddQuestionFragment() {
@@ -138,7 +129,7 @@ public class AddQuestionFragment extends Fragment {
             chooseImage(fourthAnswerImg);
         });
         ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
-            FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),questionImg,firstAnswerImg,secondAnswerImg,thirdAnswerImg,fourthAnswerImg,this);
+            FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),this.imageMap,this.getContext());
         });
     }
     private void chooseImage(ImageView img){

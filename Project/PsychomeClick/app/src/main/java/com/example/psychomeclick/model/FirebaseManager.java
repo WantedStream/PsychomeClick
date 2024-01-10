@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.Map;
 
 public class FirebaseManager {
    static FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -55,7 +56,7 @@ public class FirebaseManager {
 
 
     }
-    public static void addQuestiontoDB(String correctAnswer, URI question, URI first, URI sec, URI third, URI forth, Context context){
+    public static void addQuestiontoDB(String correctAnswer, Map<Integer,Uri> imageMap, Context context){
         StorageReference storageRef = firebaseStorage.getReference();
 
 
@@ -63,40 +64,29 @@ public class FirebaseManager {
         q.put("correctAnswer",correctAnswer);
        DocumentReference qdocument = db.collection("Questions").document();
         qdocument.set(q).addOnSuccessListener(tsk-> {
-
             // Create a reference to the file in Firebase Storage
             StorageReference fileRef = storageRef.child("QuestionStorage/" +qdocument.getId());
-
-            Bitmap bitmap = ((BitmapDrawable) question.getDrawable()).getBitmap();
-
             // Convert the Bitmap to a Uri
-            Uri imageUri = getImageUri(this, bitmap);
             // Register observers to listen for the upload task
-            fileRef.putFile(first.getDrawable()).addOnSuccessListener(taskSnapshot -> {
-                // File successfully uploaded
+            for(Map.Entry<Integer,Uri> entry : imageMap.entrySet()) {
+                // do what you have to do here
+                // In your case, another loop.
+                fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
+                    // File successfully uploaded
+                    Toast.makeText(context.getApplicationContext(),"question added",Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(exception -> {
+                    // Handle unsuccessful uploads
+                    Toast.makeText(context.getApplicationContext(),"problem." +
+                            "",Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(context.getApplicationContext(),"question added",Toast.LENGTH_SHORT).show();
+                }).addOnProgressListener(snapshot -> {
+                    // Track the progress of the upload
+                    double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                    // Update your UI with the upload progress
 
-            }).addOnFailureListener(exception -> {
-                // Handle unsuccessful uploads
-            }).addOnProgressListener(snapshot -> {
-                // Track the progress of the upload
-                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                // Update your UI with the upload progress
-            });
+                });
+            }
         });
-
-
-);
-
-
-
     }
 
-    private Uri getImageUri(Context context, Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
-        return Uri.parse(path);
-    }
 }
