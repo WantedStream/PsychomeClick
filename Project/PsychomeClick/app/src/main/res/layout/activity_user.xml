@@ -10,26 +10,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#3F51B5"
         >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_gravity="center">
             <TextView
                 android:layout_gravity="top"
                 android:gravity="center"
                 android:id="@+id/WelcomeText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="welcome"
+                android:textSize="20dp"
+                android:padding="20dp"
+                android:textColor="#1C8C88"
                 />
 
             <Button
                 android:id="@+id/goToAdminPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="go to admin page" />
+                android:text="go to admin page"
+                android:backgroundTint="#23328C"
+                />
         </LinearLayout>
 
 
@@ -38,16 +45,33 @@
             android:id="@+id/contentFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" />
-        <Spinner
-            android:id="@+id/spinnerTopics"
-            android:layout_height="50dp"
-            android:layout_width="160dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_weight="1"
+             />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            >
+
+            <Spinner
+                android:id="@+id/spinnerTopics"
+                android:layout_width="260dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:backgroundTint="#070707"
+
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

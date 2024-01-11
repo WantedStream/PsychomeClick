@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FirebaseManager {
@@ -56,7 +57,7 @@ public class FirebaseManager {
 
 
     }
-    public static void addQuestiontoDB(String correctAnswer, Map<Integer,Uri> imageMap, Context context){
+    public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap, Context context){
         StorageReference storageRef = firebaseStorage.getReference();
 
 
@@ -65,12 +66,16 @@ public class FirebaseManager {
        DocumentReference qdocument = db.collection("Questions").document();
         qdocument.set(q).addOnSuccessListener(tsk-> {
             // Create a reference to the file in Firebase Storage
-            StorageReference fileRef = storageRef.child("QuestionStorage/" +qdocument.getId());
+
             // Convert the Bitmap to a Uri
             // Register observers to listen for the upload task
+            int x=0;
             for(Map.Entry<Integer,Uri> entry : imageMap.entrySet()) {
                 // do what you have to do here
                 // In your case, another loop.
+                StorageReference fileRef = storageRef.child("QuestionStorage/" +qdocument.getId()+"/images"+x);
+                x++;
+                System.out.println(entry.getKey()+"   "+entry.getValue());
                 fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
                     // File successfully uploaded
                     Toast.makeText(context.getApplicationContext(),"question added",Toast.LENGTH_SHORT).show();

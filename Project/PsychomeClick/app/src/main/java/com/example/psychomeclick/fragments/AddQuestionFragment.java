@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -47,7 +48,7 @@ public class AddQuestionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private ImageView currentImage;
-    private Map<Integer,Uri> imageMap=new HashMap<Integer,Uri>();
+    private LinkedHashMap<Integer,Uri> imageMap=new LinkedHashMap<>();
    private final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
                this.currentImage.setImageURI(uris);
