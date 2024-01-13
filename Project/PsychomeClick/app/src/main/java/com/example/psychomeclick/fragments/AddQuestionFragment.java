@@ -130,7 +130,7 @@ public class AddQuestionFragment extends Fragment {
             chooseImage(fourthAnswerImg);
         });
         ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
-            FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),this.imageMap,this.getContext(),(p1, p2) -> { return p2 + p1; });
+            FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),this.imageMap,this,new QuestionListFragment());
         });
     }
     private void chooseImage(ImageView img){
@@ -140,8 +140,6 @@ public class AddQuestionFragment extends Fragment {
               .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
              .build());
     }
-    public interface switchTo {
-        String doSomething(int param1, String param2);
-    }
+
 
 }

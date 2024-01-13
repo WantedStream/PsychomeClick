@@ -13,8 +13,16 @@ import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.psychomeclick.LogIn;
+import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
+import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,7 +38,9 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 public class FirebaseManager {
    static FirebaseFirestore db = FirebaseFirestore.getInstance();
    static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -57,38 +67,35 @@ public class FirebaseManager {
 
 
     }
-    public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap, Context context){
+    public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap,Fragment f, Fragment to){
         StorageReference storageRef = firebaseStorage.getReference();
-
-
+        Context context=f.getContext();
         HashMap<String, Object> q = new HashMap<>();
         q.put("correctAnswer",correctAnswer);
        DocumentReference qdocument = db.collection("Questions").document();
         qdocument.set(q).addOnSuccessListener(tsk-> {
-            // Create a reference to the file in Firebase Storage
 
-            // Convert the Bitmap to a Uri
-            // Register observers to listen for the upload task
             int x=0;
             for(Map.Entry<Integer,Uri> entry : imageMap.entrySet()) {
-                // do what you have to do here
-                // In your case, another loop.
+
                 StorageReference fileRef = storageRef.child("QuestionStorage/" +qdocument.getId()+"/images"+x);
                 x++;
                 System.out.println(entry.getKey()+"   "+entry.getValue());
                 fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
-                    // File successfully uploaded
                     Toast.makeText(context.getApplicationContext(),"question added",Toast.LENGTH_SHORT).show();
+
+                    if(to!=null){
+                        FragmentManager fm =  ((Fragment) f).getParentFragmentManager();
+                        FragmentTransaction transaction = fm.beginTransaction();
+                        transaction.replace(R.id.contentFragment, to);
+                        transaction.commit();
+                    }
+
                 }).addOnFailureListener(exception -> {
-                    // Handle unsuccessful uploads
                     Toast.makeText(context.getApplicationContext(),"problem." +
                             "",Toast.LENGTH_SHORT).show();
-
                 }).addOnProgressListener(snapshot -> {
-                    // Track the progress of the upload
                     double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                    // Update your UI with the upload progress
-
                 });
             }
         });
