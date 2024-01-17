@@ -1,10 +1,12 @@
 package com.example.psychomeclick.model;
 
+import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
@@ -23,12 +25,14 @@ import com.example.psychomeclick.LogIn;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
 import com.example.psychomeclick.fragments.AddQuestionFragment;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -47,14 +51,17 @@ public class FirebaseManager {
     static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     public static User currentUser=null;
-        public static void logIn(String email,String password, Context context){
+        public static void logIn(String email,String password, Activity activity){
+            Context context=activity.getApplicationContext();
         firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(authResultTask -> {
             if(authResultTask.isSuccessful()){
                 db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
                     Toast.makeText(context.getApplicationContext(),"welcome " +userTask.getResult().get("username").toString(),Toast.LENGTH_SHORT).show();
                     currentUser=new User(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("username").toString(),userTask.getResult().get("userprogress").toString());
+                    saveCorrentUserToSharedPreferences(activity.getPreferences(MODE_PRIVATE));
                     Intent intent = new Intent(context,UserActivity.class);
-                     context.startActivity(intent);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
                     ((Activity) context).finish();
                 });
             }
@@ -66,6 +73,24 @@ public class FirebaseManager {
         });
 
 
+    }
+
+    public static void saveCorrentUserToSharedPreferences(SharedPreferences sp){
+        SharedPreferences.Editor prefsEditor = sp.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(currentUser);
+        prefsEditor.putString("currentUser", json);
+        prefsEditor.commit();
+
+
+
+    }
+    public static void saveNewUserToSharedPreferences(User user,SharedPreferences sp){
+        SharedPreferences.Editor prefsEditor = sp.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(user);
+        prefsEditor.putString("currentUser", json);
+        prefsEditor.commit();
     }
     public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap,Fragment f, Fragment to){
         StorageReference storageRef = firebaseStorage.getReference();
@@ -99,6 +124,9 @@ public class FirebaseManager {
                 });
             }
         });
+    }
+    public static void signUp(){
+
     }
 
 }
