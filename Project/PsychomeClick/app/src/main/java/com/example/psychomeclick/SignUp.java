@@ -1,5 +1,7 @@
 package com.example.psychomeclick;
 
+import static com.example.psychomeclick.model.FirebaseManager.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.psychomeclick.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
@@ -126,6 +129,8 @@ public class SignUp extends AppCompatActivity {
                                  Intent intent = new Intent(this,LogIn.class);
                                 startActivity(intent);
                                   finish();
+
+                                saveShareRefCurrent(new User(username,email,phone,email),true,getPreferences(MODE_PRIVATE));
                         });
                         }
                     });

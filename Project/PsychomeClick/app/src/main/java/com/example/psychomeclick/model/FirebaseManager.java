@@ -50,6 +50,7 @@ public class FirebaseManager {
    static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
+    public static final String PrefLocaltion="LogIn";
     public static User currentUser=null;
         public static void logIn(String email,String password, Activity activity){
             Context context=activity.getApplicationContext();
@@ -57,12 +58,12 @@ public class FirebaseManager {
             if(authResultTask.isSuccessful()){
                 db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
                     Toast.makeText(context.getApplicationContext(),"welcome " +userTask.getResult().get("username").toString(),Toast.LENGTH_SHORT).show();
-                    currentUser=new User(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("username").toString(),userTask.getResult().get("userprogress").toString());
-                    saveCorrentUserToSharedPreferences(activity.getPreferences(MODE_PRIVATE));
+                    User tmpuser=new User(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("userprogress").toString());
+                    saveShareRefCurrent(tmpuser,true,activity.getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
                     Intent intent = new Intent(context,UserActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                    ((Activity) context).finish();
+                    activity.finish();
                 });
             }
             else{
@@ -75,22 +76,23 @@ public class FirebaseManager {
 
     }
 
-    public static void saveCorrentUserToSharedPreferences(SharedPreferences sp){
-        SharedPreferences.Editor prefsEditor = sp.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(currentUser);
-        prefsEditor.putString("currentUser", json);
-        prefsEditor.commit();
+    public static void saveShareRefCurrent(User user,boolean save,SharedPreferences sp){
+        currentUser=user;
+        if(save) {
+            SharedPreferences.Editor prefsEditor = sp.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(user);
+            prefsEditor.putString("currentUser", json);
+            prefsEditor.commit();
 
-
+        }
 
     }
-    public static void saveNewUserToSharedPreferences(User user,SharedPreferences sp){
-        SharedPreferences.Editor prefsEditor = sp.edit();
+  public static User getUserFromShared(SharedPreferences sp){
         Gson gson = new Gson();
-        String json = gson.toJson(user);
-        prefsEditor.putString("currentUser", json);
-        prefsEditor.commit();
+        String json = sp.getString("currentUser", null);
+        User obj = gson.fromJson(json, User.class);
+        return obj;
     }
     public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap,Fragment f, Fragment to){
         StorageReference storageRef = firebaseStorage.getReference();

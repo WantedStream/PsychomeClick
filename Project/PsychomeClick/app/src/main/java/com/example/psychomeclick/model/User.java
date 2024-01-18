@@ -4,13 +4,16 @@ public class User {
     protected String name,email;
     protected UserProgress userProgress;
 
-    private String password;
+
     private String phone;
 
-    public User(String name,String email,String phone,String password,String userProgressstr){
+    public User() {
+    }
+
+    public User(String name, String email, String phone, String userProgressstr){
         this.name=name;
         this.email=email;
-        this.password=password;
+
         this.phone=phone;
         this.userProgress=new UserProgress(userProgressstr);
 
@@ -28,9 +31,7 @@ public class User {
         return userProgress;
     }
 
-    public String getPassword() {
-        return password;
-    }
+
 
     public void setName(String name) {
         this.name = name;
@@ -44,17 +45,15 @@ public class User {
         this.userProgress = userProgress;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
 
     @Override
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", phone=" + phone +
                 ", userProgress=" + userProgress +
-                ", password='" + password + '\'' +
                 '}';
     }
 

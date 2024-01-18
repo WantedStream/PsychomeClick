@@ -1,5 +1,7 @@
 package com.example.psychomeclick;
 
+import static com.example.psychomeclick.model.FirebaseManager.getUserFromShared;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -26,12 +28,9 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println(up.navigateTo(this,array,true));
        // Map.Entry<String, HashMap>  entry=   new AbstractMap.SimpleEntry<String, HashMap>("exmpleString", new HashMap<>());
        //up.addToPath(this,entry, array);
-
-        Gson gson = new Gson();
-        String json = getPreferences(MODE_PRIVATE).getString("currentUser", null);
-        User obj = gson.fromJson(json, User.class);
-        System.out.println(json);
-        if(obj==null){
+        User user = getUserFromShared(getPreferences(MODE_PRIVATE));
+        System.out.println(user+"AAAAAAAAAAAA");
+        if(user==null){
 
 
 
@@ -50,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
         else{
-            System.out.println("aaa");
-
-            FirebaseManager.currentUser=obj;
             Intent intent = new Intent(this,UserActivity.class);
             startActivity(intent);
              finish();
