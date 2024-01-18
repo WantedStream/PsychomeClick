@@ -39,8 +39,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -130,5 +132,11 @@ public class FirebaseManager {
     public static void signUp(){
 
     }
+    public static List<Question> getAllQuestions(){
+            List<Question> list = new ArrayList<>();
+        db.collection("Questions").get().addOnSuccessListener(()->){
 
+        });
+
+    }
 }

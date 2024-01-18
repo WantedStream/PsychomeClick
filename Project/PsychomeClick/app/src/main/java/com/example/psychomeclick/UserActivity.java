@@ -1,5 +1,8 @@
 package com.example.psychomeclick;
 
+import static com.example.psychomeclick.model.Constants.adminList;
+import static com.example.psychomeclick.model.FirebaseManager.currentUser;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -39,7 +42,9 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             ((TextView) findViewById(R.id.WelcomeText)).setText("welcome " +name);
         });
 
-
+        if(!adminList.contains(currentUser.getName())){
+            findViewById(R.id.goToAdminPage).setVisibility(View.GONE);
+        }
         findViewById(R.id.goToAdminPage).setOnClickListener((v)->{  Intent intent = new Intent(this,AdminActivity.class);
             startActivity(intent);
             finish();});
@@ -82,7 +87,7 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
         spinner.setAdapter(ad);
     }
     private boolean isAdmin(FirebaseUser user){
-        return Constants.adminList.contains(user.getUid());
+        return adminList.contains(user.getUid());
     }
 
     @Override

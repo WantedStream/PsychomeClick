@@ -1,5 +1,6 @@
 package com.example.psychomeclick.fragments;
 
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -15,8 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.FirebaseManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,7 +79,7 @@ public class QuestionListFragment extends Fragment {
 
 
        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-       createStuff();
+       createStuff(view);
 
        return view;
     }
@@ -83,7 +88,20 @@ public class QuestionListFragment extends Fragment {
     private void voidAddQuestionsToTable(){
 
     }
-    private void createStuff(){
+    private void createStuff(View view){
+        FirebaseManager.getAllQuestions();
+        TableLayout tb = view.findViewById(R.id.questionTable);
+        for(int i=0;i<5;i++){
+            TableRow row=new TableRow(view.getContext());
+            for (int j = 0; j < 8; j++) {
+                TextView tv=new TextView(view.getContext());
+                tv.setText("AAA   ");
+                tv.setTextColor(Color.WHITE);
+                row.addView(tv);
+
+            }
+            tb.addView(row);
+        }
 
     }
 }

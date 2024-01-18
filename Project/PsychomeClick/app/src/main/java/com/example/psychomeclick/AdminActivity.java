@@ -3,6 +3,7 @@ package com.example.psychomeclick;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
 import android.os.Bundle;
 
@@ -20,6 +21,12 @@ public class AdminActivity extends AppCompatActivity {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new AddQuestionFragment());
+            transaction.commit();
+        });
+        findViewById(R.id.listQuestionBtn).setOnClickListener((v) ->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new QuestionListFragment());
             transaction.commit();
         });
         FragmentManager fm = getSupportFragmentManager();

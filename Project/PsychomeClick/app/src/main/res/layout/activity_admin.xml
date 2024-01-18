@@ -20,7 +20,14 @@
             android:text="add question"
 
             />
+        <Button
+            android:id="@+id/listQuestionBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="list questions"
 
+            />
         <FrameLayout
             android:id="@+id/contentFragment"
             android:layout_width="fill_parent"

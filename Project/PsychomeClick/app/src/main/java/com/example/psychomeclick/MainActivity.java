@@ -1,5 +1,6 @@
 package com.example.psychomeclick;
 
+import static com.example.psychomeclick.model.FirebaseManager.PrefLocaltion;
 import static com.example.psychomeclick.model.FirebaseManager.getUserFromShared;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +11,7 @@ import android.os.Bundle;
 
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.User;
-import com.example.psychomeclick.model.UserProgress;
-import com.google.gson.Gson;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println(up.navigateTo(this,array,true));
        // Map.Entry<String, HashMap>  entry=   new AbstractMap.SimpleEntry<String, HashMap>("exmpleString", new HashMap<>());
        //up.addToPath(this,entry, array);
-        User user = getUserFromShared(getPreferences(MODE_PRIVATE));
-        System.out.println(user+"AAAAAAAAAAAA");
+        User user = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
+        FirebaseManager.currentUser =user;
         if(user==null){
 
 
