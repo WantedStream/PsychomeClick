@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
@@ -26,8 +27,11 @@ import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
 import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -39,6 +43,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -133,10 +138,43 @@ public class FirebaseManager {
 
     }
     public static List<Question> getAllQuestions(){
-            List<Question> list = new ArrayList<>();
-        db.collection("Questions").get().addOnSuccessListener(()->){
+            List<Question> questionList = new ArrayList<>();
+            int count;
+        db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
+            StorageReference storageRef=firebaseStorage.getReference();
+
+            for (DocumentSnapshot document:getCollectTask.getDocuments()) {
+                String questionId = document.getId();
+                StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
+                List<Bitmap> imageBitMapList =  getBitMapsFromQuestion(fileRef);
+                Question question= new Question(imageBitMapList.get(0),imageBitMapList.get(0),imageBitMapList.get(0),imageBitMapList.get(0),imageBitMapList.get(0),(String)questionId,(byte)document.get("correctAnswer"),(int)document.get("difficulty"));
+                questionList.add(question);
+            }
 
         });
-
+        return questionList;
     }
+
+
+
+        private static  List<Bitmap> getBitMapsFromQuestion(StorageReference ref){
+            List<Bitmap> bitmapArray=new ArrayList<>();
+
+            for (int x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
+                ref.child("images"+x).getDownloadUrl();
+                final long ONE_MEGABYTE = 1024 * 1024;
+                ref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
+                    byte[] data = getimgTask;
+                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+                    bitmapArray.add(bmp);
+                }).addOnFailureListener((failure)-> {
+
+                });
+
+            }
+            while(bitmapArray.size()<Constants.QUESTION_IMAGE_COUNT){
+            }
+
+            return bitmapArray;
+        }
 }

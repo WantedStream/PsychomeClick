@@ -22,6 +22,9 @@ import android.widget.TextView;
 
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.FirebaseManager;
+import com.example.psychomeclick.model.Question;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,16 +92,40 @@ public class QuestionListFragment extends Fragment {
 
     }
     private void createStuff(View view){
-        FirebaseManager.getAllQuestions();
+        List<Question> questionList=FirebaseManager.getAllQuestions();
         TableLayout tb = view.findViewById(R.id.questionTable);
+        int questionIndex=0;
         for(int i=0;i<5;i++){
             TableRow row=new TableRow(view.getContext());
             for (int j = 0; j < 8; j++) {
+                Question question=questionList.get(questionIndex);
                 TextView tv=new TextView(view.getContext());
-                tv.setText("AAA   ");
+                tv.setText(question.getRightAnswer());
                 tv.setTextColor(Color.WHITE);
                 row.addView(tv);
 
+                ImageView imageView1 = new ImageView(view.getContext());
+                imageView1.setImageBitmap(question.getQuestion());
+                //
+                ImageView imageView2 = new ImageView(view.getContext());
+                imageView2.setImageBitmap(question.getQuestion());
+                //
+                ImageView imageView3 = new ImageView(view.getContext());
+                imageView3.setImageBitmap(question.getQuestion());
+                //
+                ImageView imageView4 = new ImageView(view.getContext());
+                imageView4.setImageBitmap(question.getQuestion());
+                //
+                ImageView imageView5 = new ImageView(view.getContext());
+                imageView5.setImageBitmap(question.getQuestion());
+
+                row.addView(tv);
+                row.addView(imageView1);
+                row.addView(imageView2);
+                row.addView(imageView3);
+                row.addView(imageView4);
+                row.addView(imageView5);
+                questionIndex++;
             }
             tb.addView(row);
         }

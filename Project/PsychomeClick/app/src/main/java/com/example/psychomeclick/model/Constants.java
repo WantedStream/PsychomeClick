@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public class Constants {
    public static final ImmutableList<String> adminList = ImmutableList.of("t1", "coolusername","","");
-
+   public static final short QUESTION_IMAGE_COUNT=5;
 }

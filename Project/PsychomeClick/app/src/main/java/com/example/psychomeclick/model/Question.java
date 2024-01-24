@@ -6,19 +6,18 @@ import android.graphics.Bitmap;
 
 public class Question {
     private Bitmap question,answer1,answer2,answer3,answer4;
-    private static byte rightAnswer;
-    private int questionTag,difficulty;
-    private boolean isDapar;
-
-    public Question(Bitmap question, Bitmap answer1, Bitmap answer2, Bitmap answer3, Bitmap answer4, int questionTag, int difficulty, boolean isDapar) {
+    private byte rightAnswer;
+    private  int difficulty;
+    private String questionTag;
+    public Question(Bitmap question, Bitmap answer1, Bitmap answer2, Bitmap answer3, Bitmap answer4, String questionTag, byte rightAnswer,int difficulty) {
         this.question = question;
         this.answer1 = answer1;
         this.answer2 = answer2;
         this.answer3 = answer3;
         this.answer4 = answer4;
+        this.rightAnswer=rightAnswer;
         this.questionTag = questionTag;
         this.difficulty = difficulty;
-        this.isDapar = isDapar;
     }
 
     @Override
@@ -31,7 +30,6 @@ public class Question {
                 ", answer4=" + answer4 +
                 ", id=" + questionTag +
                 ", difficulty=" + difficulty +
-                ", isDapar=" + isDapar +
                 '}';
     }
 
@@ -56,11 +54,11 @@ public class Question {
         return answer4;
     }
 
-    public static byte getRightAnswer() {
-        return rightAnswer;
+    public byte getRightAnswer() {
+        return this.rightAnswer;
     }
 
-    public int getQuestionTag() {
+    public String getQuestionTag() {
         return questionTag;
     }
 
@@ -68,9 +66,6 @@ public class Question {
         return difficulty;
     }
 
-    public boolean isDapar() {
-        return isDapar;
-    }
 
     public void setQuestion(Bitmap question) {
         this.question = question;
@@ -92,11 +87,11 @@ public class Question {
         this.answer4 = answer4;
     }
 
-    public static void setRightAnswer(byte rightAnswer) {
-        Question.rightAnswer = rightAnswer;
+    public void setRightAnswer(byte rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 
-    public void setQuestionTag(int questionTag) {
+    public void setQuestionTag(String questionTag) {
         this.questionTag = questionTag;
     }
 
@@ -104,7 +99,4 @@ public class Question {
         this.difficulty = difficulty;
     }
 
-    public void setDapar(boolean dapar) {
-        isDapar = dapar;
-    }
 }
