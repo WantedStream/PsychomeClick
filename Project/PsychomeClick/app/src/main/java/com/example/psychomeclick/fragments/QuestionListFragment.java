@@ -95,6 +95,7 @@ public class QuestionListFragment extends Fragment {
         List<Question> questionList=FirebaseManager.getAllQuestions();
         TableLayout tb = view.findViewById(R.id.questionTable);
         int questionIndex=0;
+
         for(int i=0;i<5;i++){
             TableRow row=new TableRow(view.getContext());
             for (int j = 0; j < 8; j++) {

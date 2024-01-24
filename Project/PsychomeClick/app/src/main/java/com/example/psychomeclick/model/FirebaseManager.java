@@ -140,6 +140,7 @@ public class FirebaseManager {
     public static List<Question> getAllQuestions(){
             List<Question> questionList = new ArrayList<>();
             int count;
+        int size=db.collection("Questions").get().getResult().getDocuments().size()
         db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
             StorageReference storageRef=firebaseStorage.getReference();
 
@@ -152,6 +153,8 @@ public class FirebaseManager {
             }
 
         });
+
+
         return questionList;
     }
 
