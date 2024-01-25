@@ -27,6 +27,7 @@ import com.example.psychomeclick.model.Question;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -113,7 +114,7 @@ public class QuestionListFragment extends Fragment {
                 tv.setTextColor(Color.WHITE);
                 row.addView(tv);
 
-                List<Bitmap> questionImages=question.getImages();
+                List<Map.Entry<Bitmap, Byte>> questionImages=question.getImages();
                 ImageView imageView1 = new ImageView(view.getContext());
                 imageView1.setImageBitmap(questionImages.get(0));
                 //

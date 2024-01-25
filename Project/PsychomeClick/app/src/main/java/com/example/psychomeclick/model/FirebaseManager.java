@@ -49,6 +49,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -145,7 +147,7 @@ public class FirebaseManager {
             for (DocumentSnapshot document:getCollectTask.getDocuments()) {
                 String questionId = document.getId();
                 StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
-                Question question = new Question((String)questionId,(byte)document.get("correctAnswer"),(int)document.get("difficulty"));
+                Question question = new Question((String)questionId,Byte.parseByte((String) document.get("correctAnswer")),0);
                 setBitMapsInQuestion(fileRef,question);
                 questionList.add(question);
 
@@ -170,7 +172,8 @@ public class FirebaseManager {
                     byte[] data = getimgTask;
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
                     String path=newref.getPath();
-                    question.getImages().set(path.charAt(path.length()-1)-'c',bmp);
+                    System.out.println(path.charAt(path.length()-1));
+                    question.getImages().set(bmp);
                 }).addOnFailureListener((failure)-> {
 
                 });

@@ -3,22 +3,24 @@ package com.example.psychomeclick.model;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class Question {
-    private List<Bitmap> images;
+    private Map<Byte, Bitmap> images;
     private byte rightAnswer;
     private  int difficulty;
     private String questionTag;
-    public Question(List<Bitmap> images, String questionTag, byte rightAnswer,int difficulty) {
+    public Question(Map<Byte, Bitmap> images, String questionTag, byte rightAnswer,int difficulty) {
         this.images = images;
         this.rightAnswer=rightAnswer;
         this.questionTag = questionTag;
         this.difficulty = difficulty;
     }
     public Question(String questionTag, byte rightAnswer,int difficulty) {
-        this.images = new ArrayList<>();
+        this.images = new HashMap<>();
         this.rightAnswer=rightAnswer;
         this.questionTag = questionTag;
         this.difficulty = difficulty;
@@ -37,7 +39,7 @@ public class Question {
     }
 
 
-    public List<Bitmap> getImages() {
+    public Map<Byte, Bitmap> getImages() {
         return this.images;
     }
 
