@@ -145,8 +145,8 @@ public class FirebaseManager {
             for (DocumentSnapshot document:getCollectTask.getDocuments()) {
                 String questionId = document.getId();
                 StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
-                Question question = new Question(null,null,null,null,null,(String)questionId,(byte)document.get("correctAnswer"),(int)document.get("difficulty"));
-                List<Bitmap> imageBitMapList =  setBitMapsInQuestion(fileRef,question);
+                Question question = new Question((String)questionId,(byte)document.get("correctAnswer"),(int)document.get("difficulty"));
+                setBitMapsInQuestion(fileRef,question);
                 questionList.add(question);
 
             }
@@ -162,13 +162,15 @@ public class FirebaseManager {
         private static void setBitMapsInQuestion(StorageReference ref,Question question){
             List<Bitmap> bitmapArray=new ArrayList<>();
           int x=0;
+            System.out.println("aa");
             for ( x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
                 StorageReference newref= ref.child("images"+x);
                 final long ONE_MEGABYTE = 1024 * 1024;
                 newref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
                     byte[] data = getimgTask;
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    question.getImages().set(0,bmp);
+                    String path=newref.getPath();
+                    question.getImages().set(path.charAt(path.length()-1)-'c',bmp);
                 }).addOnFailureListener((failure)-> {
 
                 });

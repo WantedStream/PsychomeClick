@@ -2,6 +2,7 @@ package com.example.psychomeclick.model;
 
 import android.graphics.Bitmap;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,12 @@ public class Question {
         this.questionTag = questionTag;
         this.difficulty = difficulty;
     }
-
+    public Question(String questionTag, byte rightAnswer,int difficulty) {
+        this.images = new ArrayList<>();
+        this.rightAnswer=rightAnswer;
+        this.questionTag = questionTag;
+        this.difficulty = difficulty;
+    }
     @Override
     public String toString() {
         return "Question{" +
