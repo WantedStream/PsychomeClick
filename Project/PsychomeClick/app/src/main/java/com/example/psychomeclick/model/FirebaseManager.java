@@ -139,17 +139,16 @@ public class FirebaseManager {
     }
     public static List<Question> getAllQuestions(){
             List<Question> questionList = new ArrayList<>();
-            int count;
-        int size=db.collection("Questions").get().getResult().getDocuments().size()
+            int count=questionList.size();
         db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
             StorageReference storageRef=firebaseStorage.getReference();
-
             for (DocumentSnapshot document:getCollectTask.getDocuments()) {
                 String questionId = document.getId();
                 StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
-                List<Bitmap> imageBitMapList =  getBitMapsFromQuestion(fileRef);
-                Question question= new Question(imageBitMapList.get(0),imageBitMapList.get(0),imageBitMapList.get(0),imageBitMapList.get(0),imageBitMapList.get(0),(String)questionId,(byte)document.get("correctAnswer"),(int)document.get("difficulty"));
+                Question question = new Question(null,null,null,null,null,(String)questionId,(byte)document.get("correctAnswer"),(int)document.get("difficulty"));
+                List<Bitmap> imageBitMapList =  setBitMapsInQuestion(fileRef,question);
                 questionList.add(question);
+
             }
 
         });
@@ -160,24 +159,22 @@ public class FirebaseManager {
 
 
 
-        private static  List<Bitmap> getBitMapsFromQuestion(StorageReference ref){
+        private static void setBitMapsInQuestion(StorageReference ref,Question question){
             List<Bitmap> bitmapArray=new ArrayList<>();
-
-            for (int x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
-                ref.child("images"+x).getDownloadUrl();
+          int x=0;
+            for ( x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
+                StorageReference newref= ref.child("images"+x);
                 final long ONE_MEGABYTE = 1024 * 1024;
-                ref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
+                newref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
                     byte[] data = getimgTask;
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    bitmapArray.add(bmp);
+                    question.getImages().set(0,bmp);
                 }).addOnFailureListener((failure)-> {
 
                 });
 
             }
-            while(bitmapArray.size()<Constants.QUESTION_IMAGE_COUNT){
-            }
 
-            return bitmapArray;
+
         }
 }

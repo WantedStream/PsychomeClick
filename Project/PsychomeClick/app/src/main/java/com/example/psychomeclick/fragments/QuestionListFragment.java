@@ -1,5 +1,6 @@
 package com.example.psychomeclick.fragments;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,6 +43,7 @@ public class QuestionListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private List<Question> questionList;
 
     ImageView question,first,second,third,fourth;
     public QuestionListFragment() {
@@ -82,43 +85,49 @@ public class QuestionListFragment extends Fragment {
 
 
        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-       createStuff(view);
+        questionList=FirebaseManager.getAllQuestions();
+        createStuff(view);
 
-       return view;
+        return view;
     }
 
 
     private void voidAddQuestionsToTable(){
 
     }
-    private void createStuff(View view){
-        List<Question> questionList=FirebaseManager.getAllQuestions();
-        TableLayout tb = view.findViewById(R.id.questionTable);
+
+
+    private void updateTB(TableLayout tb,View view){
+        tb.removeAllViews();
         int questionIndex=0;
+        List<Question> copylist= new ArrayList<>(this.questionList);
 
         for(int i=0;i<5;i++){
             TableRow row=new TableRow(view.getContext());
             for (int j = 0; j < 8; j++) {
-                Question question=questionList.get(questionIndex);
+                if(questionIndex==copylist.size())
+                    break;
+                Question question=copylist.get(questionIndex);
                 TextView tv=new TextView(view.getContext());
                 tv.setText(question.getRightAnswer());
                 tv.setTextColor(Color.WHITE);
                 row.addView(tv);
 
+                List<Bitmap> questionImages=question.getImages();
                 ImageView imageView1 = new ImageView(view.getContext());
-                imageView1.setImageBitmap(question.getQuestion());
+                imageView1.setImageBitmap(questionImages.get(0));
                 //
                 ImageView imageView2 = new ImageView(view.getContext());
-                imageView2.setImageBitmap(question.getQuestion());
+                imageView2.setImageBitmap(questionImages.get(1));
                 //
                 ImageView imageView3 = new ImageView(view.getContext());
-                imageView3.setImageBitmap(question.getQuestion());
+                imageView3.setImageBitmap(questionImages.get(2));
                 //
                 ImageView imageView4 = new ImageView(view.getContext());
-                imageView4.setImageBitmap(question.getQuestion());
+                imageView4.setImageBitmap(questionImages.get(3));
                 //
                 ImageView imageView5 = new ImageView(view.getContext());
-                imageView5.setImageBitmap(question.getQuestion());
+                imageView5.setImageBitmap(questionImages.get(4));
 
                 row.addView(tv);
                 row.addView(imageView1);
@@ -130,6 +139,10 @@ public class QuestionListFragment extends Fragment {
             }
             tb.addView(row);
         }
+    }
 
+    private void createStuff(View view){
+        TableLayout tb = view.findViewById(R.id.questionTable);
+        updateTB(tb,view);
     }
 }

@@ -31,7 +31,7 @@ public class AdminActivity extends AppCompatActivity {
         });
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.contentFragment, new QuestionListFragment());
+        transaction.replace(R.id.contentFragment, new AddQuestionFragment());
         transaction.commit();
     }
 }
