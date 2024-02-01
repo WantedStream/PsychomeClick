@@ -1,5 +1,7 @@
 package com.example.psychomeclick.fragments;
 
+import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
+
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
@@ -26,8 +28,11 @@ import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,66 +91,50 @@ public class QuestionListFragment extends Fragment {
 
 
        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-        questionList=FirebaseManager.getAllQuestions();
         createStuff(view);
 
         return view;
     }
 
 
-    private void voidAddQuestionsToTable(){
-
-    }
 
 
-    private void updateTB(TableLayout tb,View view){
+    private  Queue<LinearLayout> createTB(TableLayout tb,View view){
         tb.removeAllViews();
         int questionIndex=0;
-        List<Question> copylist= new ArrayList<>(this.questionList);
-
+        Queue<LinearLayout> qlist= new LinkedList<LinearLayout>();
         for(int i=0;i<5;i++){
             TableRow row=new TableRow(view.getContext());
             for (int j = 0; j < 8; j++) {
-                if(questionIndex==copylist.size())
-                    break;
-                Question question=copylist.get(questionIndex);
+                LinearLayout celllayout = new LinearLayout(view.getContext());
                 TextView tv=new TextView(view.getContext());
-                tv.setText(question.getRightAnswer());
                 tv.setTextColor(Color.WHITE);
-                row.addView(tv);
+                tv.setText("aaa");
+                tv.setTextSize(50);
+                celllayout.addView(tv);
+                for (int k = 0; k < QUESTION_IMAGE_COUNT; k++) {
+                    ImageView imgV= new ImageView(view.getContext());
+                    ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(50, 50);
+                    imgV.setLayoutParams(params);
+                    imgV.setBackgroundColor(Color.RED);
+                    celllayout.addView(imgV);
+                }
 
-               Map<Byte, Bitmap> questionImages=question.getImages();
-                ImageView imageView1 = new ImageView(view.getContext());
-                imageView1.setImageBitmap(questionImages.get(0));
-                //
-                ImageView imageView2 = new ImageView(view.getContext());
-                imageView2.setImageBitmap(questionImages.get(1));
-                //
-                ImageView imageView3 = new ImageView(view.getContext());
-                imageView3.setImageBitmap(questionImages.get(2));
-                //
-                ImageView imageView4 = new ImageView(view.getContext());
-                imageView4.setImageBitmap(questionImages.get(3));
-                //
-                ImageView imageView5 = new ImageView(view.getContext());
-                imageView5.setImageBitmap(questionImages.get(4));
-
-                row.addView(tv);
-                row.addView(imageView1);
-                row.addView(imageView2);
-                row.addView(imageView3);
-                row.addView(imageView4);
-                row.addView(imageView5);
                 questionIndex++;
-                System.out.println(question.getQuestionTag()+"aaaaaaaaa");
+                row.addView(celllayout);
+                qlist.add(celllayout);
             }
             tb.addView(row);
 
         }
+        return qlist;
+    }
+    private void updateTBitems( Queue<LinearLayout> qlist){
+
     }
 
     private void createStuff(View view){
         TableLayout tb = view.findViewById(R.id.questionTable);
-        updateTB(tb,view);
+        updateTBitems(createTB(tb,view));
     }
 }

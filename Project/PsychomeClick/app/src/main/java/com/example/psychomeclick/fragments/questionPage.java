@@ -71,8 +71,8 @@ public class questionPage extends Fragment {
 
     }
     private void createStuff(View v){
-            ImageButton firstAnswer = (ImageButton) v.findViewById(R.id.firstAnswerImg);
-            firstAnswer.addOnClickListener.
+          //  ImageButton firstAnswer = (ImageButton) v.findViewById(R.id.firstAnswerImg);
+           // firstAnswer.addOnClickListener.
     }
 
 }

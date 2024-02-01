@@ -3,6 +3,8 @@ package com.example.psychomeclick.model;
 import static android.content.Context.MODE_PRIVATE;
 import static androidx.core.content.ContextCompat.startActivity;
 
+import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,14 +16,17 @@ import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.example.psychomeclick.LogIn;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
@@ -50,6 +55,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -139,47 +145,74 @@ public class FirebaseManager {
     public static void signUp(){
 
     }
-    public static List<Question> getAllQuestions(){
-            List<Question> questionList = new ArrayList<>();
-            int count=questionList.size();
+   // public static List<Question> getAllQuestions(){
+    //        List<Question> questionList = new ArrayList<>();
+     //       int count=questionList.size();
+     //   db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
+     //       StorageReference storageRef=firebaseStorage.getReference();
+      //      for (DocumentSnapshot document:getCollectTask.getDocuments()) {
+       //         String questionId = document.getId();
+       //         StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
+       //         Question question = new Question((String)questionId,Byte.parseByte((String) document.get("correctAnswer")),0);
+       //         setBitMapsInQuestion(fileRef,question);
+       //         questionList.add(question);
+
+       //     }
+
+      //  });
+
+
+       // return questionList;
+   // }
+
+
+
+      //  private static void setBitMapsInQuestion(StorageReference ref,Question question){
+     //       List<Bitmap> bitmapArray=new ArrayList<>();
+     //     int x=0;
+     //     Map<Byte,Bitmap> map=new HashMap<>();
+     //       for ( x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
+    //            StorageReference newref= ref.child("images"+x);
+    //            final long ONE_MEGABYTE = 1024 * 1024;
+     //           newref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
+     //               byte[] data = getimgTask;
+      //              Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+       //             String path=newref.getPath();
+      //              int number=path.charAt(path.length()-1)-'0';
+      //              map.put( Byte.valueOf((byte)(number)),bmp);
+       //         }).addOnFailureListener((failure)-> {
+//
+       //         });
+//
+        //    }
+        //    question.setImages(map);
+
+
+       // }
+
+    public static void betterAllQuestions(Queue<LinearLayout> qlist,Context c){
+        //int count=questionList.size();
+        StorageReference storageRef=firebaseStorage.getReference();
         db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
-            StorageReference storageRef=firebaseStorage.getReference();
             for (DocumentSnapshot document:getCollectTask.getDocuments()) {
                 String questionId = document.getId();
                 StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
-                Question question = new Question((String)questionId,Byte.parseByte((String) document.get("correctAnswer")),0);
-                setBitMapsInQuestion(fileRef,question);
-                questionList.add(question);
-
+                setQuestion(fileRef,qlist.remove(),c);
             }
 
         });
 
 
-        return questionList;
     }
 
-
-
-        private static void setBitMapsInQuestion(StorageReference ref,Question question){
-            List<Bitmap> bitmapArray=new ArrayList<>();
-          int x=0;
-          Map<Byte,Bitmap> map=new HashMap<>();
-            for ( x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
-                StorageReference newref= ref.child("images"+x);
-                final long ONE_MEGABYTE = 1024 * 1024;
-                newref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
-                    byte[] data = getimgTask;
-                    Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-                    String path=newref.getPath();
-                    int number=path.charAt(path.length()-1)-'0';
-                    map.put( Byte.valueOf((byte)(number)),bmp);
-                }).addOnFailureListener((failure)-> {
-
-                });
-
-            }
-
-
+    public static void setQuestion(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
+        for(int x=1;x<QUESTION_IMAGE_COUNT;x++){
+            loadImage(storageRef.child("images"+x), (ImageView) cellayout.getChildAt(x),c);
         }
+    }
+    private static void loadImage(@NonNull StorageReference storageRef, @NonNull ImageView imageView, Context c) {
+        Glide.with(c)
+                .load(storageRef)
+                .into(imageView);
+    }
 }
