@@ -164,7 +164,7 @@ public class FirebaseManager {
         private static void setBitMapsInQuestion(StorageReference ref,Question question){
             List<Bitmap> bitmapArray=new ArrayList<>();
           int x=0;
-            System.out.println("aa");
+          Map<Byte,Bitmap> map=new HashMap<>();
             for ( x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
                 StorageReference newref= ref.child("images"+x);
                 final long ONE_MEGABYTE = 1024 * 1024;
@@ -172,8 +172,8 @@ public class FirebaseManager {
                     byte[] data = getimgTask;
                     Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
                     String path=newref.getPath();
-                    System.out.println(path.charAt(path.length()-1));
-                    question.getImages().set(bmp);
+                    int number=path.charAt(path.length()-1)-'0';
+                    map.put( Byte.valueOf((byte)(number)),bmp);
                 }).addOnFailureListener((failure)-> {
 
                 });

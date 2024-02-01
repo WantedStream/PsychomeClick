@@ -114,7 +114,7 @@ public class QuestionListFragment extends Fragment {
                 tv.setTextColor(Color.WHITE);
                 row.addView(tv);
 
-                List<Map.Entry<Bitmap, Byte>> questionImages=question.getImages();
+               Map<Byte, Bitmap> questionImages=question.getImages();
                 ImageView imageView1 = new ImageView(view.getContext());
                 imageView1.setImageBitmap(questionImages.get(0));
                 //
@@ -137,8 +137,10 @@ public class QuestionListFragment extends Fragment {
                 row.addView(imageView4);
                 row.addView(imageView5);
                 questionIndex++;
+                System.out.println(question.getQuestionTag()+"aaaaaaaaa");
             }
             tb.addView(row);
+
         }
     }
 

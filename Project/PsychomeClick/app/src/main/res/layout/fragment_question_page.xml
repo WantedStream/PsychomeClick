@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.questionPage"
+    >
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="390dp"
+            android:orientation="vertical"
+
+            >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/answer1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/answer2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/btn_star" />
+
+            <ImageButton
+                android:id="@+id/anser3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:src="@drawable/ic_launcher_background" />
+
+            <ImageButton
+                android:id="@+id/answer4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/btn_star" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/prevbtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text="<"
+                android:background="#3F2AB8"/>
+
+            <Button
+                android:id="@+id/nextbtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:text=">"
+                android:background="#3F2AB8"/>
+
+
+            />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

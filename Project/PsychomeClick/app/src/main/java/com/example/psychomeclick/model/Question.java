@@ -56,8 +56,8 @@ public class Question {
     }
 
 
-    public void setImages(List<Bitmap> bitmapList) {
-        this.images = bitmapList;
+    public void setImages(Map<Byte, Bitmap> bitmapMap) {
+        this.images = bitmapMap;
     }
 
 
