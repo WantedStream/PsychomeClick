@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -190,14 +191,14 @@ public class FirebaseManager {
 
        // }
 
-    public static void betterAllQuestions(Queue<LinearLayout> qlist,Context c){
+    public static void insertToQuestionCells(Queue<LinearLayout> qlist,Context c){
         //int count=questionList.size();
         StorageReference storageRef=firebaseStorage.getReference();
         db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
             for (DocumentSnapshot document:getCollectTask.getDocuments()) {
                 String questionId = document.getId();
-                StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
-                setQuestion(fileRef,qlist.remove(),c);
+                StorageReference fileRef = storageRef.child("QuestionStorage/" +questionId+"/images"+0);
+               setQuestionCell(fileRef,qlist.remove(),c);
             }
 
         });
@@ -209,10 +210,17 @@ public class FirebaseManager {
         for(int x=1;x<QUESTION_IMAGE_COUNT;x++){
             loadImage(storageRef.child("images"+x), (ImageView) cellayout.getChildAt(x),c);
         }
+
+
     }
     private static void loadImage(@NonNull StorageReference storageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
                 .load(storageRef)
                 .into(imageView);
+    }
+    public static void setQuestionCell(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
+
+            loadImage(storageRef, (ImageView) cellayout.getChildAt(1),c);
+
     }
 }

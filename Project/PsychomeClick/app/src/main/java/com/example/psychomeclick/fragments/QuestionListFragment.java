@@ -1,6 +1,7 @@
 package com.example.psychomeclick.fragments;
 
 import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
+import static com.example.psychomeclick.model.FirebaseManager.insertToQuestionCells;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -111,18 +112,20 @@ public class QuestionListFragment extends Fragment {
                 tv.setTextColor(Color.WHITE);
                 tv.setText("aaa");
                 tv.setTextSize(50);
+
                 celllayout.addView(tv);
-                for (int k = 0; k < QUESTION_IMAGE_COUNT; k++) {
+
                     ImageView imgV= new ImageView(view.getContext());
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(50, 50);
                     imgV.setLayoutParams(params);
                     imgV.setBackgroundColor(Color.RED);
                     celllayout.addView(imgV);
-                }
+
 
                 questionIndex++;
                 row.addView(celllayout);
                 qlist.add(celllayout);
+
             }
             tb.addView(row);
 
@@ -130,11 +133,12 @@ public class QuestionListFragment extends Fragment {
         return qlist;
     }
     private void updateTBitems( Queue<LinearLayout> qlist){
-
+        insertToQuestionCells(qlist,this.getContext());
     }
 
     private void createStuff(View view){
         TableLayout tb = view.findViewById(R.id.questionTable);
         updateTBitems(createTB(tb,view));
+
     }
 }
