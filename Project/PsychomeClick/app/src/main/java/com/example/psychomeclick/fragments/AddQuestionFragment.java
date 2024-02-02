@@ -10,6 +10,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Environment;
 import android.provider.ContactsContract;
@@ -130,7 +132,11 @@ public class AddQuestionFragment extends Fragment {
             chooseImage(fourthAnswerImg);
         });
         ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
-            FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),this.imageMap,this,new QuestionListFragment());
+           FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),this.imageMap,this,null);
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new QuestionListFragment());
+            transaction.commit();
         });
     }
     private void chooseImage(ImageView img){

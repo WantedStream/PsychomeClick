@@ -12,6 +12,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,23 +110,35 @@ public class QuestionListFragment extends Fragment {
             TableRow row=new TableRow(view.getContext());
             for (int j = 0; j < 8; j++) {
                 LinearLayout celllayout = new LinearLayout(view.getContext());
+                celllayout.setOrientation(LinearLayout.VERTICAL);
                 TextView tv=new TextView(view.getContext());
                 tv.setTextColor(Color.WHITE);
-                tv.setText("aaa");
-                tv.setTextSize(50);
+                tv.setTextSize(30);
 
                 celllayout.addView(tv);
 
                     ImageView imgV= new ImageView(view.getContext());
-                    ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(50, 50);
+                    ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(900, 1000);
                     imgV.setLayoutParams(params);
-                    imgV.setBackgroundColor(Color.RED);
+
                     celllayout.addView(imgV);
 
+                Button  b = new Button(view.getContext());
+                b.setText("edit");
+                b.setOnClickListener((v)->{
+                    FragmentManager fm = getParentFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.contentFragment, new AddQuestionFragment());
+                    transaction.commit();
+                });
+                
+                celllayout.addView(b);
+                celllayout.setBackgroundColor(Color.BLUE);
 
                 questionIndex++;
                 row.addView(celllayout);
                 qlist.add(celllayout);
+
 
             }
             tb.addView(row);

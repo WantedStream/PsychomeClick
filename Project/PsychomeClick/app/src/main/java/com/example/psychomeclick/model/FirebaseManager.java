@@ -16,8 +16,10 @@ import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ import com.example.psychomeclick.LogIn;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
 import com.example.psychomeclick.fragments.AddQuestionFragment;
+import com.example.psychomeclick.fragments.QuestionListFragment;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -128,9 +131,9 @@ public class FirebaseManager {
                     Toast.makeText(context.getApplicationContext(),"question added",Toast.LENGTH_SHORT).show();
 
                     if(to!=null){
-                        FragmentManager fm =  ((Fragment) f).getParentFragmentManager();
+                        FragmentManager fm = f.getParentFragmentManager();
                         FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.contentFragment, to);
+                        transaction.replace(R.id.contentFragment, new QuestionListFragment());
                         transaction.commit();
                     }
 
@@ -200,7 +203,7 @@ public class FirebaseManager {
                 StorageReference fileRef = storageRef.child("QuestionStorage/" +questionId+"/images"+0);
                setQuestionCell(fileRef,qlist.remove(),c);
             }
-
+            while(!qlist.isEmpty())qlist.remove().setVisibility(View.GONE);
         });
 
 
@@ -219,7 +222,9 @@ public class FirebaseManager {
                 .into(imageView);
     }
     public static void setQuestionCell(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
-
+       String path= storageRef.getPath();
+        int begin=path.indexOf('/',1),end=path.indexOf('/',begin+1);
+        ( (TextView)cellayout.getChildAt(0)).setText(storageRef.getPath().substring(begin+1,end-1));
             loadImage(storageRef, (ImageView) cellayout.getChildAt(1),c);
 
     }
