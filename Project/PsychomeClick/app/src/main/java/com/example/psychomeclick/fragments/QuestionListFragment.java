@@ -128,7 +128,8 @@ public class QuestionListFragment extends Fragment {
                 b.setOnClickListener((v)->{
                     FragmentManager fm = getParentFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
-                    transaction.replace(R.id.contentFragment, new AddQuestionFragment());
+                    EditQuestionFragment eqf=new EditQuestionFragment();
+                    transaction.replace(R.id.contentFragment, EditQuestionFragment.newInstance(tv.getText().toString()));
                     transaction.commit();
                 });
                 

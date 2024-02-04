@@ -17,6 +17,9 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,9 +68,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 public class FirebaseManager {
-   static FirebaseFirestore db = FirebaseFirestore.getInstance();
-   static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+   public static FirebaseFirestore db = FirebaseFirestore.getInstance();
+   public static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    public static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     public static final String PrefLocaltion="LogIn";
     public static User currentUser=null;
@@ -146,56 +149,9 @@ public class FirebaseManager {
             }
         });
     }
-    public static void signUp(){
 
-    }
-   // public static List<Question> getAllQuestions(){
-    //        List<Question> questionList = new ArrayList<>();
-     //       int count=questionList.size();
-     //   db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
-     //       StorageReference storageRef=firebaseStorage.getReference();
-      //      for (DocumentSnapshot document:getCollectTask.getDocuments()) {
-       //         String questionId = document.getId();
-       //         StorageReference fileRef = storageRef.child("QuestionStorage/" + questionId);
-       //         Question question = new Question((String)questionId,Byte.parseByte((String) document.get("correctAnswer")),0);
-       //         setBitMapsInQuestion(fileRef,question);
-       //         questionList.add(question);
-
-       //     }
-
-      //  });
-
-
-       // return questionList;
-   // }
-
-
-
-      //  private static void setBitMapsInQuestion(StorageReference ref,Question question){
-     //       List<Bitmap> bitmapArray=new ArrayList<>();
-     //     int x=0;
-     //     Map<Byte,Bitmap> map=new HashMap<>();
-     //       for ( x=0;x<Constants.QUESTION_IMAGE_COUNT;x++){
-    //            StorageReference newref= ref.child("images"+x);
-    //            final long ONE_MEGABYTE = 1024 * 1024;
-     //           newref.getBytes(ONE_MEGABYTE).addOnSuccessListener((getimgTask)-> {
-     //               byte[] data = getimgTask;
-      //              Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
-       //             String path=newref.getPath();
-      //              int number=path.charAt(path.length()-1)-'0';
-      //              map.put( Byte.valueOf((byte)(number)),bmp);
-       //         }).addOnFailureListener((failure)-> {
-//
-       //         });
-//
-        //    }
-        //    question.setImages(map);
-
-
-       // }
 
     public static void insertToQuestionCells(Queue<LinearLayout> qlist,Context c){
-        //int count=questionList.size();
         StorageReference storageRef=firebaseStorage.getReference();
         db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
             for (DocumentSnapshot document:getCollectTask.getDocuments()) {
@@ -209,14 +165,7 @@ public class FirebaseManager {
 
     }
 
-    public static void setQuestion(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
-        for(int x=1;x<QUESTION_IMAGE_COUNT;x++){
-            loadImage(storageRef.child("images"+x), (ImageView) cellayout.getChildAt(x),c);
-        }
-
-
-    }
-    private static void loadImage(@NonNull StorageReference storageRef, @NonNull ImageView imageView, Context c) {
+    public static void loadImage(@NonNull StorageReference storageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
                 .load(storageRef)
                 .into(imageView);
@@ -224,8 +173,10 @@ public class FirebaseManager {
     public static void setQuestionCell(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
        String path= storageRef.getPath();
         int begin=path.indexOf('/',1),end=path.indexOf('/',begin+1);
-        ( (TextView)cellayout.getChildAt(0)).setText(storageRef.getPath().substring(begin+1,end-1));
+        ( (TextView)cellayout.getChildAt(0)).setText(storageRef.getPath().substring(begin+1,end));
             loadImage(storageRef, (ImageView) cellayout.getChildAt(1),c);
 
     }
+
+
 }
