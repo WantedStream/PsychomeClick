@@ -8,22 +8,35 @@
     <!-- TODO: Update blank fragment layout -->
 
 
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:padding="50dp"
+        android:scrollbars="none"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#6ACCAC"
+            android:padding="40dp">
 
+            <Button
+                android:id="@+id/backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
             <TextView
                 android:id="@+id/idTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:
-                
+                android:textSize="50dp"
+                android:gravity="center"
+                android:paddingBottom="50dp"
                 />
 
             <ImageView
@@ -42,26 +55,29 @@
                 android:id="@+id/imagesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical"
+                android:gravity="center"></LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="50dp">
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/resetBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
+
+                    android:text="reset" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/applyBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Button" />
+                    android:layout_marginLeft="20dp"
+                    android:text="apply" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

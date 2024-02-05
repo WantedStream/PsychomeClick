@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -33,6 +35,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.psychomeclick.LogIn;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
@@ -165,10 +169,28 @@ public class FirebaseManager {
 
     }
 
-    public static void loadImage(@NonNull StorageReference storageRef, @NonNull ImageView imageView, Context c) {
+    public static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
-                .load(storageRef)
+                .load(imageRef)
                 .into(imageView);
+    }
+    public static void saveImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView,String name, Context c) {
+
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+                       imageRef.child(name).putBytes(data).addOnSuccessListener(taskSnapshot -> {
+                            })
+                       .addOnFailureListener(exception -> {
+                                // Handle any errors getting the download URL
+                                Log.e("FirebaseStorage", "Error getting download URL: " + exception.getMessage());
+
+                        });
+
+
     }
     public static void setQuestionCell(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
        String path= storageRef.getPath();
