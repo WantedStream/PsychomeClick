@@ -106,6 +106,10 @@ public class EditQuestionFragment extends Fragment {
         v.findViewById(R.id.applyBtn).setOnClickListener((b)->{
             changeQuestionImages(v);
             changeTextImages(v);
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new QuestionListFragment());
+            transaction.commit();
         });
         v.findViewById(R.id.questingImg).setOnClickListener((img)->{
             chooseImage((ImageView) img);
@@ -196,10 +200,9 @@ public class EditQuestionFragment extends Fragment {
                LinearLayout layout=(LinearLayout) (textsView.getChildAt(i));
                 EditText et = (EditText) layout.getChildAt(1);
                 String value=et.getText().toString();
-                if(value.trim()==""){
-                    value=et.getHint().toString();
+                if(value.trim().equals("")){
+                    value=et.getHint()+"";
                 }
-                System.out.println(value);
                 String field=((TextView)layout.getChildAt(0)).getText().toString();
                 field=field.substring(0,field.length()-1);
                 ((DocumentSnapshot) t).getReference().update(field, value);

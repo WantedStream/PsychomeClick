@@ -34,5 +34,13 @@
             android:layout_height="fill_parent"
             android:layout_weight="50" />
 
+        <Button
+            android:id="@+id/returnToMainMenuBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:layout_weight="1"
+            android:text="main menu" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

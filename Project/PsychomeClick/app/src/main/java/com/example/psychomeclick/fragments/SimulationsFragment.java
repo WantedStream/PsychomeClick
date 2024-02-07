@@ -1,5 +1,6 @@
 package com.example.psychomeclick.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +13,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.example.psychomeclick.AdminActivity;
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.pdftestpage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,11 +100,12 @@ public class SimulationsFragment extends Fragment {
             int textSize = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
             btn1.setTextSize(textSize);
-            btn1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // put code on click operation
-                }
+            btn1.setOnClickListener(v -> {
+                Intent intent = new Intent(getActivity(), pdftestpage.class);
+                Bundle extras = intent.getExtras();
+                extras.putString("link", "https://www.nite.org.il/wp-content/uploads/2024/01/psychometric_winter_2023_acc.pdf");
+                startActivity(intent);
+                (this.getActivity()).finish();
             });
             linearLayout.addView(btn1);
             lastid=btn1.getId()+"";
