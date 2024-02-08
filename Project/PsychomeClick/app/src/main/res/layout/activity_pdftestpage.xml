@@ -6,14 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".pdftestpage">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
         <WebView
             android:id="@+id/webview1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="match_parent" >
+
+        </WebView>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:text="Button"
+        android:textSize="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

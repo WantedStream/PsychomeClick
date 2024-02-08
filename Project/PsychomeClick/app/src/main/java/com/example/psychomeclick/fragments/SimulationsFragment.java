@@ -102,8 +102,7 @@ public class SimulationsFragment extends Fragment {
             btn1.setTextSize(textSize);
             btn1.setOnClickListener(v -> {
                 Intent intent = new Intent(getActivity(), pdftestpage.class);
-                Bundle extras = intent.getExtras();
-                extras.putString("link", "https://www.nite.org.il/wp-content/uploads/2024/01/psychometric_winter_2023_acc.pdf");
+                intent.putExtra("link", "https://www.nite.org.il/wp-content/uploads/2024/01/psychometric_winter_2023_acc.pdf");
                 startActivity(intent);
                 (this.getActivity()).finish();
             });

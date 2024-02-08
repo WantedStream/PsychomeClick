@@ -14,11 +14,10 @@ public class pdftestpage extends AppCompatActivity {
 
         WebView webview1 = (WebView) findViewById(R.id.webview1);
         webview1.getSettings().setJavaScriptEnabled(true);
-        String filepath = getIntent().getStringExtra("link");
+        String pdf = getIntent().getStringExtra("link");
 
+        System.out.println(pdf);
 
-        webview1.loadUrl("http://docs.google.com/gview?embedded=true&url=" + filepath);
-
-
+        webview1.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
     }
 }
