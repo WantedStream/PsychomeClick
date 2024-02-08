@@ -51,8 +51,7 @@ public class EditQuestionFragment extends Fragment {
     private ImageView currentlySelectedImage;
     final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
-                if(uris!=null)
-                currentlySelectedImage.setImageURI(uris);
+                if(uris!=null) currentlySelectedImage.setImageURI(uris);
             });
     /**
      * Use this factory method to create a new instance of
