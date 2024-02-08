@@ -1,0 +1,28 @@
+//  public void chooseImageV2(ImageView imageView){
+   //     this.currentlySelectedImage=imageView;
+    //    Intent intent = new Intent();
+   //     intent.setType("image/*");
+    //    intent.setAction(Intent.ACTION_GET_CONTENT);
+   //     startActivityForResult(Intent.createChooser(intent, "Select Image"),2);
+   // }
+   // @Override
+   // public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    //    super.onActivityResult(requestCode, resultCode, data);
+
+
+     //   if(requestCode==2 && resultCode==RESULT_OK && data !=null) {
+       //     Uri uri = data.getData();
+
+       //     try {
+       //         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), uri);
+        //        // Log.d(TAG, String.valueOf(bitmap));
+        //        this.currentlySelectedImage.setImageBitmap(bitmap);
+
+
+        //    } catch (IOException e) {
+        //        e.printStackTrace();
+        //    }
+
+       // }
+
+   // }
