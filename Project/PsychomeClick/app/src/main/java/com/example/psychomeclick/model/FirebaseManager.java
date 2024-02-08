@@ -35,8 +35,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.*;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.bumptech.glide.signature.MediaStoreSignature;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.psychomeclick.LogIn;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.UserActivity;
@@ -172,7 +175,9 @@ public class FirebaseManager {
     public static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
                 .load(imageRef)
-                .into(imageView);
+                .signature(new ObjectKey(Long.toString(System.currentTimeMillis())))
+                            .into(imageView);
+
     }
     public static void saveImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView,String name, Context c) {
 
