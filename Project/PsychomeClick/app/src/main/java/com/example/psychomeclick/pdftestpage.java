@@ -2,8 +2,11 @@ package com.example.psychomeclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebView;
+
+import com.example.psychomeclick.fragments.SimulationsFragment;
 
 public class pdftestpage extends AppCompatActivity {
 
@@ -19,5 +22,11 @@ public class pdftestpage extends AppCompatActivity {
         System.out.println(pdf);
 
         webview1.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
+        findViewById(R.id.backbtn).setOnClickListener((v)->{
+            Intent myIntent = new Intent(this, UserActivity.class);
+            myIntent.putExtra("selectboxfrag","Simulations");
+            startActivity(myIntent);
+            finish();
+        });
     }
 }

@@ -49,7 +49,9 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             startActivity(intent);
             finish();});
 
-        Fragment fragment = new GeneralFragment();
+         ;
+         String s =getIntent().getStringExtra("selectboxfrag");
+        Fragment fragment = s!=null&&s.equals("Simulations") ? new SimulationsFragment(): new GeneralFragment();
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

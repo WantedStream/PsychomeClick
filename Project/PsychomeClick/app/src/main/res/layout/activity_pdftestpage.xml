@@ -15,13 +15,21 @@
         </WebView>
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
+        android:id="@+id/backbtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="2dp"
-        android:text="Button"
-        android:textSize="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
+        android:text="back"
+        android:textSize="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+    <Button
+        android:id="@+id/dotest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:text="test"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
