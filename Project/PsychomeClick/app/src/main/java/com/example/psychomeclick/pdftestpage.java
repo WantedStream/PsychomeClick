@@ -3,10 +3,23 @@ package com.example.psychomeclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.example.psychomeclick.fragments.SimulationsFragment;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class pdftestpage extends AppCompatActivity {
 
@@ -17,11 +30,36 @@ public class pdftestpage extends AppCompatActivity {
 
         WebView webview1 = (WebView) findViewById(R.id.webview1);
         webview1.getSettings().setJavaScriptEnabled(true);
-        String pdf = getIntent().getStringExtra("link");
+        webview1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+       // String pdf = getIntent().getStringExtra("link");
+            String testTime=getIntent().getStringExtra("testTime").toString();
 
-        System.out.println(pdf);
+        // Create an Executor
+        Executor executor = Executors.newSingleThreadExecutor();
 
-        webview1.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
+        // Execute Jsoup connection in the background thread
+
+        executor.execute(() -> {
+            try {
+                // Fetch the HTML content from the URL
+                Document document = Jsoup.connect("https://www.nite.org.il/psychometric-entrance-test/preparation/hebrew-practice-tests/").get();
+                Elements td = document.select("td");
+
+                Element span = td.select("span:containsOwn(" + testTime+ ")").first();
+                if (span != null) {
+                    Element linkElement = span.parent();
+                    String url = linkElement.attr("href");
+                    System.out.println("Found link: " + url);
+                    // ALL webview methods must be called on the SAME THREAD
+                    webview1.post(() -> webview1.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + url));
+                } else {
+                    System.out.println(testTime + " not found");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+       //
         findViewById(R.id.backbtn).setOnClickListener((v)->{
             Intent myIntent = new Intent(this, UserActivity.class);
             myIntent.putExtra("selectboxfrag","Simulations");

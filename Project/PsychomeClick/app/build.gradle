@@ -89,4 +89,7 @@ dependencies {
 
     // FirebaseUI for Cloud Storage
     implementation 'com.firebaseui:firebase-ui-storage:8.0.2'
+
+    implementation 'org.jsoup:jsoup:1.17.2'
+
 }

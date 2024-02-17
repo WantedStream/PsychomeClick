@@ -76,40 +76,44 @@ public class SimulationsFragment extends Fragment {
         LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.relativeLayoutTestContainer);
 
         // Inflate the layout for this fragment
-        String lastid=null;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 2023; i >= 2018; i--) {
             //create button
-            Button btn1 = new Button(view.getContext());
-            btn1.setText("Button number "+i);
-            btn1.setId(View.generateViewId());
-            System.out.println(btn1.getId()+"");
+            String[] seasons = {"חורף","סתיו","קיץ","אביב"};
 
-            if(lastid==null)lastid=btn1.getId()+"";
-
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
-            );
-            //set button properties
-            int marginInPixels = (int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
-            layoutParams.bottomMargin=marginInPixels;
-
-
-            btn1.setLayoutParams(layoutParams);
-            int textSize = (int) TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
-            btn1.setTextSize(textSize);
-            btn1.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), pdftestpage.class);
-                intent.putExtra("link", "https://www.nite.org.il/wp-content/uploads/2024/01/psychometric_winter_2023_acc.pdf");
-                startActivity(intent);
-                (this.getActivity()).finish();
-            });
-            linearLayout.addView(btn1);
-            lastid=btn1.getId()+"";
-
+            for (int j=0;j<4;j++){
+                createSingleButton(view,linearLayout, seasons[j]+" "+i);
+            }
         }
 
     }
-}
+    private void createSingleButton(View view,LinearLayout linearLayout,String text){
+        Button btn1 = new Button(view.getContext());
+        btn1.setText(text);
+        btn1.setId(View.generateViewId());
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        //set button properties
+        int marginInPixels = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+        layoutParams.bottomMargin=marginInPixels;
+
+
+        btn1.setLayoutParams(layoutParams);
+        int textSize = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        btn1.setTextSize(textSize);
+        btn1.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), pdftestpage.class);
+            intent.putExtra("testTime", text);
+            startActivity(intent);
+            (this.getActivity()).finish();
+        });
+        linearLayout.addView(btn1);
+
+    }
+
+
+    }
