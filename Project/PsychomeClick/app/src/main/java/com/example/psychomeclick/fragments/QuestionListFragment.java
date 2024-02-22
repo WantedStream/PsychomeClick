@@ -3,6 +3,7 @@ package com.example.psychomeclick.fragments;
 import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
 import static com.example.psychomeclick.model.FirebaseManager.insertToQuestionCells;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
@@ -29,6 +30,8 @@ import android.widget.TextView;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -123,17 +126,9 @@ public class QuestionListFragment extends Fragment {
 
                     celllayout.addView(imgV);
 
-                Button  b = new Button(view.getContext());
-                b.setText("edit");
-                b.setOnClickListener((v)->{
-                    FragmentManager fm = getParentFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-                    EditQuestionFragment eqf=new EditQuestionFragment();
-                    transaction.replace(R.id.contentFragment, EditQuestionFragment.newInstance(tv.getText().toString()));
-                    transaction.commit();
-                });
-                
-                celllayout.addView(b);
+                celllayout.addView(getEditButton(view.getContext(),tv));
+                celllayout.addView(getInsertToTreeBtn(view.getContext(),tv));
+
                 celllayout.setBackgroundColor(Color.BLUE);
 
                 questionIndex++;
@@ -155,5 +150,30 @@ public class QuestionListFragment extends Fragment {
         TableLayout tb = view.findViewById(R.id.questionTable);
         updateTBitems(createTB(tb,view));
 
+    }
+    //must pass tv and not string because getting the string from the text view before it has been set to id will give error
+    private Button getInsertToTreeBtn(Context context, TextView textView){
+        Button button = new Button(context);
+        button.setText("edit");
+        button.setOnClickListener((v)->{
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            QuestionTreeFragment eqf=new QuestionTreeFragment();
+            transaction.replace(R.id.contentFragment, eqf.newInstance(textView.getText().toString()));
+            transaction.commit();
+        });
+        return button;
+    }
+    private Button getEditButton(Context context,TextView tv){
+        Button  b = new Button(context);
+        b.setText("edit");
+        b.setOnClickListener((v)->{
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            EditQuestionFragment eqf=new EditQuestionFragment();
+            transaction.replace(R.id.contentFragment, EditQuestionFragment.newInstance(tv.getText().toString()));
+            transaction.commit();
+        });
+        return b;
     }
 }

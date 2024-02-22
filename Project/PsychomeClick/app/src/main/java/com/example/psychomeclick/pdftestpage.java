@@ -33,6 +33,7 @@ public class pdftestpage extends AppCompatActivity {
         webview1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
        // String pdf = getIntent().getStringExtra("link");
             String testTime=getIntent().getStringExtra("testTime").toString();
+        webview1.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
 
         // Create an Executor
         Executor executor = Executors.newSingleThreadExecutor();
