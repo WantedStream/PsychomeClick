@@ -1,9 +1,9 @@
 package com.example.psychomeclick.helpers;
 
-import android.content.res.Configuration;
 import android.view.View;
 import android.widget.Adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
@@ -13,10 +13,12 @@ import dev.bandb.graphview.graph.Graph;
 import dev.bandb.graphview.graph.GraphView;
 import dev.bandb.graphview.graph.Node;
 import dev.bandb.graphview.layouts.tree.BuchheimWalkerConfiguration;
-import dev.bandb.graphview.layouts.tree.BuchheimWalkerLayoutManager;
-import dev.bandb.graphview.layouts.tree.TreeEdgeDecoration;
 
-public class ViewHolder {
+public class NodeHolder extends RecyclerView.ViewHolder {
+    public NodeHolder(@NonNull View itemView) {
+        super(itemView);
+    }
+
     private void setupGraphView(View v) {
         GraphView graphView = v.findViewById(R.id.recycler);
 
