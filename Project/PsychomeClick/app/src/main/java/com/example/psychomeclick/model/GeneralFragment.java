@@ -1,14 +1,27 @@
 package com.example.psychomeclick.model;
 
+import static android.content.ContentValues.TAG;
+import static com.example.psychomeclick.model.FirebaseManager.db;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.helpers.SubjectNodesAdapter;
+import com.example.psychomeclick.views.PercentageRingView;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +74,31 @@ public class GeneralFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_general, container, false);
+        View v= inflater.inflate(R.layout.fragment_general, container, false);
+        makeStuff(v);
+        return v;
+    }
+    public void makeStuff(View v){
+        RecyclerView recyclerView = v.findViewById(R.id.recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
+      SubjectNodesAdapter adapter = new SubjectNodesAdapter(new ArrayList<>());
+        recyclerView.setAdapter(adapter);
+
+        PercentageRingView percentageRingView = v.findViewById(R.id.percentageRingView);
+        percentageRingView.setPercentage(74);
+        List<Node> dataList = new ArrayList<>();
+        db.collection("SubjectTree")
+                .get()
+                .addOnCompleteListener((task)->{
+                        if (task.isSuccessful()) {
+                            Gson gson = new Gson();
+                            Node node = gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class);
+                            dataList.add(node);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "Error getting tree: ", task.getException());
+                        }
+                    }
+                );
     }
 }

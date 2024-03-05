@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.example.psychomeclick.fragments.QuestionListFragment;
+import com.example.psychomeclick.fragments.SubjectTreeFragment;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -31,11 +32,20 @@ public class AdminActivity extends AppCompatActivity {
             transaction.replace(R.id.contentFragment, new QuestionListFragment());
             transaction.commit();
         });
+
+        findViewById(R.id.treeSubjectBtn).setOnClickListener((t)->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new SubjectTreeFragment());
+            transaction.commit();
+        });
+
         ((Button) findViewById(R.id.returnToMainMenuBtn)).setOnClickListener((t)->{
             Intent intent = new Intent(this,UserActivity.class);
             startActivity(intent);
             finish();
         });
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.contentFragment, new AddQuestionFragment());

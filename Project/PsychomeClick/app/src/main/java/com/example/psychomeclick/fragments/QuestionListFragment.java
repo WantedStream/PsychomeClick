@@ -1,17 +1,11 @@
 package com.example.psychomeclick.fragments;
 
-import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
 import static com.example.psychomeclick.model.FirebaseManager.insertToQuestionCells;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -28,16 +21,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
@@ -158,7 +145,7 @@ public class QuestionListFragment extends Fragment {
         button.setOnClickListener((v)->{
             FragmentManager fm = getParentFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
-            QuestionTreeFragment eqf=new QuestionTreeFragment();
+            SubjectTreeFragment eqf=new SubjectTreeFragment();
             transaction.replace(R.id.contentFragment, eqf.newInstance(textView.getText().toString()));
             transaction.commit();
         });
