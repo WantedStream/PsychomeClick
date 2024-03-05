@@ -23,6 +23,7 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_node_layout, parent, false);
+        System.out.println("aaa");
         return new DataViewHolder(view);
     }
 
@@ -30,6 +31,7 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
         String data = dataList.get(position);
         holder.textView.setText(data);
+        System.out.println(data+"aaa");
     }
 
     @Override

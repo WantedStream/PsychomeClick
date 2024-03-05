@@ -86,14 +86,14 @@ public class GeneralFragment extends Fragment {
 
         PercentageRingView percentageRingView = v.findViewById(R.id.percentageRingView);
         percentageRingView.setPercentage(74);
-        List<Node> dataList = new ArrayList<>();
+        List<String> dataList = new ArrayList<>();
         db.collection("SubjectTree")
                 .get()
                 .addOnCompleteListener((task)->{
                         if (task.isSuccessful()) {
                             Gson gson = new Gson();
-                            Node node = gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class);
-                            dataList.add(node);
+                           ;
+                            dataList.add(gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class).getName());
                             adapter.notifyDataSetChanged();
                         } else {
                             Log.d(TAG, "Error getting tree: ", task.getException());
