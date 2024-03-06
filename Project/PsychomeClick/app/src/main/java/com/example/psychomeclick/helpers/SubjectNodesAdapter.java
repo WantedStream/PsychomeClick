@@ -12,6 +12,7 @@ import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.Node;
 import com.example.psychomeclick.views.PercentageRingView;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapter.DataViewHolder> {
@@ -33,6 +34,12 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         Node data = dataList.get(position);
         holder.textView.setText(data.getName());
         holder.percentageRingView.setPercentage(30);
+
+        // Update the click listener of the percentageRingView
+        holder.percentageRingView.setOnClickListener((v) -> {
+            Node[] nodes = data.getNodes(); // Assuming getNodes() returns a list of nodes
+            updateRecyclerView(Arrays.asList(nodes));
+        });
     }
 
     @Override
@@ -51,5 +58,11 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
             percentageRingView = itemView.findViewById(R.id.percentage);
             //percentageRingView.setOnClickListener();
         }
+    }
+
+    private void updateRecyclerView(List<Node> nodes) {
+        dataList.clear(); // Clear the existing list
+        dataList.addAll(nodes); // Add the new nodes to the list
+        notifyDataSetChanged(); // Notify the adapter about the change
     }
 }
