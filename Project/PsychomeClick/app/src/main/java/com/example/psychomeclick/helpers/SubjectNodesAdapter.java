@@ -9,13 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.Node;
+import com.example.psychomeclick.views.PercentageRingView;
 
 import java.util.List;
 
 public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapter.DataViewHolder> {
-    private List<String> dataList;
+    private List<Node> dataList;
 
-    public SubjectNodesAdapter(List<String> dataList) {
+    public SubjectNodesAdapter(List<Node> dataList) {
         this.dataList = dataList;
     }
 
@@ -23,15 +25,14 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.subject_node_layout, parent, false);
-        System.out.println("aaa");
         return new DataViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
-        String data = dataList.get(position);
-        holder.textView.setText(data);
-        System.out.println(data+"aaa");
+        Node data = dataList.get(position);
+        holder.textView.setText(data.getName());
+        holder.percentageRingView.setPercentage(30);
     }
 
     @Override
@@ -41,10 +42,14 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
 
     public static class DataViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
+        PercentageRingView percentageRingView;
 
         public DataViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textView);
+            System.out.println(itemView);
+            textView = itemView.findViewById(R.id.subjectTV);
+            percentageRingView = itemView.findViewById(R.id.percentage);
+            //percentageRingView.setOnClickListener();
         }
     }
 }

@@ -80,20 +80,22 @@ public class GeneralFragment extends Fragment {
     }
     public void makeStuff(View v){
         RecyclerView recyclerView = v.findViewById(R.id.recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-      SubjectNodesAdapter adapter = new SubjectNodesAdapter(new ArrayList<>());
+        recyclerView.setLayoutManager( new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
+        List<Node> dataList = new ArrayList<>();
+
+        SubjectNodesAdapter adapter = new SubjectNodesAdapter(dataList);
         recyclerView.setAdapter(adapter);
 
-        PercentageRingView percentageRingView = v.findViewById(R.id.percentageRingView);
-        percentageRingView.setPercentage(74);
-        List<String> dataList = new ArrayList<>();
+
         db.collection("SubjectTree")
                 .get()
                 .addOnCompleteListener((task)->{
                         if (task.isSuccessful()) {
                             Gson gson = new Gson();
-                           ;
-                            dataList.add(gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class).getName());
+                           Node node = gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class);
+                            for(Node n: node.getNodes()){
+                                dataList.add(n);
+                            }
                             adapter.notifyDataSetChanged();
                         } else {
                             Log.d(TAG, "Error getting tree: ", task.getException());

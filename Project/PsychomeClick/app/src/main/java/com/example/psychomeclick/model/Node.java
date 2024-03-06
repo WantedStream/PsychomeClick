@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 public class Node {
     private String name;
     private Node[] nodes;
-    private String[] questionList; // Assuming this is also required
+
 
     private static void listNodes(Node node) {
         System.out.println("Node Name: " + node.getName());
@@ -20,14 +20,21 @@ public class Node {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Node[] getNodes() {
-        return nodes;
+        return this.nodes;
     }
 
-    public String[] getQuestionList() {
-        return questionList;
+
+    public int getSubPercents() {
+        int percent=1;
+        for(Node node:this.nodes){
+            int currentpercent=1;
+            currentpercent*=node.getSubPercents();
+            percent+=currentpercent;
+        }
+        return percent;
     }
 }
