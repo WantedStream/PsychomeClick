@@ -93,7 +93,7 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         List<Node> tmp=new ArrayList<>();
         for (Node node:nodes) tmp.add(node);
         if(!tmp.isEmpty())
-       this.formerLists.push(nodes);
+       this.formerLists.push(tmp);
         System.out.println(this.formerLists);
     }
 }
