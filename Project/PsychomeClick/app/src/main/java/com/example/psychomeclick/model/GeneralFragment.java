@@ -85,7 +85,9 @@ public class GeneralFragment extends Fragment {
 
         SubjectNodesAdapter adapter = new SubjectNodesAdapter(dataList);
         recyclerView.setAdapter(adapter);
-
+        v.findViewById(R.id.backToFormerNode).setOnClickListener((b)->{
+            adapter.backToFormerNodes();
+        });
 
         db.collection("SubjectTree")
                 .get()

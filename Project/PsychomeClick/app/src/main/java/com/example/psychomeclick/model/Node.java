@@ -12,6 +12,7 @@ public class Node {
     private Node[] nodes;
 
     private String[] questionList;
+
     private static void listNodes(Node node) {
         System.out.println("Node Name: " + node.getName());
         if (node.getNodes() != null) {
@@ -40,4 +41,5 @@ public class Node {
         return percent;
     }
 
+  
 }
