@@ -32,6 +32,7 @@ public class Node {
 
     public String[] getQuestionList()  {return this.questionList;}
     public int getSubPercents() {
+   
         int percent=1;
         for(Node node:this.nodes){
             int currentpercent=1;
@@ -41,5 +42,5 @@ public class Node {
         return percent;
     }
 
-  
+
 }
