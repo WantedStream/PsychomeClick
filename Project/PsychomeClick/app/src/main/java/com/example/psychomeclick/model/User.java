@@ -1,8 +1,8 @@
 package com.example.psychomeclick.model;
 
 public class User {
-    protected String name,email,userProgress;
-
+    protected String name,email;
+    UserProgress userProgress;
 
     private String phone;
 
@@ -14,7 +14,7 @@ public class User {
         this.email=email;
 
         this.phone=phone;
-        this.userProgress=(userProgressstr);
+        this.userProgress=new UserProgress(userProgressstr);
 
     }
 
@@ -26,7 +26,7 @@ public class User {
         return email;
     }
 
-    public String getUserProgress() {
+    public UserProgress getUserProgress() {
         return userProgress;
     }
 
@@ -40,7 +40,7 @@ public class User {
         this.email = email;
     }
 
-    public void setUserProgress(String userProgress) {
+    public void setUserProgress(UserProgress userProgress) {
         this.userProgress = userProgress;
     }
 

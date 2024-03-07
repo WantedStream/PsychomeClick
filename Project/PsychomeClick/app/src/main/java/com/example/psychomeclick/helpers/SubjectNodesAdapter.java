@@ -1,5 +1,8 @@
 package com.example.psychomeclick.helpers;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.TestActivity;
 import com.example.psychomeclick.model.Node;
 import com.example.psychomeclick.views.PercentageRingView;
 
@@ -46,6 +50,10 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
             if(nodes!=null){
                 updateRecyclerView(Arrays.asList(nodes));
             } else if (data.getQuestionList()!=null&&data.getQuestionList().length>0) {
+                Intent intent = new Intent(holder.itemView.getContext(), TestActivity.class);
+                intent.putExtra("questionList", data.getQuestionList());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                holder.itemView.getContext().getApplicationContext().startActivity(intent);
             }
             else{
                 Toast.makeText(holder.itemView.getContext(), "no questions yet!", Toast.LENGTH_SHORT).show();
@@ -83,9 +91,7 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         if(formerLists.empty())
             return;
         dataList.clear(); // Clear the existing list
-        System.out.println(this.formerLists);
         dataList.addAll(this.formerLists.pop()); // Add the new nodes to the list
-        System.out.println(this.formerLists);
         notifyDataSetChanged();
 
     }
@@ -94,6 +100,5 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         for (Node node:nodes) tmp.add(node);
         if(!tmp.isEmpty())
        this.formerLists.push(tmp);
-        System.out.println(this.formerLists);
     }
 }
