@@ -52,7 +52,7 @@ public class Node {
             return percent;
         }
 
-        String progjson= FirebaseManager.currentUser.getUserProgress().getUserProgressStr();
+        String progjson= FirebaseManager.userData.getUserProgress().getUserProgressStr();
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(progjson, JsonObject.class);
         JsonArray jsonArray=jsonObject.getAsJsonArray(this.name);

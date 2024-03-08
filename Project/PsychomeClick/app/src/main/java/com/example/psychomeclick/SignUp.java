@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,67 +73,53 @@ public class SignUp extends AppCompatActivity {
 
 
     private void addBetterButtonFunction(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseAuth auth=FirebaseAuth.getInstance();
-
         findViewById(R.id.signupBT).setOnClickListener(e -> {
-            this.emailErrors.setText("");
-            this.phoneErrors.setText("");
-            this.usernameErrors.setText("");
-            this.passwordErrors.setText("");
+            this.emailErrors.setText("");this.phoneErrors.setText("");this.usernameErrors.setText("");this.passwordErrors.setText("");
             String username=userNameEt.getText().toString(),email=emailEt.getText().toString(),phone=phoneEt.getText().toString(),password=passwordEt.getText().toString(),pass2=RepeatPasswordEt.getText().toString();
-            System.out.println("aaaaaa");
-
             if(username.trim().isEmpty()||email.trim().isEmpty()||phone.trim().isEmpty()||password.trim().isEmpty()||pass2.trim().isEmpty())
             {
                 Toast.makeText(getApplicationContext(),"all fields are required",Toast.LENGTH_SHORT).show();
-                System.out.println("a");
                 return;
             }
-            System.out.println(username.trim()+"aaaaa");
-
             if(!password.equals(pass2)) {
                 this.passwordErrors.setText("passwords arent the same!");
                 return;
             }
-            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+            firebaseAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(task -> {
+                HashMap<String, Object> user = new HashMap<>();
+                user.put("username", username);user.put("email", email);user.put("phone", phone);user.put("userprogress", "{}");
+                db.collection("Users").document(task.getUser().getUid()).set(user).addOnCompleteListener(t-> {
+
+                    Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show();
+                    task.getUser().sendEmailVerification();
+
+                    Intent intent = new Intent(this,LogIn.class);
+                    LogIn.logIn(username,password,this);
+                    startActivity(intent);
+                    finish();
 
 
-                        if (!task.isSuccessful()) {
-                            String str = (task.getException() + "").substring((task.getException() + "").lastIndexOf(":") + 1);
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthWeakPasswordException exception) {
-                                this.passwordErrors.setText(exception.getReason());
-                                this.passwordErrors.requestFocus();
-                            } catch (FirebaseAuthInvalidCredentialsException exception) {
-                                this.emailErrors.setText(exception.getMessage());
-                                this.emailErrors.requestFocus();
-                            } catch (FirebaseAuthUserCollisionException exception) {
-                                this.emailErrors.setText(exception.getMessage());
-                                this.emailErrors.requestFocus();
-                            } catch (Exception exception) {
-                                System.out.println(exception.getMessage());
-                            }
-                        }
-                        else{
-                            HashMap<String, Object> user = new HashMap<>();
-                            user.put("username", username);
-                            user.put("email", email);
-                            user.put("phone", phone);
-                            user.put("userprogress", "{}");
-                            db.collection("Users").document(task.getResult().getUser().getUid()).set(user).addOnCompleteListener(t-> {
+                        }).addOnFailureListener((errorTask)->{
+                String str = (errorTask.getMessage() + "").substring((errorTask.getMessage() + "").lastIndexOf(":") + 1);
+                try {
+                    throw errorTask.getCause();
+                } catch (FirebaseAuthWeakPasswordException exception) {
+                    this.passwordErrors.setText(exception.getReason());
+                    this.passwordErrors.requestFocus();
+                } catch (FirebaseAuthInvalidCredentialsException exception) {
+                    this.emailErrors.setText(exception.getMessage());
+                    this.emailErrors.requestFocus();
+                } catch (FirebaseAuthUserCollisionException exception) {
+                    this.emailErrors.setText(exception.getMessage());
+                    this.emailErrors.requestFocus();
+                } catch (Exception exception) {
+                    System.out.println(exception.getMessage());
+                } catch (Throwable ex) {
+                    throw new RuntimeException(ex);
+                }
 
-                                Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show();
-                                task.getResult().getUser().sendEmailVerification();
+                });
 
-                                 Intent intent = new Intent(this,LogIn.class);
-                                startActivity(intent);
-                                  finish();
-
-                                saveShareRefCurrent(new User(username,email,phone,email),true,getPreferences(MODE_PRIVATE));
-                        });
-                        }
                     });
 
 

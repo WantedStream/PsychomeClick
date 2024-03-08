@@ -80,49 +80,44 @@ public class FirebaseManager {
     public static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     public static final String PrefLocaltion="LogIn";
-    public static User currentUser=null;
-        public static void logIn(String email,String password, Activity activity){
-            Context context=activity.getApplicationContext();
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(authResultTask -> {
-            if(authResultTask.isSuccessful()){
-                db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
-                    Toast.makeText(context.getApplicationContext(),"welcome " +userTask.getResult().get("username").toString(),Toast.LENGTH_SHORT).show();
-                    User tmpuser=new User(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("userprogress").toString());
-                    saveShareRefCurrent(tmpuser,true,activity.getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
-                    Intent intent = new Intent(context,UserActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                    activity.finish();
-                });
-            }
-            else{
-                Toast.makeText(context.getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
+    public static UserData userData;
+       // public static void logIn(String email,String password, Activity activity){
+       //     Context context=activity.getApplicationContext();
+      //  firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(authResultTask -> {
+       //     if(authResultTask.isSuccessful()){
+       //         db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
+        //            Toast.makeText(context.getApplicationContext(),"welcome " +userTask.getResult().get("username").toString(),Toast.LENGTH_SHORT).show();
+        //            UserData tmpuser=new UserData(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("userprogress").toString());
+        //            saveShareRefCurrent(tmpuser,true,activity.getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
+         //           Intent intent = new Intent(context,UserActivity.class);
+         //           intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //            context.startActivity(intent);
+         //           activity.finish();
+         //       });
+         //   }
+         //   else{
+          //      Toast.makeText(context.getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
 
-            }
+          //  }
 
-        });
+       // });
 
 
-    }
+   // }
 
-    public static void saveShareRefCurrent(User user,boolean save,SharedPreferences sp){
-        currentUser=user;
-        if(save) {
-            SharedPreferences.Editor prefsEditor = sp.edit();
-            Gson gson = new Gson();
-            String json = gson.toJson(user);
-            prefsEditor.putString("currentUser", json);
-            prefsEditor.commit();
+    //public static void saveShareRefCurrent(User user,boolean save,SharedPreferences sp){
+    //    currentUser=user;
+    //    if(save) {
+    //        SharedPreferences.Editor prefsEditor = sp.edit();
+     //       Gson gson = new Gson();
+     //       String json = gson.toJson(user);
+     //       prefsEditor.putString("currentUser", json);
+     //       prefsEditor.commit();
+//
+     //   }
 
-        }
+    //}
 
-    }
-  public static User getUserFromShared(SharedPreferences sp){
-        Gson gson = new Gson();
-        String json = sp.getString("currentUser", null);
-        User obj = gson.fromJson(json, User.class);
-        return obj;
-    }
     public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap,Fragment f, Fragment to){
         StorageReference storageRef = firebaseStorage.getReference();
         Context context=f.getContext();

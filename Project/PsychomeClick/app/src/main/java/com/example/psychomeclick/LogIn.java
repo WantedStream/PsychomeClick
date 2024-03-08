@@ -2,19 +2,24 @@ package com.example.psychomeclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Pair;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.model.User;
+import com.example.psychomeclick.model.UserData;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 import java.sql.SQLOutput;
 
@@ -41,30 +46,32 @@ public class LogIn extends AppCompatActivity {
         this.passwordErrors.setText("");
 
         findViewById(R.id.button).setOnClickListener( View -> {
-//            FirebaseFirestore db = FirebaseFirestore.getInstance();
-//            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-//            firebaseAuth.signInWithEmailAndPassword(this.emailEt.getText().toString(),this.passwordEt.getText().toString()).addOnCompleteListener(authResultTask -> {
-//                if(authResultTask.isSuccessful()){
-//                    System.out.println("hmm");
-//                  db.collection("Users").document(authResultTask.getResult().getUser().getUid()).get().addOnCompleteListener(userTask -> {
-//                        User user = new User (userTask.getResult().getString("username"),userTask.getResult().getString("email"),userTask.getResult().getString("phone"),this.passwordEt.getText().toString(),userTask.getResult().getString("userProgress"));
-//                        Toast.makeText(getApplicationContext(),"welcome " +user.toString(),Toast.LENGTH_SHORT).show();
-//                      System.out.println(user);
-//
-//
-//                      Intent intent = new Intent(this,UserActivity.class);
-//                      startActivity(intent);
-//                      finish();
-//
-//                    });
-//                }
-//                else{
-//                    Toast.makeText(getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
-//
-//                }
-//
-//            });
-            FirebaseManager.logIn(this.emailEt.getText().toString(),this.passwordEt.getText().toString(),this);
+            logIn(this.emailEt.getText().toString(),this.passwordEt.getText().toString(),this);
         });
     }
+    public static void logIn(String email,String password, Activity activity){
+        Context context=activity.getApplicationContext();
+        FirebaseManager.firebaseAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(authResultTask -> {
+            FirebaseManager.db.collection("Users").document(authResultTask.getUser().getUid()).get().addOnCompleteListener(userTask -> {
+                    Toast.makeText(context.getApplicationContext(),"welcome " +userTask.getResult().get("username").toString(),Toast.LENGTH_SHORT).show();
+                    FirebaseManager.userData=new UserData(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("userprogress").toString());
+                    saveShareRef(email,password,activity.getSharedPreferences(FirebaseManager.PrefLocaltion,MODE_PRIVATE));
+                    Intent intent = new Intent(context,UserActivity.class);
+                    context.startActivity(intent);
+                    activity.finish();
+                });
+            }).addOnFailureListener((failureT)->{
+            Toast.makeText(context.getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
+        });
+
+}
+    public static void saveShareRef(String email,String password, SharedPreferences sp){
+            SharedPreferences.Editor prefsEditor = sp.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(new Pair<String,String>(email,password));
+            prefsEditor.putString("currentUser", json);
+            prefsEditor.commit();
+    }
+
+
 }

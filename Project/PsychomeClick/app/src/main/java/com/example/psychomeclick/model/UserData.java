@@ -1,15 +1,15 @@
 package com.example.psychomeclick.model;
 
-public class User {
+public class UserData {
     protected String name,email;
     UserProgress userProgress;
 
     private String phone;
 
-    public User() {
+    public UserData() {
     }
 
-    public User(String name, String email, String phone, String userProgressstr){
+    public UserData(String name, String email, String phone, String userProgressstr){
         this.name=name;
         this.email=email;
 
