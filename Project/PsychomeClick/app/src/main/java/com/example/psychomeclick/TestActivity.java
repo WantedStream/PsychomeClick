@@ -22,9 +22,9 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         Bundle extras = getIntent().getExtras();
-        questionIdList=  Arrays.asList(extras.get("questionList"));
+       // questionIdList=  Arrays.asList(extras.get("questionList"));
 
-        ((ImageView) findViewById(R.id.imageView)).
+      //  ((ImageView) findViewById(R.id.imageView)).
     }
 
     public static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {

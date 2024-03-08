@@ -1,7 +1,6 @@
 package com.example.psychomeclick;
 
 import static com.example.psychomeclick.model.Constants.adminList;
-import static com.example.psychomeclick.model.FirebaseManager.currentUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.psychomeclick.fragments.SimulationsFragment;
 import com.example.psychomeclick.model.Constants;
+import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.GeneralFragment;
 import com.example.psychomeclick.fragments.RandomFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +42,7 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             ((TextView) findViewById(R.id.WelcomeText)).setText("welcome " +name);
         });
 
-        if(!adminList.contains(currentUser.getName())){
+        if(!adminList.contains(FirebaseManager.userData.getName())){
             findViewById(R.id.goToAdminPage).setVisibility(View.GONE);
         }
         findViewById(R.id.goToAdminPage).setOnClickListener((v)->{  Intent intent = new Intent(this,AdminActivity.class);

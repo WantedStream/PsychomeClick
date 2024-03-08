@@ -41,7 +41,6 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
         Node data = dataList.get(position);
         holder.textView.setText(data.getName());
-        holder.percentageRingView.setPercentage(30);
         holder.percentageRingView.setPercentage(data.getSubPercents());
         // Update the click listener of the percentageRingView
         holder.percentageRingView.setOnClickListener((v) -> {

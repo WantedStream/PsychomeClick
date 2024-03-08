@@ -15,7 +15,7 @@ public class Node {
     private String name;
     private Node[] nodes;
 
-    private Map.Entry[] questionList;
+    private String[] questionList;
 
     public int percent;
     private static void listNodes(Node node) {
@@ -39,7 +39,7 @@ public class Node {
         return this.nodes;
     }
 
-    public Map.Entry[] getQuestionList()  {return this.questionList;}
+    public String[] getQuestionList()  {return this.questionList;}
     public int getSubPercents() {
    
         int percent=0;
@@ -52,25 +52,21 @@ public class Node {
             return percent;
         }
 
-        String progjson= FirebaseManager.userData.getUserProgress().getUserProgressStr();
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(progjson, JsonObject.class);
-        JsonArray jsonArray=jsonObject.getAsJsonArray(this.name);
+        JsonArray jsonArray=FirebaseManager.userData.getSubjectQuestion(this.name);
         if(jsonArray!=null&&this.getQuestionList().length>0){
             Integer correct=0;
-           jsonArray.forEach((e)->{
-               JsonArray pairArr=e.getAsJsonArray();
-               String id=pairArr.get(0).getAsString();
-               int answer=pairArr.get(1).getAsInt();
-
-               FirebaseManager.db.collection("Questions").document(id).get().addOnCompleteListener((t)->{
-                   if((int)t.getResult().get("correctAnswer")==answer)
-
-               });
-           });
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonArray pairArr=jsonArray.get(i).getAsJsonArray();
+                String id=pairArr.get(0).getAsString();
+                int answer=pairArr.get(1).getAsInt();
+                Integer question=FirebaseManager.QuestionMap.get(id);
+                System.out.println(id+" "+answer+"=="+question);
+                if(question!=null&&question.equals(answer))
+                    correct++;
+            }
+            return (int)(((double)correct/this.getQuestionList().length)*100);
 
         }
-        return (int)(((double)jsonObject1.get("correctAnswers").getAsInt()/this.getQuestionList().length)*100);
 
         return 0;
 

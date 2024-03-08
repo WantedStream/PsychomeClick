@@ -94,7 +94,7 @@ public class GeneralFragment extends Fragment {
                 .addOnCompleteListener((task)->{
                         if (task.isSuccessful()) {
                             Gson gson = new Gson();
-                           Node node = gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class);
+                            Node node = gson.fromJson( task.getResult().getDocuments().get(0).get("tree").toString(), Node.class);
                             for(Node n: node.getNodes()){
                                 dataList.add(n);
                             }

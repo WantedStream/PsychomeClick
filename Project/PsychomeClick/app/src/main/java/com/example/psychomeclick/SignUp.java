@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.model.User;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
@@ -92,11 +91,8 @@ public class SignUp extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show();
                     task.getUser().sendEmailVerification();
-
-                    Intent intent = new Intent(this,LogIn.class);
                     LogIn.logIn(username,password,this);
-                    startActivity(intent);
-                    finish();
+
 
 
                         }).addOnFailureListener((errorTask)->{

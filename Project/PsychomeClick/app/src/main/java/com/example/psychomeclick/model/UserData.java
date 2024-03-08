@@ -1,11 +1,17 @@
 package com.example.psychomeclick.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+
 public class UserData {
     protected String name,email;
-    UserProgress userProgress;
 
-    private String phone;
+    private String phone,userProgress;
 
+    private HashMap<String,String[]> subjectMap;
     public UserData() {
     }
 
@@ -14,8 +20,8 @@ public class UserData {
         this.email=email;
 
         this.phone=phone;
-        this.userProgress=new UserProgress(userProgressstr);
-
+        this.userProgress=userProgressstr;
+        this.subjectMap=new HashMap<>();
     }
 
     public String getName() {
@@ -26,11 +32,16 @@ public class UserData {
         return email;
     }
 
-    public UserProgress getUserProgress() {
+    public String getUserProgress() {
         return userProgress;
     }
 
-
+    public JsonArray getSubjectQuestion(String subject){
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(userProgress, JsonObject.class);
+        JsonArray jsonArray=jsonObject.getAsJsonArray(subject);
+        return jsonArray;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -40,7 +51,7 @@ public class UserData {
         this.email = email;
     }
 
-    public void setUserProgress(UserProgress userProgress) {
+    public void setUserProgress(String userProgress) {
         this.userProgress = userProgress;
     }
 

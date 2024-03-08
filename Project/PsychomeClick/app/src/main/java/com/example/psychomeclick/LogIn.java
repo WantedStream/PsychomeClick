@@ -22,6 +22,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.sql.SQLOutput;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class LogIn extends AppCompatActivity {
 
@@ -57,18 +61,22 @@ public class LogIn extends AppCompatActivity {
                     FirebaseManager.userData=new UserData(userTask.getResult().get("username").toString(),userTask.getResult().get("email").toString(),userTask.getResult().get("phone").toString(),userTask.getResult().get("userprogress").toString());
                     saveShareRef(email,password,activity.getSharedPreferences(FirebaseManager.PrefLocaltion,MODE_PRIVATE));
                     Intent intent = new Intent(context,UserActivity.class);
+                   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                    activity.finish();
+                   activity.finish();
                 });
             }).addOnFailureListener((failureT)->{
-            Toast.makeText(context.getApplicationContext(),"user doesnt exist",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context.getApplicationContext(),"user doesn't exist",Toast.LENGTH_SHORT).show();
         });
 
 }
     public static void saveShareRef(String email,String password, SharedPreferences sp){
             SharedPreferences.Editor prefsEditor = sp.edit();
             Gson gson = new Gson();
-            String json = gson.toJson(new Pair<String,String>(email,password));
+            LinkedHashMap<String,String> map= new LinkedHashMap<>();
+            map.put("email",email);
+            map.put("password",password);
+        String json = gson.toJson(map);
             prefsEditor.putString("currentUser", json);
             prefsEditor.commit();
     }

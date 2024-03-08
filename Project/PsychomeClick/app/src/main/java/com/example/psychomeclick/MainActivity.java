@@ -17,6 +17,10 @@ import com.example.psychomeclick.model.UserData;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.gson.Gson;
 
+import java.util.AbstractMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,12 +28,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // UserProgress up = new UserProgress("");
-       // String[] array = {"Verbal reasoning","Analogies"};
-        //System.out.println(up.navigateTo(this,array,true));
-       // Map.Entry<String, HashMap>  entry=   new AbstractMap.SimpleEntry<String, HashMap>("exmpleString", new HashMap<>());
-       //up.addToPath(this,entry, array);
-        Pair<String,String> emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
+
+        Map<String,String> emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
         findViewById(R.id.gologInBtn).setOnClickListener((v) -> {
             Intent intent = new Intent(this,LogIn.class);
             startActivity(intent);
@@ -42,26 +42,37 @@ public class MainActivity extends AppCompatActivity {
         });
         findViewById(R.id.goaboutBtn).setOnClickListener((v) -> {});
 
-
-        if(emailAndPass!=null){
-            FirebaseManager.firebaseAuth.signInWithEmailAndPassword(emailAndPass.first,emailAndPass.second).addOnSuccessListener((authData)->{
-                FirebaseManager.db.collection("Users").document(authData.getUser().getUid()).get().addOnCompleteListener(dbData->{
-                    DocumentSnapshot userDataSnapshot=dbData.getResult();
-                    userData=new UserData(userDataSnapshot.getString("username"),userDataSnapshot.getString("email"),userDataSnapshot.getString("phone"),userDataSnapshot.getString("userprogress"));
-                    Intent intent = new Intent(this,UserActivity.class);
-                    startActivity(intent);
-                    finish();
+        FirebaseManager.db.collection("Questions").get().addOnCompleteListener((t)->{
+            for (DocumentSnapshot doc: t.getResult().getDocuments()) {
+                FirebaseManager.QuestionMap.put(doc.getId(),(Integer.parseInt(doc.get("correctAnswer").toString())));
+            }
+            String email=emailAndPass.get("email"),password=emailAndPass.get("password");
+            if(email!=null&&password!=null){
+                FirebaseManager.firebaseAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener((authData)->{
+                    FirebaseManager.db.collection("Users").document(authData.getUser().getUid()).get().addOnCompleteListener(dbData->{
+                        DocumentSnapshot userDataSnapshot=dbData.getResult();
+                        userData=new UserData(userDataSnapshot.getString("username"),userDataSnapshot.getString("email"),userDataSnapshot.getString("phone"),userDataSnapshot.getString("userprogress"));
+                        Intent intent = new Intent(this,UserActivity.class);
+                        startActivity(intent);
+                        finish();
+                    });
                 });
-            });
 
-        }
+            }
+        });
+
+
+
+
+
+
 
     }
 
-    public static Pair<String,String> getUserFromShared(SharedPreferences sp){
+    public static Map<String,String> getUserFromShared(SharedPreferences sp){
         Gson gson = new Gson();
         String json = sp.getString("currentUser", null);
-        Pair<String,String> obj = gson.fromJson(json, Pair.class);
+        Map<String,String> obj = gson.fromJson(json, LinkedHashMap.class);
         return obj;
     }
 }

@@ -8,7 +8,7 @@ public class LastSubject extends Subject{
     }
 
 
-    public void openQuestion(UserProgress userProgress) {
+    public void openQuestion(JsFunctions userProgress) {
         //int questionId=userProgress.navigateToQuestion(subjectName);
 
     }
