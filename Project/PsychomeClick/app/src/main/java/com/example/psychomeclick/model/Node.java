@@ -46,7 +46,7 @@ public class Node {
         if(this.nodes!=null){
             for(Node node:this.nodes){
                 int currentpercent=1;
-                currentpercent*=node.getSubPercents();
+                currentpercent*=node.getSubPercents()/ this.nodes.length;
                 percent+=currentpercent;
             }
             return percent;
