@@ -15,44 +15,49 @@
         android:gravity="center"
       >
 
-        <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="390dp"
-            android:orientation="vertical"
-
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             >
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/btn_star" />
-
-            <ImageButton
-                android:id="@+id/answer1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/btn_star" />
-
-            <ImageButton
-                android:id="@+id/answer2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/btn_star" />
-
-            <ImageButton
-                android:id="@+id/anser3"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:src="@drawable/ic_launcher_background" />
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/answer4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/btn_star" />
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/img0"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/btn_star" />
+
+                <ImageButton
+                    android:id="@+id/img1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/btn_star" />
+
+                <ImageButton
+                    android:id="@+id/img2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/btn_star" />
+
+                <ImageButton
+                    android:id="@+id/img3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:src="@android:drawable/btn_star" />
+
+                <ImageButton
+                    android:id="@+id/img4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/btn_star" />
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -81,7 +86,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/gobackbtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"

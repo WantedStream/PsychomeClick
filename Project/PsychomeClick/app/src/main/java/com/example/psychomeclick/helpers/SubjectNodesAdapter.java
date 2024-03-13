@@ -51,6 +51,7 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
             } else if (data.getQuestionList()!=null&&data.getQuestionList().length>0) {
                 Intent intent = new Intent(holder.itemView.getContext(), TestActivity.class);
                 intent.putExtra("questionList", data.getQuestionList());
+                intent.putExtra("subject",data.getName());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 holder.itemView.getContext().getApplicationContext().startActivity(intent);
             }
