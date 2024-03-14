@@ -58,9 +58,10 @@ public class Node {
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonArray pairArr=jsonArray.get(i).getAsJsonArray();
                 String id=pairArr.get(0).getAsString();
+                if(pairArr.get(1)==null)
+                    continue;
                 int answer=pairArr.get(1).getAsInt();
                 Integer question=FirebaseManager.QuestionMap.get(id);
-                System.out.println(id+" "+answer+"=="+question);
                 if(question!=null&&question.equals(answer))
                     correct++;
             }
