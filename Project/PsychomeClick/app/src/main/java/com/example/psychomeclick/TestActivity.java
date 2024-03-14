@@ -22,6 +22,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,10 +41,8 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        prevbtn= findViewById(R.id.prevbtn);backbtn= findViewById(R.id.gobackbtn);nextbtn = findViewById(R.id.nextbtn);
 
-        prevbtn=   findViewById(R.id.prevbtn);
-        backbtn=   findViewById(R.id.gobackbtn);
-        nextbtn = findViewById(R.id.nextbtn);
         prevbtn.setOnClickListener((b)->{
             loadQuestion(this.currentIndex-1);
             updateButtons();
@@ -59,21 +59,36 @@ public class TestActivity extends AppCompatActivity {
         questionIdList=  Arrays.asList(extras.getStringArray("questionList"));
         subject=extras.getString("subject");
         answeredQuestions= FirebaseManager.userData.getSubjectQuestion(subject);
+        List<Integer> indicesToRemove=new ArrayList<>();
         for (int i = 0; i < answeredQuestions.size(); i++) {
-            //removes if doesn't exist.
-            String qId=answeredQuestions.get(i).getAsJsonArray().get(i).getAsString();
+            String qId=answeredQuestions.get(i).getAsJsonArray().get(0).getAsString();
             if(!questionIdList.contains(qId)){
-                removeFromAnswerListInFireStore(i);
+                indicesToRemove.add(i);
             }
         }
-        if(answeredQuestions.size()==0){
-           currentIndex=0;
+        for (JsonElement s: answeredQuestions
+             ) {
+            if(!questionIdList.contains(s.getAsJsonArray().get(0).getAsString())){
+                answeredQuestions.remove(s);
+            }
         }
-        else{
-            currentIndex=answeredQuestions.size()-1;
-        }
-        loadQuestion(currentIndex);
-        updateButtons();
+        removeFromAnswerListInFireStore(indicesToRemove);
+        FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
+            prevbtn.setEnabled(true);
+            nextbtn.setEnabled(true);
+            backbtn.setEnabled(true);
+
+
+            if(answeredQuestions.size()==0){
+                currentIndex=0;
+            }
+            else{
+                currentIndex=answeredQuestions.size()-1;
+            }
+            loadQuestion(currentIndex);
+            System.out.println(currentIndex);
+            updateButtons();
+        });
 
     }
 
@@ -90,10 +105,6 @@ public class TestActivity extends AppCompatActivity {
 
     }
     private void loadQuestion(int index){
-
-        JsonArray question;
-
-
         if(index>answeredQuestions.size()-1){//if question hasnt been answered yet.
 
            prevbtn.setEnabled(false);
@@ -106,13 +117,13 @@ public class TestActivity extends AppCompatActivity {
             JsonArray jsonArray=jsonObject.getAsJsonArray(subject);
             JsonArray singleNewQ=new JsonArray();
             singleNewQ.add(qId);
-            singleNewQ.add(FirebaseManager.QuestionMap.get(qId));
+            singleNewQ.add(-1);
             jsonArray.add(singleNewQ);
             String updatedJsonString = gson.toJson(jsonObject);
             FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
-                prevbtn.setEnabled(false);
-                backbtn.setEnabled(false);
-                nextbtn.setEnabled(false);
+              //  prevbtn.setEnabled(false);
+                backbtn.setEnabled(true);
+                //nextbtn.setEnabled(false);
                 answeredQuestions.add(singleNewQ);
                 putImagesInImageViews(singleNewQ);
                 currentIndex=index;
@@ -121,7 +132,7 @@ public class TestActivity extends AppCompatActivity {
             });
         }
         else{
-             question =answeredQuestions.get(index).getAsJsonArray();
+            JsonArray question =answeredQuestions.get(index).getAsJsonArray();
             putImagesInImageViews(question);
             currentIndex=index;
             updateButtons();
@@ -144,19 +155,34 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    private void removeFromAnswerListInFireStore(int i){
+    private void removeFromAnswerListInFireStore(List<Integer> indices){
         //NOTE:CALL ONLY ON CREATING. CALLING IT AFTER CREATION MAY CAUSE PROBLEMS.
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(FirebaseManager.userData.getUserProgress(), JsonObject.class);
-        JsonArray jsonArray=jsonObject.getAsJsonArray(subject);
-        jsonArray.remove(i);
+        JsonArray tmpArray=jsonObject.getAsJsonArray(subject);
+        JsonArray jsonArray = new JsonArray();
+        for (int i = 0; i < tmpArray.size(); i++) {
+            if(!indices.contains(i))
+                jsonArray.add(tmpArray.get(i));
+        }
+        while(!tmpArray.isEmpty())
+            tmpArray.remove(tmpArray.get)
         String updatedJsonString = gson.toJson(jsonObject);
         FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
             prevbtn.setEnabled(true);
            nextbtn.setEnabled(true);
           backbtn.setEnabled(true);
-            answeredQuestions.remove(i);
 
+
+            if(answeredQuestions.size()==0){
+                currentIndex=0;
+            }
+            else{
+                currentIndex=answeredQuestions.size()-1;
+            }
+            loadQuestion(currentIndex);
+            System.out.println(currentIndex);
+            updateButtons();
         });
     }
     private void putImagesInImageViews(JsonArray question){

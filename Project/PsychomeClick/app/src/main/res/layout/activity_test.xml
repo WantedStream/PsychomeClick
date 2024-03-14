@@ -6,91 +6,96 @@
     android:layout_height="match_parent"
     tools:context=".TestActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical"
-        android:gravity="center"
-      >
-
-        <ImageView
-            android:id="@+id/img0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/btn_star" />
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:orientation="horizontal">
-
-
-                <ImageButton
-                    android:id="@+id/img1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
-
-                <ImageButton
-                    android:id="@+id/img2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
-
-                <ImageButton
-                    android:id="@+id/img3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:src="@android:drawable/btn_star" />
-
-                <ImageButton
-                    android:id="@+id/img4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:src="@android:drawable/btn_star" />
-            </LinearLayout>
-        </HorizontalScrollView>
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <ImageView
+                android:id="@+id/img0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/btn_star" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+
+                    <ImageButton
+                        android:id="@+id/img1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/btn_star" />
+
+                    <ImageButton
+                        android:id="@+id/img2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/btn_star" />
+
+                    <ImageButton
+                        android:id="@+id/img3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:src="@android:drawable/btn_star" />
+
+                    <ImageButton
+                        android:id="@+id/img4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/btn_star" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/prevbtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#3F2AB8"
+                    android:text="prev" />
+
+                <Button
+                    android:id="@+id/nextbtn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="#3F2AB8"
+                    android:text="next" />
+
+
+                />
+            </LinearLayout>
 
             <Button
-                android:id="@+id/prevbtn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="#3F2AB8"
-                android:text="prev" />
-
-            <Button
-                android:id="@+id/nextbtn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="#3F2AB8"
-                android:text="next" />
-
-
-            />
+                android:id="@+id/gobackbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="15dp"
+                android:text="Button" />
         </LinearLayout>
+    </ScrollView>
 
-        <Button
-            android:id="@+id/gobackbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            android:layout_gravity="left"
-            android:layout_marginTop="15dp"/>
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
