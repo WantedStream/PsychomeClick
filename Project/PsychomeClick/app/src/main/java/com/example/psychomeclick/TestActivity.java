@@ -17,6 +17,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
 import com.example.psychomeclick.model.UserData;
+import com.example.psychomeclick.views.BorderTogglingButton;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -150,6 +151,18 @@ public class TestActivity extends AppCompatActivity {
 
 
     private void putImagesInImageViews(JsonArray question){
+        int answer=question.get(1).getAsInt();
+       ((BorderTogglingButton)(findViewById(R.id.img1))).disable();
+        ((BorderTogglingButton)(findViewById(R.id.img2))).disable();
+       ((BorderTogglingButton)(findViewById(R.id.img3))).disable();
+       ((BorderTogglingButton)(findViewById(R.id.img4))).disable();
+        switch (answer){
+            case 1:((BorderTogglingButton)(findViewById(R.id.img1))).enable();
+            case 2:((BorderTogglingButton)(findViewById(R.id.img2))).enable();
+            case 3:((BorderTogglingButton)(findViewById(R.id.img3))).enable();
+            case 4:((BorderTogglingButton)(findViewById(R.id.img4))).enable();
+            default:
+        }
         for (int i = 0; i <= 4; i++) {
             StorageReference fileRef0 = FirebaseManager.firebaseStorage.getReference().child("QuestionStorage/" +question.get(0).getAsString()+"/images"+i);
             switch(i){
@@ -160,5 +173,6 @@ public class TestActivity extends AppCompatActivity {
                 case 4:             loadImage(fileRef0,findViewById(R.id.img4),this);break;
             }
         }
+
     }
 }

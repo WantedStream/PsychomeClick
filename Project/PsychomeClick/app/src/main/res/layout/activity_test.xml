@@ -35,26 +35,26 @@
                     android:orientation="horizontal">
 
 
-                    <ImageButton
+                    <com.example.psychomeclick.views.BorderTogglingButton
                         android:id="@+id/img1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@android:drawable/btn_star" />
 
-                    <ImageButton
+                    <com.example.psychomeclick.views.BorderTogglingButton
                         android:id="@+id/img2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:src="@android:drawable/btn_star" />
 
-                    <ImageButton
+                    <com.example.psychomeclick.views.BorderTogglingButton
                         android:id="@+id/img3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
                         android:src="@android:drawable/btn_star" />
 
-                    <ImageButton
+                    <com.example.psychomeclick.views.BorderTogglingButton
                         android:id="@+id/img4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
