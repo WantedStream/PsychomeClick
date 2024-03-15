@@ -11,6 +11,7 @@ public class UserData {
 
     private String phone,userProgress;
 
+    private Gson gson;
     private HashMap<String,String[]> subjectMap;
     public UserData() {
     }
@@ -22,6 +23,7 @@ public class UserData {
         this.phone=phone;
         this.userProgress=userProgressstr;
         this.subjectMap=new HashMap<>();
+        this.gson=new Gson();
     }
 
     public String getName() {
@@ -37,10 +39,15 @@ public class UserData {
     }
 
     public JsonArray getSubjectQuestion(String subject){
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(userProgress, JsonObject.class);
+        JsonObject jsonObject = this.gson.fromJson(userProgress, JsonObject.class);
         JsonArray jsonArray=jsonObject.getAsJsonArray(subject);
         return jsonArray;
+    }
+
+    public JsonObject getJsonProgress(){
+
+        JsonObject jsonObject = this.gson.fromJson(userProgress, JsonObject.class);
+        return jsonObject;
     }
 
     public void setName(String name) {
@@ -73,5 +80,9 @@ public class UserData {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Gson getGson() {
+        return this.gson;
     }
 }
