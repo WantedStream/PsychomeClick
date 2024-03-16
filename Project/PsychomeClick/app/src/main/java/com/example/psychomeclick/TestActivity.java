@@ -41,20 +41,17 @@ public class TestActivity extends AppCompatActivity {
     JsonArray answeredQuestions;
     int currentIndex=0;
     Button backbtn,prevbtn,nextbtn;
+    BorderTogglingButton img1,img2,img3,img4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        prevbtn= findViewById(R.id.prevbtn);backbtn= findViewById(R.id.gobackbtn);nextbtn = findViewById(R.id.nextbtn);
-
-        prevbtn.setOnClickListener((b)->{loadQuestion(this.currentIndex-1);updateButtons();});
-        backbtn.setOnClickListener((b)->{onBackPressed();});
-        nextbtn.setOnClickListener((b)->{loadQuestion(this.currentIndex+1);updateButtons();});
+        innitView();
 
         Bundle extras = getIntent().getExtras();
         questionIdList=  Arrays.asList(extras.getStringArray("questionList"));
         subject=extras.getString("subject");
-
 
         //remove removed question from users answer list
        JsonObject userProgressJson= FirebaseManager.userData.getJsonProgress();
@@ -85,8 +82,37 @@ public class TestActivity extends AppCompatActivity {
         });
 
     }
+    private void innitView(){
+        prevbtn= findViewById(R.id.prevbtn);backbtn= findViewById(R.id.gobackbtn);nextbtn = findViewById(R.id.nextbtn);
+        img1=(BorderTogglingButton) findViewById(R.id.img1);img2=(BorderTogglingButton) findViewById(R.id.img2);img3=(BorderTogglingButton) findViewById(R.id.img3);img4=(BorderTogglingButton) findViewById(R.id.img4);
 
-
+        prevbtn.setOnClickListener((b)->{loadQuestion(this.currentIndex-1);updateButtons();});
+        backbtn.setOnClickListener((b)->{onBackPressed();});
+        nextbtn.setOnClickListener((b)->{loadQuestion(this.currentIndex+1);updateButtons();});
+        img1.setOnBorderToggledListener((isOn)-> {
+            if(isOn)
+            {disableAll(img1);} updateUserAnswer();
+        });
+        img2.setOnBorderToggledListener((isOn)-> {
+            if(isOn)
+            {disableAll(img2);} updateUserAnswer();
+        });
+        img3.setOnBorderToggledListener((isOn)-> {
+            if(isOn)
+            {disableAll(img3);} updateUserAnswer();
+        });
+        img4.setOnBorderToggledListener((isOn)-> {
+            if(isOn)
+            {disableAll(img4);} updateUserAnswer();
+        });
+    }
+    private void disableAll(BorderTogglingButton except){
+        this.img1.disable();
+        this.img2.disable();
+        this.img3.disable();
+        this.img4.disable();
+        except.enable();
+    }
     private void updateButtons(){
         if(currentIndex==0) prevbtn.setEnabled(false);
         else prevbtn.setEnabled(true);
@@ -132,10 +158,29 @@ public class TestActivity extends AppCompatActivity {
             updateButtons();
         }
 
+    }
+    private void updateUserAnswer(){
+        Gson gson = FirebaseManager.userData.getGson();
+        JsonObject jsonObject = gson.fromJson(FirebaseManager.userData.getUserProgress(), JsonObject.class);
+        JsonArray jsonQuestion=jsonObject.getAsJsonArray(subject).getAsJsonArray().get(currentIndex).getAsJsonArray();
+        int answer;
+        if(img1.isOn())
+            answer=1;
+        else if(img2.isOn())
+            answer=2;
+        else if(img3.isOn())
+            answer=3;
+        else if(img4.isOn())
+            answer=4;
+        else
+            answer=-1;
+        JsonElement newElement =gson.toJsonTree(answer);
+        jsonQuestion.set(1,newElement);
+        String updatedJsonString = FirebaseManager.userData.getGson().toJson(jsonObject);
+        FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
+            this.answeredQuestions.get(currentIndex).getAsJsonArray().set(1,newElement);
 
-
-
-
+        });
     }
     private static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
@@ -152,15 +197,15 @@ public class TestActivity extends AppCompatActivity {
 
     private void putImagesInImageViews(JsonArray question){
         int answer=question.get(1).getAsInt();
-       ((BorderTogglingButton)(findViewById(R.id.img1))).disable();
-        ((BorderTogglingButton)(findViewById(R.id.img2))).disable();
-       ((BorderTogglingButton)(findViewById(R.id.img3))).disable();
-       ((BorderTogglingButton)(findViewById(R.id.img4))).disable();
+       img1.disable();
+        img2.disable();
+       img3.disable();
+      img4.disable();
         switch (answer){
-            case 1:((BorderTogglingButton)(findViewById(R.id.img1))).enable();
-            case 2:((BorderTogglingButton)(findViewById(R.id.img2))).enable();
-            case 3:((BorderTogglingButton)(findViewById(R.id.img3))).enable();
-            case 4:((BorderTogglingButton)(findViewById(R.id.img4))).enable();
+            case 1:img1.enable();break;
+            case 2:img2.enable();break;
+            case 3:img3.enable();break;
+            case 4:img4.enable();break;
             default:
         }
         for (int i = 0; i <= 4; i++) {

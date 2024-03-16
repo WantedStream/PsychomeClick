@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 
 public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatImageButton {
     private boolean isBorderEnabled = false;
+    private OnBorderToggleListener onBorderToggleListener;
 
     public BorderTogglingButton(Context context) {
         super(context);
@@ -27,11 +28,16 @@ public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatIma
         // Set initial appearance (without border)
         setBorderEnabled(false);
         setOnClickListener(v -> toggleBorder());
+
     }
 
     public void toggleBorder() {
         isBorderEnabled = !isBorderEnabled;
         setBorderEnabled(isBorderEnabled);
+
+        if (onBorderToggleListener != null) {
+            onBorderToggleListener.onBorderToggled(isBorderEnabled);
+        }
     }
     public void enable(){
         isBorderEnabled=true;
@@ -50,5 +56,15 @@ public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatIma
             // Remove border
             getBackground().clearColorFilter();
         }
+    }
+    public boolean isOn(){
+        return this.isBorderEnabled;
+    }
+    public interface OnBorderToggleListener {
+        void onBorderToggled(boolean isBorderEnabled);
+    }
+
+    public void setOnBorderToggledListener(OnBorderToggleListener listener) {
+        this.onBorderToggleListener = listener;
     }
 }
