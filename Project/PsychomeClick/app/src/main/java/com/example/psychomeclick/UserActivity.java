@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,6 +24,10 @@ import com.example.psychomeclick.fragments.RandomFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class UserActivity extends AppCompatActivity  implements AdapterView.OnItemSelectedListener{
     private FirebaseAuth firebaseAuth;
@@ -60,6 +65,14 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
 
         setSelectBox();
 
+        findViewById(R.id.signoutbutton).setOnClickListener((t)->{
+            FirebaseManager.userData=null;
+            FirebaseManager.firebaseAuth.signOut();
+            deleteUserFromShared(this.getSharedPreferences(FirebaseManager.PrefLocaltion,MODE_PRIVATE));
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
     // if(isAdmin(User)){
 //
@@ -126,5 +139,16 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
         super.onPointerCaptureChanged(hasCapture);
+    }
+
+    public static void deleteUserFromShared(SharedPreferences sp){
+        SharedPreferences.Editor prefsEditor = sp.edit();
+        Gson gson = new Gson();
+        LinkedHashMap<String,String> map= new LinkedHashMap<>();
+        map.put("email","");
+        map.put("password","");
+        String json = gson.toJson(map);
+        prefsEditor.putString("currentUser", json);
+        prefsEditor.commit();
     }
 }

@@ -96,6 +96,6 @@ dependencies {
     implementation 'com.otaliastudios:zoomlayout:1.9.0'
     implementation 'dev.bandb.graphview:graphview:0.8.1'
 
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 
 }
