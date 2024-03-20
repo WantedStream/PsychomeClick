@@ -57,6 +57,9 @@ public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatIma
             getBackground().clearColorFilter();
         }
     }
+   public void setBorderColor(int color){
+        this.getBackground().setColorFilter(color,PorterDuff.Mode.SRC_ATOP);
+   }
     public boolean isOn(){
         return this.isBorderEnabled;
     }

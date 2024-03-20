@@ -25,6 +25,10 @@ public class UserData {
         this.subjectMap=new HashMap<>();
         this.gson=new Gson();
     }
+    public void updateUserProgress(String userProgress){
+        this.gson=new Gson();
+        this.userProgress=userProgress;
+    }
 
     public String getName() {
         return name;

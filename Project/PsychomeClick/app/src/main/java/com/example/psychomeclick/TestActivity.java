@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.Button;
@@ -25,9 +27,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -42,7 +46,6 @@ public class TestActivity extends AppCompatActivity {
     int currentIndex=0;
     Button backbtn,prevbtn,nextbtn;
     BorderTogglingButton img1,img2,img3,img4;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,7 @@ public class TestActivity extends AppCompatActivity {
        JsonObject userProgressJson= FirebaseManager.userData.getJsonProgress();
         answeredQuestions =userProgressJson.getAsJsonArray(subject);
         System.out.println(answeredQuestions);
+        System.out.println(questionIdList);
         Iterator<JsonElement> iterator = answeredQuestions.iterator();
         while (iterator.hasNext()) {
             JsonElement e=iterator.next();
@@ -87,7 +91,10 @@ public class TestActivity extends AppCompatActivity {
         img1=(BorderTogglingButton) findViewById(R.id.img1);img2=(BorderTogglingButton) findViewById(R.id.img2);img3=(BorderTogglingButton) findViewById(R.id.img3);img4=(BorderTogglingButton) findViewById(R.id.img4);
 
         prevbtn.setOnClickListener((b)->{loadQuestion(this.currentIndex-1);updateButtons();});
-        backbtn.setOnClickListener((b)->{onBackPressed();});
+        backbtn.setOnClickListener((b)->{ Intent intent = new Intent(this,UserActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+            this.finish();});
         nextbtn.setOnClickListener((b)->{loadQuestion(this.currentIndex+1);updateButtons();});
         img1.setOnBorderToggledListener((isOn)-> {
             if(isOn)
@@ -112,19 +119,30 @@ public class TestActivity extends AppCompatActivity {
         this.img3.disable();
         this.img4.disable();
         except.enable();
+
+
+        if(FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex))==getSelectedAnswer()){
+            except.setBorderColor(Color.GREEN);
+            System.out.println("AAA"+FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex)));
+        }
+        else{
+            System.out.println("something wrong");
+        }
+        System.out.println(FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex)));
+        System.out.println(except);
+
+
     }
     private void updateButtons(){
         if(currentIndex==0) prevbtn.setEnabled(false);
         else prevbtn.setEnabled(true);
 
-        if(currentIndex==answeredQuestions.size()-1){
+        if(currentIndex==questionIdList.size()-1){
             nextbtn.setEnabled(false);
         }
         else{
             nextbtn.setEnabled(true);
         }
-        System.out.println(currentIndex+" CURRENT INDEx");
-        System.out.println(questionIdList.size());
     }
     private void loadQuestion(int index){
         if(index>answeredQuestions.size()-1){//if question hasnt been answered yet.
@@ -143,18 +161,22 @@ public class TestActivity extends AppCompatActivity {
             String updatedJsonString = FirebaseManager.userData.getGson().toJson(jsonObject);
             FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
                 prevbtn.setEnabled(true);
+                nextbtn.setEnabled(true);
+                backbtn.setEnabled(true);
 
                 answeredQuestions.add(singleNewQ);
-                putImagesInImageViews(singleNewQ);
                 currentIndex=index;
+                putImagesInImageViews(singleNewQ);
+
 
                 updateButtons();
+
             });
         }
         else{
             JsonArray question =answeredQuestions.get(index).getAsJsonArray();
-            putImagesInImageViews(question);
             currentIndex=index;
+            putImagesInImageViews(question);
             updateButtons();
         }
 
@@ -163,23 +185,13 @@ public class TestActivity extends AppCompatActivity {
         Gson gson = FirebaseManager.userData.getGson();
         JsonObject jsonObject = gson.fromJson(FirebaseManager.userData.getUserProgress(), JsonObject.class);
         JsonArray jsonQuestion=jsonObject.getAsJsonArray(subject).getAsJsonArray().get(currentIndex).getAsJsonArray();
-        int answer;
-        if(img1.isOn())
-            answer=1;
-        else if(img2.isOn())
-            answer=2;
-        else if(img3.isOn())
-            answer=3;
-        else if(img4.isOn())
-            answer=4;
-        else
-            answer=-1;
-        JsonElement newElement =gson.toJsonTree(answer);
+
+        JsonElement newElement =gson.toJsonTree(getSelectedAnswer());
         jsonQuestion.set(1,newElement);
         String updatedJsonString = FirebaseManager.userData.getGson().toJson(jsonObject);
         FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
             this.answeredQuestions.get(currentIndex).getAsJsonArray().set(1,newElement);
-
+            FirebaseManager.userData.updateUserProgress(updatedJsonString);
         });
     }
     private static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {
@@ -196,18 +208,15 @@ public class TestActivity extends AppCompatActivity {
 
 
     private void putImagesInImageViews(JsonArray question){
+        System.out.println(question);
         int answer=question.get(1).getAsInt();
-       img1.disable();
-        img2.disable();
-       img3.disable();
-      img4.disable();
         switch (answer){
-            case 1:img1.enable();break;
-            case 2:img2.enable();break;
-            case 3:img3.enable();break;
-            case 4:img4.enable();break;
-            default:
-        }
+            case 1:disableAll(img1);break;
+            case 2:disableAll(img2);break;
+            case 3:disableAll(img3);break;
+            case 4:disableAll(img4);break;
+        }//cant use getSelected answer because get selected answer looks at what box is toggled, however no box is toggled yet...
+
         for (int i = 0; i <= 4; i++) {
             StorageReference fileRef0 = FirebaseManager.firebaseStorage.getReference().child("QuestionStorage/" +question.get(0).getAsString()+"/images"+i);
             switch(i){
@@ -219,5 +228,18 @@ public class TestActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private int getSelectedAnswer(){
+        if(img1.isOn())
+            return 1;
+        else if(img2.isOn())
+          return 2;
+        else if(img3.isOn())
+            return 3;
+        else if(img4.isOn())
+            return 4;
+        else
+         return   -1;
     }
 }

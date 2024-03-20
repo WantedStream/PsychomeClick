@@ -30,8 +30,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UserActivity extends AppCompatActivity  implements AdapterView.OnItemSelectedListener{
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firestore;
     private int current=0;
     private static final String[] topics = {"", "כללי", "סימולציות",
             "אקראי"};
@@ -39,10 +37,25 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        this.firebaseAuth = FirebaseAuth.getInstance();
-        this.firestore = FirebaseFirestore.getInstance();
-       FirebaseUser user = firebaseAuth.getCurrentUser();
-        firestore.collection("Users").document(user.getUid()).get().addOnCompleteListener(userTask -> {
+        createStuff();
+
+        findViewById(R.id.signoutbutton).setOnClickListener((t)->{
+            FirebaseManager.userData=null;
+            FirebaseManager.firebaseAuth.signOut();
+            deleteUserFromShared(this.getSharedPreferences(FirebaseManager.PrefLocaltion,MODE_PRIVATE));
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    @Override
+   public void onStart() {
+
+        super.onStart();
+    }
+    public void createStuff(){
+        FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(userTask -> {
             String name=userTask.getResult().getString("username").toString();
             ((TextView) findViewById(R.id.WelcomeText)).setText("welcome " +name);
         });
@@ -54,8 +67,8 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             startActivity(intent);
             finish();});
 
-         ;
-         String s =getIntent().getStringExtra("selectboxfrag");
+        ;
+        String s =getIntent().getStringExtra("selectboxfrag");
         Fragment fragment = s!=null&&s.equals("Simulations") ? new SimulationsFragment(): new GeneralFragment();
 
         FragmentManager fm = getSupportFragmentManager();
@@ -64,21 +77,7 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
         transaction.commit();
 
         setSelectBox();
-
-        findViewById(R.id.signoutbutton).setOnClickListener((t)->{
-            FirebaseManager.userData=null;
-            FirebaseManager.firebaseAuth.signOut();
-            deleteUserFromShared(this.getSharedPreferences(FirebaseManager.PrefLocaltion,MODE_PRIVATE));
-            Intent intent = new Intent(this,MainActivity.class);
-            startActivity(intent);
-            finish();
-        });
     }
-    // if(isAdmin(User)){
-//
-       // };
-
-
 
     private void setSelectBox(){
         Spinner spinner=findViewById(R.id.spinnerTopics);
