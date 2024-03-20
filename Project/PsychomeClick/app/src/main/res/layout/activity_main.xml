@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="#338BA6">
+        android:background="@drawable/bg2">
 
         <TextView
             android:id="@+id/textView"
@@ -21,7 +21,7 @@
             android:textSize="80sp"
             android:gravity="center"
             android:layout_marginBottom="40sp"
-            android:textColor="#3F51B5"/>
+            android:textColor="#3FA7B5"/>
 
         <Button
             android:id="@+id/gologInBtn"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:text="אודות"
             android:textSize="20dp"
-
+                android:backgroundTint="#0466BC"
             />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

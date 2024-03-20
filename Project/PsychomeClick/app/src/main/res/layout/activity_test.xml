@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:background="">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +74,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#3F2AB8"
+                    android:backgroundTint="#21D4F3"
                     android:text="prev" />
 
                 <Button
@@ -81,7 +82,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="#3F2AB8"
+                    android:backgroundTint="#21D4F3"
                     android:text="next" />
 
 
@@ -94,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:layout_marginTop="15dp"
-                android:text="Button" />
+                android:text="Button"
+                android:backgroundTint="#FFEB3B"/>
         </LinearLayout>
     </ScrollView>
 

@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.PsychomeClick" parent="Base.Theme.PsychomeClick" />
+    <style name="Theme.PsychomeClick" parent="Base.Theme.PsychomeClick" >
+    <item name="background">@mipmap/ic_launcher_background</item>
+    </style>
 </resources>
