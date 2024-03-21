@@ -14,15 +14,17 @@
         >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:gravity="center"
+
+            android:background="#2AE3D2">
             <TextView
                 android:layout_gravity="top"
                 android:gravity="center"
                 android:id="@+id/WelcomeText"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="welcome"
                 android:textSize="20dp"
@@ -32,9 +34,9 @@
 
             <Button
                 android:id="@+id/goToAdminPage"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="go to admin page"
+                android:text="admin page"
                 android:backgroundTint="#23328C"
                 />
         </LinearLayout>
@@ -73,12 +75,19 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/signoutbutton"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="signout"
-            android:backgroundTint="#00D4BB"/>
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
+
+            <Button
+                android:id="@+id/signoutbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#00D4BB"
+                android:text="signout" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
