@@ -9,6 +9,8 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +23,16 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.helpers.QuestionListAdapter;
+import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,83 +91,23 @@ public class QuestionListFragment extends Fragment {
 
 
        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-        createStuff(view);
-
+        //createStuff(view);
+        makeContent(view);
         return view;
     }
 
+    private void makeContent(View view){
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerquestions);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(),LinearLayoutManager.HORIZONTAL,true));
 
-
-
-    private  Queue<LinearLayout> createTB(TableLayout tb,View view){
-        tb.removeAllViews();
-        int questionIndex=0;
-        Queue<LinearLayout> qlist= new LinkedList<LinearLayout>();
-        for(int i=0;i<5;i++){
-            TableRow row=new TableRow(view.getContext());
-            for (int j = 0; j < 8; j++) {
-                LinearLayout celllayout = new LinearLayout(view.getContext());
-                celllayout.setOrientation(LinearLayout.VERTICAL);
-                TextView tv=new TextView(view.getContext());
-                tv.setTextColor(Color.WHITE);
-                tv.setTextSize(30);
-
-                celllayout.addView(tv);
-
-                    ImageView imgV= new ImageView(view.getContext());
-                    ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(900, 1000);
-                    imgV.setLayoutParams(params);
-
-                    celllayout.addView(imgV);
-
-                celllayout.addView(getEditButton(view.getContext(),tv));
-                celllayout.addView(getInsertToTreeBtn(view.getContext(),tv));
-
-                celllayout.setBackgroundColor(Color.BLUE);
-
-                questionIndex++;
-                row.addView(celllayout);
-                qlist.add(celllayout);
-
-
-            }
-            tb.addView(row);
-
-        }
-        return qlist;
-    }
-    private void updateTBitems( Queue<LinearLayout> qlist){
-        insertToQuestionCells(qlist,this.getContext());
+        // Initialize data
+        Set<String> dataset = FirebaseManager.QuestionMap.keySet();
+        String[] strArr=new String[dataset.size()];
+        dataset.toArray(strArr);
+        // Initialize adapter
+        System.out.println(dataset);
+        recyclerView.setAdapter(new QuestionListAdapter(getParentFragmentManager(), Arrays.asList(strArr)));
     }
 
-    private void createStuff(View view){
-        TableLayout tb = view.findViewById(R.id.questionTable);
-        updateTBitems(createTB(tb,view));
-
-    }
     //must pass tv and not string because getting the string from the text view before it has been set to id will give error
-    private Button getInsertToTreeBtn(Context context, TextView textView){
-        Button button = new Button(context);
-        button.setText("edit");
-        button.setOnClickListener((v)->{
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            SubjectTreeFragment eqf=new SubjectTreeFragment();
-            transaction.replace(R.id.contentFragment, eqf.newInstance(textView.getText().toString()));
-            transaction.commit();
-        });
-        return button;
-    }
-    private Button getEditButton(Context context,TextView tv){
-        Button  b = new Button(context);
-        b.setText("edit");
-        b.setOnClickListener((v)->{
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            EditQuestionFragment eqf=new EditQuestionFragment();
-            transaction.replace(R.id.contentFragment, EditQuestionFragment.newInstance(tv.getText().toString()));
-            transaction.commit();
-        });
-        return b;
-    }
 }
