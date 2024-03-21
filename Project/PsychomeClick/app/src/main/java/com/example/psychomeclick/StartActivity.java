@@ -48,6 +48,10 @@ public class StartActivity<T> extends Activity {
 
         Thread loginThread = new Thread(() -> {
             Map<String,String> emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
+            if(emailAndPass==null){
+                //never logged in or created an account
+                LogIn.saveShareRef("","",getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
+            }
             String email=emailAndPass.get("email"),password=emailAndPass.get("password");
             if(email!=null&&password!=null&&!email.isEmpty()&&!password.isEmpty()){
                 FirebaseManager.firebaseAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener((authData)->{

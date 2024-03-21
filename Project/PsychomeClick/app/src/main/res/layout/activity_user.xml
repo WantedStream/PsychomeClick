@@ -87,6 +87,13 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#00D4BB"
                 android:text="signout" />
+
+            <Button
+                android:id="@+id/aibtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ai" />
         </LinearLayout>
 
     </LinearLayout>

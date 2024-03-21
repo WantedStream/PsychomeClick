@@ -47,6 +47,11 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             startActivity(intent);
             finish();
         });
+        findViewById(R.id.aibtn).setOnClickListener((t)->{
+            Intent intent = new Intent(this, ChatBotActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
     @Override
