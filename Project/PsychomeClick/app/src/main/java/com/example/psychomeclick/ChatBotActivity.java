@@ -59,29 +59,16 @@ public class ChatBotActivity extends AppCompatActivity {
             @Override
             public void onSuccess(GenerateContentResponse result) {
                 String resultText = result.getText();
-                ChatView chatView = findViewById(R.id.chatView);
-
-               // chatView.addMessage(resultText, true, true, Color.BLACK, R.drawable.bg);
-               // chatView.addMessage(resultText, false, false, Color.BLUE, R.drawable.bg2);
-               // chatView.addMessage(resultText, true, true, Color.RED, 0);
                 ((EditText)  findViewById(R.id.msgText)).setText("");
             }
 
             @Override
             public void onFailure(Throwable t) {
                 t.printStackTrace();
-                ChatView chatView = findViewById(R.id.chatView);
                 String resultText = t.getMessage();
-               // chatView.addMessage(resultText, true, true, Color.BLACK, R.drawable.bg);
-                //chatView.addMessage(resultText, false, false, Color.BLUE, R.drawable.bg2);
-               // chatView.addMessage(resultText, true, true, Color.RED, 0);
                 ((EditText)  findViewById(R.id.msgText)).setText("");
             }
         }, getMainExecutor());
-        ChatView chatView = findViewById(R.id.chatView);
-        chatView.addMessage(new Message("Hello", true, true, Color.BLACK, R.drawable.bg));
-        chatView.addMessage(new Message("Hi there", false, false, Color.BLUE, R.drawable.bg5));
-        chatView.addMessage(new Message("How are you?", true, true, Color.RED, 0)); // No image
 
     }
 }
