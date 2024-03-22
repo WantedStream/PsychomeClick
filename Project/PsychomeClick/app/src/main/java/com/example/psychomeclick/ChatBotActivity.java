@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.views.ChatView;
-import com.example.psychomeclick.views.Message;
+
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.ChatFutures;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
