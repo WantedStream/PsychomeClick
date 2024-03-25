@@ -71,7 +71,7 @@ public class ChatBotActivity extends AppCompatActivity {
                     public void onSuccess(GenerateContentResponse result) {
                         String resultText = result.getText();
                         ChatView chatView = findViewById(R.id.chatView);
-                        chatView.addMessage(resultText, true, Color.GREEN, true, R.drawable.ic_launcher_foreground);
+                        chatView.addMessage(resultText, true, Color.GREEN, true, R.drawable.robot_foreground);
                     }
 
                     @Override
@@ -97,7 +97,7 @@ public class ChatBotActivity extends AppCompatActivity {
 
                 // Example usage:
 
-                chatView.addMessage(resultText, true, Color.DKGRAY, true, R.drawable.ic_launcher_foreground);
+                chatView.addMessage(resultText, true, Color.DKGRAY, true, R.drawable.robot_foreground);
             }
 
             @Override

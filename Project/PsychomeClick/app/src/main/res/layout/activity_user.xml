@@ -50,51 +50,82 @@
             android:layout_weight="1"
              />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="3"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            >
 
-            <Spinner
-                android:id="@+id/spinnerTopics"
-                android:layout_width="260dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:backgroundTint="#070707"
-
-                />
-
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
             android:orientation="horizontal"
-            android:layout_gravity="bottom">
+            android:layout_gravity="bottom"
+            android:background="@drawable/button_cyab_purple_background">
 
-            <Button
+            <ImageButton
                 android:id="@+id/signoutbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#00D4BB"
-                android:text="signout" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-            <Button
+                android:background="@drawable/signout_foreground"
+
+                android:layout_weight="5"
+                />
+            <ImageButton
+                android:id="@+id/general"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/general_foreground"
+
+                android:layout_weight="5"
+                />
+            <ImageButton
+                android:id="@+id/tests"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/tests_foreground"
+
+                android:layout_weight="5"
+                />
+
+            <ImageButton
                 android:id="@+id/aibtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="ai" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/robot_foreground"
+
+                android:layout_weight="5"
+              />
+
         </LinearLayout>
 
     </LinearLayout>
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+
+        >
+
+        <Spinner
+            android:id="@+id/spinnerTopics"
+            android:layout_width="260dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:backgroundTint="#070707"
+
+            />
+
+    </LinearLayout>
+    -->
 </androidx.constraintlayout.widget.ConstraintLayout>

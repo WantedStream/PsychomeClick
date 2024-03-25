@@ -52,6 +52,19 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             startActivity(intent);
             finish();
         });
+        findViewById(R.id.general).setOnClickListener((t)->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new GeneralFragment());
+            transaction.commit();
+        });
+        findViewById(R.id.tests).setOnClickListener((t)->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new SimulationsFragment());
+            transaction.commit();
+        });
+
     }
 
     @Override
@@ -81,11 +94,11 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
         transaction.replace(R.id.contentFragment, fragment);
         transaction.commit();
 
-        setSelectBox();
+        //setSelectBox();
     }
 
     private void setSelectBox(){
-        Spinner spinner=findViewById(R.id.spinnerTopics);
+        Spinner spinner=null;//findViewById(R.id.spinnerTopics);
         // Create the instance of ArrayAdapter
         // having the list of courses
         ArrayAdapter ad
