@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -44,7 +46,7 @@ public class TestActivity extends AppCompatActivity {
     String subject;
     JsonArray answeredQuestions;
     int currentIndex=0;
-    Button backbtn,prevbtn,nextbtn;
+    ImageButton backbtn,prevbtn,nextbtn;
     BorderTogglingButton img1,img2,img3,img4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,14 +136,16 @@ public class TestActivity extends AppCompatActivity {
 
     }
     private void updateButtons(){
-        if(currentIndex==0) prevbtn.setEnabled(false);
-        else prevbtn.setEnabled(true);
+        if(currentIndex==0){ prevbtn.setEnabled(false); prevbtn.setVisibility(View.INVISIBLE);}
+        else {prevbtn.setEnabled(true); prevbtn.setVisibility(View.VISIBLE);};
 
         if(currentIndex==questionIdList.size()-1){
             nextbtn.setEnabled(false);
+            nextbtn.setVisibility(View.INVISIBLE);
         }
         else{
             nextbtn.setEnabled(true);
+            nextbtn.setVisibility(View.VISIBLE);
         }
     }
     private void loadQuestion(int index){

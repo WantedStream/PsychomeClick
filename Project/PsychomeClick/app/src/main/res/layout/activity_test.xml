@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestActivity">
+    tools:context=".TestActivity"
+    android:background="@drawable/button_cyab_purple_background">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
        >
-
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,34 +70,41 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
+                <ImageButton
+
                     android:id="@+id/prevbtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:backgroundTint="#21D4F3"
-                    android:text="prev" />
+                    android:background="#FFD15D"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/leftarrow"
+                    android:paddingHorizontal="60dp"
+                    />
 
-                <Button
+                <ImageButton
+
                     android:id="@+id/nextbtn"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:backgroundTint="#21D4F3"
-                    android:text="next" />
-
-
-                />
+                    android:background="#FFD15D"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/rightarrow"
+                    android:paddingHorizontal="60dp"
+                     />
             </LinearLayout>
 
-            <Button
+            <ImageButton
                 android:id="@+id/gobackbtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="left"
-                android:layout_marginTop="15dp"
-                android:text="Button"
-                android:backgroundTint="#FFEB3B"/>
+                android:layout_marginTop="30dp"
+                android:background="@color/fui_transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/backarrow"
+                />
         </LinearLayout>
     </ScrollView>
 
