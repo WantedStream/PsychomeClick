@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.psychomeclick.CardSetsActivity;
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.VideosActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,15 +67,15 @@ public class BookFragment extends Fragment {
 
         View v= inflater.inflate(R.layout.fragment_book, container, false);
         v.findViewById(R.id.setsbtn).setOnClickListener((b)->{
-            Intent intent = new Intent(getActivity(), mFragmentFavorite.class);
+            Intent intent = new Intent(getActivity(), CardSetsActivity.class);
             startActivity(intent);
             this.getActivity().finish();
         });
         v.findViewById(R.id.videosbtn).setOnClickListener((b)->{
-            Intent intent = new Intent(getActivity(), mFragmentFavorite.class);
+            Intent intent = new Intent(getActivity(), VideosActivity.class);
             startActivity(intent);
             this.getActivity().finish();
         });
-        return;
+        return v;
     }
 }

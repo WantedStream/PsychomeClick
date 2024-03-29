@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.psychomeclick.fragments.BookFragment;
 import com.example.psychomeclick.fragments.SimulationsFragment;
 import com.example.psychomeclick.model.Constants;
 import com.example.psychomeclick.model.FirebaseManager;
@@ -64,7 +65,12 @@ public class UserActivity extends AppCompatActivity  implements AdapterView.OnIt
             transaction.replace(R.id.contentFragment, new SimulationsFragment());
             transaction.commit();
         });
-
+        findViewById(R.id.bookbtn).setOnClickListener((t)->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new BookFragment());
+            transaction.commit();
+        });
     }
 
     @Override
