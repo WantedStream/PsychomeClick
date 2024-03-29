@@ -89,6 +89,15 @@
                 />
 
             <ImageButton
+                android:id="@+id/bookbtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/book_foreground"
+
+                android:layout_weight="5"
+                />
+            <ImageButton
                 android:id="@+id/aibtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
