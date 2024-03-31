@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.FirebaseManager;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,8 +25,8 @@ public class AddSetFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String setId;
+
 
     public AddSetFragment() {
         // Required empty public constructor
@@ -52,8 +54,7 @@ public class AddSetFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            setId = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -61,6 +62,13 @@ public class AddSetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_set, container, false);
+        View v=inflater.inflate(R.layout.fragment_add_set, container, false);
+
+        return v;
+
+    }
+    private void innit(View v){
+        DocumentSnapshot ds=FirebaseManager.db.collection("Sets").document(setId).get().addOnSuccessListener({})
+        v.findViewById(R.id.title);
     }
 }
