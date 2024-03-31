@@ -12,19 +12,31 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.fragments.AddSetFragment;
+import com.example.psychomeclick.fragments.SetsFragment;
 import com.example.psychomeclick.helpers.ChatAdapter;
+import com.example.psychomeclick.model.FirebaseManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 public class SetRecycler extends RecyclerView {
     private SetAdapter adapter;
+    private Fragment f;
+    public static final String NEWSET="NEWSET";
 
     public SetRecycler(@NonNull Context context) {
         super(context);
@@ -46,6 +58,9 @@ public class SetRecycler extends RecyclerView {
         setLayoutManager(layoutManager);
         adapter=new SetAdapter(context);
         setAdapter(adapter);
+    }
+    public void setFragment(Fragment f){
+        this.f=f;
     }
 
     public class SetAdapter extends RecyclerView.Adapter<SetAdapter.SetsViewHolder>{
@@ -77,6 +92,12 @@ public class SetRecycler extends RecyclerView {
         public void onBindViewHolder(@NonNull SetsViewHolder holder, int position) {
             String set=sets.get(position);
             holder.bind(set);
+            ((View)holder.title.getParent()).setOnClickListener((v)->{
+                FragmentManager fm= f.getParentFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.replace(R.id.contentFragment, AddSetFragment.newInstance(set));
+                transaction.commit();
+            });
         }
 
         class SetsViewHolder extends RecyclerView.ViewHolder {
@@ -88,7 +109,7 @@ public class SetRecycler extends RecyclerView {
                 title= itemView.findViewById(R.id.title);
             }
             void bind(String set) {
-                if(set=="NEW SET"){
+                if(set==NEWSET){
                     this.dateOfCreate.setVisibility(GONE);
                     this.length.setVisibility(GONE);
                     this.title.setText("ADD ITEM");
@@ -99,9 +120,19 @@ public class SetRecycler extends RecyclerView {
                     setOnClickListener((b)->{});
                     return;
                 }
-                dateOfCreate.setText("date");
-                length.setText("count");
-                title.setText("title");
+              else{
+
+
+                FirebaseManager.db.collection("Sets").document(set).get().addOnSuccessListener((t)->{
+                    title.setText(t.get("title")+"");
+                    dateOfCreate.setText(t.get("date").toString());
+                    int x= JsonParser.parseString(t.get("cards")+"").getAsJsonObject().size();
+                   length.setText( x+"");
+
+
+                });
+                ;
+            }
             }
         }
     }

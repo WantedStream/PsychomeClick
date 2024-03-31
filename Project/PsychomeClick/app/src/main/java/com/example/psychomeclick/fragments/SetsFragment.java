@@ -69,11 +69,10 @@ public class SetsFragment extends Fragment {
 
     public void innitView(View v){
             SetRecycler setRecycler=(SetRecycler)v.findViewById(R.id.setRecycler);
-        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("Zfase");
-        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("Zfase");
-        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("Zfase");
-        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("Zfase");  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("Zfase");
-        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("NEW SET");
+            setRecycler.setFragment(this);
+        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet("421412");
+
+        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
 
     }
 }
