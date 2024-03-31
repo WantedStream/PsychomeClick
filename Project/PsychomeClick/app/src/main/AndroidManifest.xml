@@ -16,7 +16,7 @@
             android:name=".VideosActivity"
             android:exported="false" />
         <activity
-            android:name=".CardSetsActivity"
+            android:name=".NewSetActivity"
             android:exported="false" />
         <activity
             android:name=".ChatBotActivity"

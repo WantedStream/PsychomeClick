@@ -1,27 +1,21 @@
 package com.example.psychomeclick.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.psychomeclick.NewSetActivity;
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.VideosActivity;
-import com.example.psychomeclick.model.GeneralFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BookFragment#newInstance} factory method to
+ * Use the {@link AddSetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BookFragment extends Fragment {
+public class AddSetFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,7 +26,7 @@ public class BookFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public BookFragment() {
+    public AddSetFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +36,11 @@ public class BookFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BookFragment.
+     * @return A new instance of fragment AddSetFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BookFragment newInstance(String param1, String param2) {
-        BookFragment fragment = new BookFragment();
+    public static AddSetFragment newInstance(String param1, String param2) {
+        AddSetFragment fragment = new AddSetFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,22 +61,6 @@ public class BookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View v= inflater.inflate(R.layout.fragment_book, container, false);
-        v.findViewById(R.id.setsbtn).setOnClickListener((b)->{
-           // Intent intent = new Intent(getActivity(), NewSetActivity.class);
-            //startActivity(intent);
-            //this.getActivity().finish();
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, new SetsFragment());
-            transaction.commit();
-        });
-        v.findViewById(R.id.videosbtn).setOnClickListener((b)->{
-            Intent intent = new Intent(getActivity(), VideosActivity.class);
-            startActivity(intent);
-            this.getActivity().finish();
-        });
-        return v;
+        return inflater.inflate(R.layout.fragment_add_set, container, false);
     }
 }
