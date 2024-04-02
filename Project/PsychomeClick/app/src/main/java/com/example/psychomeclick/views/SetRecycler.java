@@ -2,6 +2,7 @@ package com.example.psychomeclick.views;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.example.psychomeclick.fragments.AddSetFragment;
 import com.example.psychomeclick.fragments.SetsFragment;
 import com.example.psychomeclick.helpers.ChatAdapter;
 import com.example.psychomeclick.model.FirebaseManager;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -93,10 +95,33 @@ public class SetRecycler extends RecyclerView {
             String set=sets.get(position);
             holder.bind(set);
             ((View)holder.title.getParent()).setOnClickListener((v)->{
+                if(holder.dateOfCreate.getVisibility()==GONE){
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("cards","{}");
+                    map.put("date","");
+                    map.put("description","");
+                    map.put("public",false);
+                    map.put("title","aa");
+                    map.put("type","");
+                    map.put("userid",FirebaseManager.firebaseAuth.getUid());
+
+
+                    FirebaseManager.db.collection("Sets").add(map).addOnCompleteListener((documentReference)->{
+                        sets.add(documentReference.getResult().toString());
+                        //notifyDataSetChanged();
+                        sets.forEach(t->{
+                            System.out.println(t+"aaADFF");
+                            if(t==null)
+                                System.out.println("AAA");
+                        });
+                    });
+                }
+                else{
                 FragmentManager fm= f.getParentFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.replace(R.id.contentFragment, AddSetFragment.newInstance(set));
                 transaction.commit();
+                }
             });
         }
 
@@ -125,7 +150,8 @@ public class SetRecycler extends RecyclerView {
 
                 FirebaseManager.db.collection("Sets").document(set).get().addOnSuccessListener((t)->{
                     title.setText(t.get("title")+"");
-                    dateOfCreate.setText(t.get("date").toString());
+                    dateOfCreate.setText(t.get("date")+"");
+                    System.out.println(JsonParser.parseString(t.get("cards")+""));
                     int x= JsonParser.parseString(t.get("cards")+"").getAsJsonObject().size();
                    length.setText( x+"");
 

@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.views.SetRecycler;
 import com.google.firebase.firestore.DocumentSnapshot;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +35,8 @@ public class AddSetFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String setId;
 
+     EditText titleEt,descriptionEt,typeEt;
+     Switch publicSwitch;
 
     public AddSetFragment() {
         // Required empty public constructor
@@ -70,17 +76,33 @@ public class AddSetFragment extends Fragment {
 
     }
     private void innit(View v){
-        if(setId== SetRecycler.NEWSET)
-            return;
-       FirebaseManager.db.collection("Sets").document(setId).get().addOnSuccessListener((t)->{
-           ((EditText) v.findViewById(R.id.titleEt)).setText(t.get("title")+"");
-           ((EditText) v.findViewById(R.id.descriptionEt)).setText(t.get("description").toString());
-           ((TextView) v.findViewById(R.id.date)).setText(t.get("date").toString());
-           ((TextView) v.findViewById(R.id.typeEt)).setText(t.get("type").toString());
-           ((Switch) v.findViewById(R.id.publicSwitch)).setChecked( Boolean.parseBoolean(t.get("public").toString()));
+            addListeners(v);
+    }
+    private void addListeners(View v){
+        titleEt=((EditText) v.findViewById(R.id.titleEt));descriptionEt= v.findViewById(R.id.descriptionEt);typeEt= v.findViewById(R.id.typeEt);publicSwitch=(Switch) v.findViewById(R.id.publicSwitch);
+        FirebaseManager.db.collection("Sets").document(setId).get().addOnSuccessListener((t)->{
+            ((TextView) v.findViewById(R.id.date)).setText(t.get("date")+"");
+            publicSwitch.setChecked( Boolean.parseBoolean(t.get("public")+""));
+            descriptionEt.setText(t.get("description")+"");
+            typeEt.setText(t.get("type")+"");
+            titleEt.setText(t.get("title")+"");
 
+        });
+        titleEt.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                FirebaseManager.db.collection("Sets").document(setId).update("title",s.toString());
+            }public void beforeTextChanged(CharSequence s, int start, int count, int after) {}public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
 
-       });
-        ;
+        descriptionEt.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                FirebaseManager.db.collection("Sets").document(setId).update("description",s.toString());
+            }public void beforeTextChanged(CharSequence s, int start, int count, int after) {}public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        typeEt.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+                FirebaseManager.db.collection("Sets").document(setId).update("type",s.toString());
+            }public void beforeTextChanged(CharSequence s, int start, int count, int after) {}public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
     }
 }
