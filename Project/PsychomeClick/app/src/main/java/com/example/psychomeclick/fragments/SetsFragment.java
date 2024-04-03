@@ -75,8 +75,9 @@ public class SetsFragment extends Fragment {
                 t.getDocuments().forEach((d)->{
                     ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(d.getId());
                 });
+              //  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
+
             });
-        ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
 
 
     }
