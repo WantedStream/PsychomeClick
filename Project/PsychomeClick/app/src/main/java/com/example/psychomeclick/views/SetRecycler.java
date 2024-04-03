@@ -99,7 +99,7 @@ public class SetRecycler extends RecyclerView {
         @Override
         public void onBindViewHolder(@NonNull SetsViewHolder holder, int position) {
             String set = sets.get(position);
-            holder.bind(set, isAddSet && position == 0); // Check both set and position for "ADD SET"
+            holder.bind(set, isAddSet && position == set.length()-1); // Check both set and position for "ADD SET"
         }
 
         class SetsViewHolder extends RecyclerView.ViewHolder {
@@ -114,6 +114,7 @@ public class SetRecycler extends RecyclerView {
 
             void bind(String set, boolean isAddSet) {
                 if (isAddSet) {
+                    System.out.println(set);
                     this.dateOfCreate.setVisibility(GONE);
                     this.length.setVisibility(GONE);
                     this.title.setText("ADD SET");
