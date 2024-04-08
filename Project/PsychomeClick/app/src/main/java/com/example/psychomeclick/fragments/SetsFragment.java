@@ -12,6 +12,11 @@ import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.views.SetRecycler;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SetsFragment#newInstance} factory method to
@@ -71,14 +76,29 @@ public class SetsFragment extends Fragment {
     public void innitView(View v){
             SetRecycler setRecycler=(SetRecycler)v.findViewById(R.id.setRecycler);
             setRecycler.setFragment(this);
-            FirebaseManager.db.collection("Sets").get().addOnSuccessListener((t)->{
-                t.getDocuments().forEach((d)->{
-                    ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(d.getId());
+            FirebaseManager.db.collection("Sets").get().addOnSuccessListener((t)-> {
+                t.getDocuments().forEach((d) -> {
+                    ((SetRecycler.SetAdapter) setRecycler.getAdapter()).addSet(d.getId());
                 });
-              //  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
+                //  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
+                v.findViewById(R.id.addSet).setOnClickListener((b) -> {
+
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("cards", "{}");
+
+                    map.put("date", new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()) + "");
+                    map.put("description", "");
+                    map.put("public", false);
+                    map.put("title", "new set");
+                    map.put("type", "");
+                    map.put("userid", FirebaseManager.firebaseAuth.getUid());
+
+                    FirebaseManager.db.collection("Sets").add(map).addOnCompleteListener((documentReference) -> {
+                       ((SetRecycler.SetAdapter) (setRecycler.getAdapter())).addSet(documentReference.getResult().getId().toString());
+                    });
+                });
+
 
             });
-
-
     }
 }

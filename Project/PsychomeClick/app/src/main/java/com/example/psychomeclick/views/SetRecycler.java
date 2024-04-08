@@ -77,10 +77,10 @@ public class SetRecycler extends RecyclerView {
             this.sets = new ArrayList<>();
         }
 
-        public void addSet(String set) {
-            isAddSet = true; // Set flag for "ADD SET" before adding new set
+        public void addSet(String set) {// Set flag for "ADD SET" before adding new set
             sets.add(set);
-            notifyItemInserted(sets.size() - 1); // Insert "ADD SET" item at position 0
+            adapter.notifyDataSetChanged();
+          smoothScrollToPosition(adapter.getItemCount() - 1);
         }
 
         @NonNull
@@ -99,7 +99,7 @@ public class SetRecycler extends RecyclerView {
         @Override
         public void onBindViewHolder(@NonNull SetsViewHolder holder, int position) {
             String set = sets.get(position);
-            holder.bind(set, isAddSet && position == set.length()-1); // Check both set and position for "ADD SET"
+            holder.bind(set); // Check both set and position for "ADD SET"
         }
 
         class SetsViewHolder extends RecyclerView.ViewHolder {
@@ -112,37 +112,13 @@ public class SetRecycler extends RecyclerView {
                 title = itemView.findViewById(R.id.title);
             }
 
-            void bind(String set, boolean isAddSet) {
-                if (isAddSet) {
-                    System.out.println(set);
-                    this.dateOfCreate.setVisibility(GONE);
-                    this.length.setVisibility(GONE);
-                    this.title.setText("ADD SET");
-                    this.title.setTextColor(Color.GRAY);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
-                    params.gravity = Gravity.CENTER;
-                    this.title.setLayoutParams(params);
-
-                    ((View) title.getParent()).setOnClickListener(b -> {
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("cards", "{}");
-                        map.put("date", Calendar.getInstance().getTime() + "");
-                        map.put("description", "");
-                        map.put("public", false);
-                        map.put("title", "set");
-                        map.put("type", "");
-                        map.put("userid", FirebaseManager.firebaseAuth.getUid());
-
-                        FirebaseManager.db.collection("Sets").add(map).addOnCompleteListener((documentReference) -> {
-                            sets.add(documentReference.getResult().getId().toString());
-                            notifyItemInserted(0); // Update with new set ID at position 0
-                        });
-                    });
-
-                } else {
+            void bind(String set) {
                     FirebaseManager.db.collection("Sets").document(set).get().addOnSuccessListener((t) -> {
+                        System.out.println(set);
                         title.setText(t.get("title") + "");
                         dateOfCreate.setText(t.get("date") + "");
+                        System.out.println(t.get("cards"));
+                        System.out.println(t.get("title"));
                         int x = JsonParser.parseString(t.get("cards") + "").getAsJsonObject().size();
                         length.setText(x + "");
 
@@ -155,5 +131,5 @@ public class SetRecycler extends RecyclerView {
                     });
                 }
             }
-        }
+
 }}
