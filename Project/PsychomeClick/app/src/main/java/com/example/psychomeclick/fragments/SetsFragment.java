@@ -89,7 +89,7 @@ public class SetsFragment extends Fragment {
                     map.put("date", new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()) + "");
                     map.put("description", "");
                     map.put("public", false);
-                    map.put("title", "new set");
+                    map.put("title", "new card set #"+setRecycler.getAdapter().getItemCount());
                     map.put("type", "");
                     map.put("userid", FirebaseManager.firebaseAuth.getUid());
 

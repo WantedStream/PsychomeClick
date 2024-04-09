@@ -18,18 +18,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
-        <LinearLayout
+        <Button
             android:id="@+id/addSet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="5"
-            android:background="@drawable/cardsetbackground"
-            android:orientation="vertical"
+            android:text="add set"
+            android:textSize="60dp"
+android:backgroundTint="#FFC107"            android:orientation="vertical"
             >
 
 
 
-        </LinearLayout>
+        </Button>
 
     </LinearLayout>
 
