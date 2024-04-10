@@ -15,17 +15,13 @@ import android.widget.TextView;
 
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.views.SetRecycler;
-import com.google.firebase.firestore.DocumentSnapshot;
-
-import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddSetFragment#newInstance} factory method to
+ * Use the {@link EditSetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddSetFragment extends Fragment {
+public class EditSetFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +34,7 @@ public class AddSetFragment extends Fragment {
      EditText titleEt,descriptionEt,typeEt;
      Switch publicSwitch;
 
-    public AddSetFragment() {
+    public EditSetFragment() {
         // Required empty public constructor
     }
 
@@ -50,8 +46,8 @@ public class AddSetFragment extends Fragment {
      * @return A new instance of fragment AddSetFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddSetFragment newInstance(String param1) {
-        AddSetFragment fragment = new AddSetFragment();
+    public static EditSetFragment newInstance(String param1) {
+        EditSetFragment fragment = new EditSetFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
@@ -103,6 +99,10 @@ public class AddSetFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 FirebaseManager.db.collection("Sets").document(setId).update("type",s.toString());
             }public void beforeTextChanged(CharSequence s, int start, int count, int after) {}public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+        publicSwitch.setOnCheckedChangeListener((b,isChecked)->{
+            FirebaseManager.db.collection("Sets").document(setId).update("public",isChecked+"");
+
         });
     }
 }

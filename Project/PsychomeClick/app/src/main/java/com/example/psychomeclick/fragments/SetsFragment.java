@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.CardSet;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.views.SetRecycler;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,8 +80,8 @@ public class SetsFragment extends Fragment {
             SetRecycler setRecycler=(SetRecycler)v.findViewById(R.id.setRecycler);
             setRecycler.setFragment(this);
             FirebaseManager.db.collection("Sets").get().addOnSuccessListener((t)-> {
-                t.getDocuments().forEach((d) -> {
-                    ((SetRecycler.SetAdapter) setRecycler.getAdapter()).addSet(d.getId());
+                t.getDocuments().forEach((documentSnapshot) -> {
+                    ((SetRecycler.SetAdapter) setRecycler.getAdapter()).addSet(new CardSet(documentSnapshot.getId(),documentSnapshot.get("title")+"",documentSnapshot.get("date")+"",Boolean.parseBoolean(documentSnapshot.get("public")+""),documentSnapshot.get("description")+"",documentSnapshot.get("cards")+"",documentSnapshot.get("userId")+""));
                 });
                 //  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
                 v.findViewById(R.id.addSet).setOnClickListener((b) -> {
@@ -92,9 +95,8 @@ public class SetsFragment extends Fragment {
                     map.put("title", "new card set #"+setRecycler.getAdapter().getItemCount());
                     map.put("type", "");
                     map.put("userid", FirebaseManager.firebaseAuth.getUid());
-
-                    FirebaseManager.db.collection("Sets").add(map).addOnCompleteListener((documentReference) -> {
-                       ((SetRecycler.SetAdapter) (setRecycler.getAdapter())).addSet(documentReference.getResult().getId().toString());
+                    FirebaseManager.db.collection("Sets").add(map).addOnSuccessListener((d) -> {
+                       ((SetRecycler.SetAdapter) (setRecycler.getAdapter())).addSet(new CardSet(d.getId(),map.get("title")+"",map.get("date")+"",Boolean.parseBoolean(map.get("public")+""),map.get("description")+"",map.get("cards")+"",map.get("userId")+""));
                     });
                 });
 

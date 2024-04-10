@@ -1,14 +1,11 @@
 package com.example.psychomeclick.views;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.opengl.Visibility;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,22 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.fragments.AddSetFragment;
-import com.example.psychomeclick.fragments.SetsFragment;
-import com.example.psychomeclick.helpers.ChatAdapter;
+import com.example.psychomeclick.fragments.EditSetFragment;
+import com.example.psychomeclick.model.CardSet;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class SetRecycler extends RecyclerView {
     private SetAdapter adapter;
@@ -69,7 +57,7 @@ public class SetRecycler extends RecyclerView {
     public class SetAdapter extends RecyclerView.Adapter<SetAdapter.SetsViewHolder> {
 
         Context context;
-        List<String> sets; // List of actual set IDs (not placeholders)
+        List<CardSet> sets;
         boolean isAddSet = false; // Flag for "ADD SET" item
 
         public SetAdapter(Context context) {
@@ -77,7 +65,7 @@ public class SetRecycler extends RecyclerView {
             this.sets = new ArrayList<>();
         }
 
-        public void addSet(String set) {// Set flag for "ADD SET" before adding new set
+        public void addSet(CardSet set) {// Set flag for "ADD SET" before adding new set
             sets.add(set);
             adapter.notifyDataSetChanged();
           smoothScrollToPosition(adapter.getItemCount() - 1);
@@ -98,37 +86,40 @@ public class SetRecycler extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull SetsViewHolder holder, int position) {
-            String set = sets.get(position);
+            CardSet set = sets.get(position);
             holder.bind(set); // Check both set and position for "ADD SET"
         }
 
         class SetsViewHolder extends RecyclerView.ViewHolder {
             TextView length, dateOfCreate, title;
-
+            Button deleteBtn;
             public SetsViewHolder(@NonNull View itemView) {
                 super(itemView);
                 length = itemView.findViewById(R.id.length);
                 dateOfCreate = itemView.findViewById(R.id.date);
                 title = itemView.findViewById(R.id.title);
+                deleteBtn=itemView.findViewById(R.id.deletebtn);
             }
 
-            void bind(String set) {
-                    FirebaseManager.db.collection("Sets").document(set).get().addOnSuccessListener((t) -> {
-                        System.out.println(set);
-                        title.setText(t.get("title") + "");
-                        dateOfCreate.setText(t.get("date") + "");
-                        System.out.println(t.get("cards"));
-                        System.out.println(t.get("title"));
-                        int x = JsonParser.parseString(t.get("cards") + "").getAsJsonObject().size();
+            void bind(CardSet set) {
+
+                        title.setText(set.getTitle() + "");
+                        dateOfCreate.setText(set.getDate());
+                        int x = JsonParser.parseString(set.getCards()).getAsJsonObject().size();
                         length.setText(x + "");
 
                         ((View) title.getParent()).setOnClickListener((b) -> {
                             FragmentManager fm = f.getParentFragmentManager();
                             FragmentTransaction transaction = fm.beginTransaction();
-                            transaction.replace(R.id.contentFragment, AddSetFragment.newInstance(set));
+                            transaction.replace(R.id.contentFragment, EditSetFragment.newInstance(set.getId()));
                             transaction.commit();
                         });
-                    });
+                        deleteBtn.setOnClickListener((b)->{
+                            FirebaseManager.db.collection("Sets").document(set.getId()).delete().addOnSuccessListener((d) -> {
+                                adapter.sets.remove(set);
+                                adapter.notifyDataSetChanged();
+                            });
+                        });
                 }
             }
 
