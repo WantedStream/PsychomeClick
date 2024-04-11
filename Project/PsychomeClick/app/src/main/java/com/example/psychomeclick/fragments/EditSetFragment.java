@@ -66,7 +66,7 @@ public class EditSetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_add_set, container, false);
+        View v=inflater.inflate(R.layout.fragment_edit_set, container, false);
         innit(v);
         return v;
 
