@@ -73,6 +73,7 @@ public class EditSetFragment extends Fragment {
     }
     private void innit(View v){
             addListeners(v);
+            v.findViewById(R.id.cardRecycler);
     }
     private void addListeners(View v){
         titleEt=((EditText) v.findViewById(R.id.titleEt));descriptionEt= v.findViewById(R.id.descriptionEt);typeEt= v.findViewById(R.id.typeEt);publicSwitch=(Switch) v.findViewById(R.id.publicSwitch);

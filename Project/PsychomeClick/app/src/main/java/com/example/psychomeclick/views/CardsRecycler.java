@@ -16,9 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.Card;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CardsRecycler extends RecyclerView {
     private CardAdapter adapter;
@@ -52,14 +56,14 @@ public class CardsRecycler extends RecyclerView {
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
 
         Context context;
-        List<CardSet> sets;
+        List<Card> cardList;
         public CardAdapter(Context context) {
             this.context = context;
-            this.sets = new ArrayList<>();
+            this.cardList = new ArrayList<>();
         }
 
-        public void addSet(CardSet set) {
-            sets.add(set);
+        public void addSet(Card card) {
+            cardList.add(card);
             adapter.notifyDataSetChanged();
             smoothScrollToPosition(adapter.getItemCount() - 1);
         }
@@ -74,23 +78,22 @@ public class CardsRecycler extends RecyclerView {
 
         @Override
         public int getItemCount() {
-            return this.sets.size();
+            return this.cardList.size();
         }
 
         @Override
         public void onBindViewHolder(@NonNull CardsRecycler.CardAdapter.CardViewHolder holder, int position) {
-            CardSet set = sets.get(position);
+            Card set = cardList.get(position);
             holder.bind(set);
         }
 
         class CardViewHolder extends RecyclerView.ViewHolder {
-            TextView length, dateOfCreate, title;
-            Button deleteBtn;
+            TextView term, meaning, imageId;
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
             }
 
-            void bind(CardSet set) {
+            void bind(Card set) {
 
             }
         }

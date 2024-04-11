@@ -102,6 +102,10 @@
 
             </LinearLayout>
         </LinearLayout>
+        <com.example.psychomeclick.views.CardsRecycler
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardRecycler"/>
 
     </LinearLayout>
 </FrameLayout>
