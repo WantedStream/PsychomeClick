@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:Hint="Name"
+            android:hint="term"
             android:background="#FFFFFF"/>
 
         <TextView
@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="text"
-            android:Hint="Name"
+            android:hint="meaning"
             android:background="#FDFDFD"/>
 
         <ImageView
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:src="@tools:sample/avatars" />
+            android:src="@drawable/cardsetbackground" />
     </LinearLayout>
 
 

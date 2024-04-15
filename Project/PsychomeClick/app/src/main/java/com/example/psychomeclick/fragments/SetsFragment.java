@@ -87,7 +87,7 @@ public class SetsFragment extends Fragment {
                 v.findViewById(R.id.addSet).setOnClickListener((b) -> {
 
                     HashMap<String, Object> map = new HashMap<>();
-                    map.put("cards", "{}");
+                    map.put("cards", "{ \"\": { \"meaning\": \"\", \"image\": \"\" } }");
 
                     map.put("date", new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()) + "");
                     map.put("description", "");

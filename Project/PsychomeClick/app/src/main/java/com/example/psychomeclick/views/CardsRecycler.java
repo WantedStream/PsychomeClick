@@ -26,7 +26,6 @@ import java.util.List;
 
 public class CardsRecycler extends RecyclerView {
     private CardAdapter adapter;
-    private Fragment f;
 
     public CardsRecycler(@NonNull Context context) {
         super(context);
@@ -49,9 +48,6 @@ public class CardsRecycler extends RecyclerView {
         adapter=new CardsRecycler.CardAdapter(context);
         setAdapter(adapter);
     }
-    public void setFragment(Fragment f){
-        this.f=f;
-    }
 
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
 
@@ -62,7 +58,7 @@ public class CardsRecycler extends RecyclerView {
             this.cardList = new ArrayList<>();
         }
 
-        public void addSet(Card card) {
+        public void addCard(Card card) {
             cardList.add(card);
             adapter.notifyDataSetChanged();
             smoothScrollToPosition(adapter.getItemCount() - 1);
@@ -91,10 +87,14 @@ public class CardsRecycler extends RecyclerView {
             TextView term, meaning, imageId;
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
+                term=itemView.findViewById(R.id.termEt);
+                meaning=itemView.findViewById(R.id.meaningET);
+
             }
 
-            void bind(Card set) {
-
+            void bind(Card card) {
+                term.setText(card.getTerm());
+                meaning.setText(card.getMeaning());
             }
         }
 

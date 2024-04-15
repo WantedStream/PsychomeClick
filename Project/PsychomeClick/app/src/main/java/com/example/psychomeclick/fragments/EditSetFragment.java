@@ -14,7 +14,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.model.Card;
+import com.example.psychomeclick.model.CardSet;
 import com.example.psychomeclick.model.FirebaseManager;
+import com.example.psychomeclick.views.CardsRecycler;
+import com.example.psychomeclick.views.SetRecycler;
+import com.google.gson.Gson;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -73,9 +84,11 @@ public class EditSetFragment extends Fragment {
     }
     private void innit(View v){
             addListeners(v);
-            v.findViewById(R.id.cardRecycler);
+
+
     }
     private void addListeners(View v){
+        CardsRecycler cardsRecycler=  v.findViewById(R.id.cardRecycler);
         titleEt=((EditText) v.findViewById(R.id.titleEt));descriptionEt= v.findViewById(R.id.descriptionEt);typeEt= v.findViewById(R.id.typeEt);publicSwitch=(Switch) v.findViewById(R.id.publicSwitch);
         FirebaseManager.db.collection("Sets").document(setId).get().addOnSuccessListener((t)->{
             ((TextView) v.findViewById(R.id.date)).setText(t.get("date")+"");
@@ -84,6 +97,24 @@ public class EditSetFragment extends Fragment {
             typeEt.setText(t.get("type")+"");
             titleEt.setText(t.get("title")+"");
 
+            Gson gson = new Gson();
+            // Deserialize the JSON string into an object
+            Map<String,Map<String,String>> cards = gson.fromJson(t.get("cards")+"", HashMap.class);
+            cards.forEach((key,value)->{
+                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(new Card(key,value.get("meaning"),value.get("image")));
+
+            });
+
+
+        v.findViewById(R.id.addCard).setOnClickListener((V)->{
+            cards.put("",)
+            String str= "{ \"\": { \"meaning\": \"\", \"image\": \"\" } }";
+
+            FirebaseManager.db.collection("Sets").document(setId).update("cards",str).addOnSuccessListener((d) -> {
+                ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(new Card("","",""));
+            });
+
+        });
         });
         titleEt.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
