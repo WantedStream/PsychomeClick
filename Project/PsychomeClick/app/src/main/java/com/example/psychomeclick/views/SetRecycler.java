@@ -105,7 +105,7 @@ public class SetRecycler extends RecyclerView {
 
                         title.setText(set.getTitle() + "");
                         dateOfCreate.setText(set.getDate());
-                        int x = JsonParser.parseString(set.getCards()).getAsJsonObject().size();
+                        int x = JsonParser.parseString(set.getCards()).getAsJsonArray().size();
                         length.setText(x + "");
 
                         ((View) title.getParent()).setOnClickListener((b) -> {

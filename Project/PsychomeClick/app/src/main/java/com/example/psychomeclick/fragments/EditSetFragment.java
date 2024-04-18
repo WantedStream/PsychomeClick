@@ -20,6 +20,7 @@ import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.views.CardsRecycler;
 import com.example.psychomeclick.views.SetRecycler;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -98,20 +99,25 @@ public class EditSetFragment extends Fragment {
             titleEt.setText(t.get("title")+"");
 
             Gson gson = new Gson();
-            // Deserialize the JSON string into an object
-            Map<String,Map<String,String>> cards = gson.fromJson(t.get("cards")+"", HashMap.class);
-            cards.forEach((key,value)->{
-                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(new Card(key,value.get("meaning"),value.get("image")));
-
+           JsonArray cards = gson.fromJson(t.get("cards")+"", JsonArray.class);
+            cards.forEach(e->{
+                JsonArray word=e.getAsJsonArray();
+                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(new Card(word.get(0).getAsString(),word.get(1).getAsString(),word.get(2).getAsString()));
             });
+            cardsRecycler.setAdapter();
 
 
         v.findViewById(R.id.addCard).setOnClickListener((V)->{
-            cards.put("",)
-            String str= "{ \"\": { \"meaning\": \"\", \"image\": \"\" } }";
+            JsonArray newWord=new JsonArray(3);
+            newWord.add("");
+            newWord.add("");
+            newWord.add("");
+         cards.add(newWord);
 
-            FirebaseManager.db.collection("Sets").document(setId).update("cards",str).addOnSuccessListener((d) -> {
-                ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(new Card("","",""));
+
+            FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString()).addOnSuccessListener((d) -> {
+
+                ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(newWord);
             });
 
         });

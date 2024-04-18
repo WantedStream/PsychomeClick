@@ -1,6 +1,8 @@
 package com.example.psychomeclick.views;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.Card;
+import com.example.psychomeclick.model.FirebaseManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 
 import java.util.ArrayList;
@@ -27,11 +31,16 @@ import java.util.List;
 public class CardsRecycler extends RecyclerView {
     private CardAdapter adapter;
 
+    private String setId;
+
+
     public CardsRecycler(@NonNull Context context) {
         super(context);
         init(context);
     }
-
+    public void setSetId(String setId){
+        this.setId=setId;
+    }
     public CardsRecycler(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -52,13 +61,15 @@ public class CardsRecycler extends RecyclerView {
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
 
         Context context;
-        List<Card> cardList;
-        public CardAdapter(Context context) {
+       // List<Card> cardList;
+        JsonArray cardList;
+        public CardAdapter(Context context, JsonArray cardList) {
             this.context = context;
-            this.cardList = new ArrayList<>();
+            this.cardList =cardList;
         }
 
-        public void addCard(Card card) {
+        public void addCard(JsonArray card) {
+            JsonArray jsonArray;
             cardList.add(card);
             adapter.notifyDataSetChanged();
             smoothScrollToPosition(adapter.getItemCount() - 1);
@@ -79,24 +90,37 @@ public class CardsRecycler extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull CardsRecycler.CardAdapter.CardViewHolder holder, int position) {
-            Card set = cardList.get(position);
-            holder.bind(set);
+            JsonArray card = (JsonArray) cardList.get(position);
+            holder.bind(card);
         }
 
         class CardViewHolder extends RecyclerView.ViewHolder {
             TextView term, meaning, imageId;
+
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
-                term=itemView.findViewById(R.id.termEt);
-                meaning=itemView.findViewById(R.id.meaningET);
+                term = itemView.findViewById(R.id.termEt);
+                meaning = itemView.findViewById(R.id.meaningET);
 
             }
 
-            void bind(Card card) {
-                term.setText(card.getTerm());
-                meaning.setText(card.getMeaning());
-            }
-        }
+            void bind(JsonArray card) {
+                term.setText(card.get(0).getAsString());
+                meaning.setText(card.get(1).getAsString());
+                term.addTextChangedListener(new TextWatcher() {
+                    public void afterTextChanged(Editable s) {
+                        card.setTerm(s.toString());
+                    }
 
-    }}
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+                });
+
+
+            }
+        }}
+    }
 
