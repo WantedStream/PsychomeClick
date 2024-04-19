@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -81,6 +82,7 @@ public class SetsFragment extends Fragment {
             setRecycler.setFragment(this);
             FirebaseManager.db.collection("Sets").get().addOnSuccessListener((t)-> {
                 t.getDocuments().forEach((documentSnapshot) -> {
+                    if(documentSnapshot.get("userid").equals(FirebaseManager.firebaseAuth.getUid()))
                     ((SetRecycler.SetAdapter) setRecycler.getAdapter()).addSet(new CardSet(documentSnapshot.getId(),documentSnapshot.get("title")+"",documentSnapshot.get("date")+"",Boolean.parseBoolean(documentSnapshot.get("public")+""),documentSnapshot.get("description")+"",documentSnapshot.get("cards")+"",documentSnapshot.get("userId")+""));
                 });
                 //  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);

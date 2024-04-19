@@ -1,13 +1,18 @@
 package com.example.psychomeclick.views;
 
+import static com.example.psychomeclick.fragments.EditSetFragment.disableEditText;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.fragments.EditSetFragment;
 import com.example.psychomeclick.model.Card;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.google.gson.Gson;
@@ -35,7 +41,7 @@ public class CardsRecycler extends RecyclerView {
 
     private String setId;
 
-
+    private boolean canEdit;
     public CardsRecycler(@NonNull Context context) {
         super(context);
         init(context);
@@ -58,6 +64,10 @@ public class CardsRecycler extends RecyclerView {
         setLayoutManager(layoutManager);
         adapter=new CardsRecycler.CardAdapter(context);
         setAdapter(adapter);
+    }
+
+    public void setCanEdit(boolean canEdit) {
+        this.canEdit = canEdit;
     }
 
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
@@ -97,7 +107,7 @@ public class CardsRecycler extends RecyclerView {
         }
 
         class CardViewHolder extends RecyclerView.ViewHolder {
-            TextView term, meaning, imageId;
+            EditText term, meaning, imageId;
 
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -110,7 +120,13 @@ public class CardsRecycler extends RecyclerView {
                 if(card.get(0).isJsonNull()) term.setText("");
                 else term.setText(card.get(0).getAsString());
                 if(card.get(1).isJsonNull()) meaning.setText("");
-                else meaning.setText(card.get(0).getAsString());
+                else meaning.setText(card.get(1).getAsString());
+                if(!canEdit){
+                    disableEditText(term);
+                    disableEditText(meaning);
+                    return;
+                }
+
                 term.addTextChangedListener(new TextWatcher() {
                     public void afterTextChanged(Editable s) {
                         card.set(0,new Gson().fromJson( s.toString(), JsonElement.class));
@@ -142,5 +158,6 @@ public class CardsRecycler extends RecyclerView {
             }
 
         }}
+
     }
 

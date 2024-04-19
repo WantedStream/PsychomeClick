@@ -1,11 +1,14 @@
 package com.example.psychomeclick.fragments;
 
+import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,11 +89,9 @@ public class EditSetFragment extends Fragment {
 
     }
     private void innit(View v){
-            addListeners(v);
-
-
+            addData(v);
     }
-    private void addListeners(View v){
+    private void addData(View v){
         CardsRecycler cardsRecycler=  v.findViewById(R.id.cardRecycler);
         titleEt=((EditText) v.findViewById(R.id.titleEt));descriptionEt= v.findViewById(R.id.descriptionEt);typeEt= v.findViewById(R.id.typeEt);publicSwitch=(Switch) v.findViewById(R.id.publicSwitch);
         FirebaseManager.db.collection("Sets").document(setId).get().addOnSuccessListener((t)->{
@@ -99,30 +100,48 @@ public class EditSetFragment extends Fragment {
             descriptionEt.setText(t.get("description")+"");
             typeEt.setText(t.get("type")+"");
             titleEt.setText(t.get("title")+"");
+            boolean canEdit=t.get("userid").equals(FirebaseManager.firebaseAuth.getUid());
 
             Gson gson = new Gson();
            JsonArray cards = gson.fromJson(t.get("cards")+"", JsonArray.class);
            cardsRecycler.setSetId(setId);
+
             cards.forEach(e->{
                 ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(e.getAsJsonArray());
             });
+            cardsRecycler.setCanEdit(canEdit);
+
+            if(canEdit){
+                addListeners();
+
+                v.findViewById(R.id.addCard).setOnClickListener((V)->{
+                    JsonArray newWord=new JsonArray(3);
+                    newWord.add( JsonParser.parseString(""));
+                    newWord.add( JsonParser.parseString(""));
+                    newWord.add(JsonParser.parseString(""));
+                    cards.add(newWord);
 
 
-        v.findViewById(R.id.addCard).setOnClickListener((V)->{
-            JsonArray newWord=new JsonArray(3);
-            newWord.add( JsonParser.parseString(""));
-            newWord.add( JsonParser.parseString(""));
-            newWord.add(JsonParser.parseString(""));
-         cards.add(newWord);
+                    FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString()).addOnSuccessListener((d) -> {
 
+                        ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(newWord);
+                    });
 
-            FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString()).addOnSuccessListener((d) -> {
+                });
+            }
+            else{
+                v.findViewById(R.id.addCard).setVisibility(View.GONE);
+                publicSwitch.setVisibility(View.GONE);
+                disableEditText(titleEt);
+                titleEt.setGravity(Gravity.LEFT);
+                disableEditText(descriptionEt);
+                disableEditText(typeEt);
 
-                ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(newWord);
-            });
-
+            }
         });
-        });
+
+    }
+    public void addListeners(){
         titleEt.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 FirebaseManager.db.collection("Sets").document(setId).update("title",s.toString());
@@ -143,5 +162,14 @@ public class EditSetFragment extends Fragment {
             FirebaseManager.db.collection("Sets").document(setId).update("public",isChecked+"");
 
         });
+    }
+
+    public static void disableEditText(EditText editText) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        editText.setBackgroundColor(Color.TRANSPARENT);
+        editText.setGravity(Gravity.CENTER);
     }
 }
