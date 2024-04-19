@@ -29,6 +29,7 @@ public class SetRecycler extends RecyclerView {
     private SetAdapter adapter;
     private Fragment f;
 
+    private boolean canDelete;
     public SetRecycler(@NonNull Context context) {
         super(context);
         init(context);
@@ -52,6 +53,10 @@ public class SetRecycler extends RecyclerView {
     }
     public void setFragment(Fragment f){
         this.f=f;
+    }
+
+    public void setCanDelete(boolean canDelete) {
+        this.canDelete = canDelete;
     }
 
     public class SetAdapter extends RecyclerView.Adapter<SetAdapter.SetsViewHolder> {
@@ -102,6 +107,8 @@ public class SetRecycler extends RecyclerView {
                 dateOfCreate = itemView.findViewById(R.id.date);
                 title = itemView.findViewById(R.id.title);
                 deleteBtn=itemView.findViewById(R.id.deletebtn);
+                if(!canDelete)
+                    deleteBtn.setVisibility(GONE);
             }
 
             void bind(CardSet set) {

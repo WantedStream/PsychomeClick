@@ -86,6 +86,7 @@ public class AllSetsFragment extends Fragment {
     private void doSearch(String str,View v){
         SetRecycler setRecycler=(SetRecycler)v.findViewById(R.id.setAllRecycler);
         setRecycler.setFragment(this);
+        setRecycler.setCanDelete(false);
         FirebaseManager.db.collection("Sets").get().addOnSuccessListener((t)-> {
             SetRecycler.SetAdapter adapter= (SetRecycler.SetAdapter) setRecycler.getAdapter();
             adapter.removeAllSets();

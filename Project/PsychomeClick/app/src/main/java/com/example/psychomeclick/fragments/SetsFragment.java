@@ -80,6 +80,7 @@ public class SetsFragment extends Fragment {
     public void innitView(View v){
             SetRecycler setRecycler=(SetRecycler)v.findViewById(R.id.setRecycler);
             setRecycler.setFragment(this);
+            setRecycler.setCanDelete(true);
             FirebaseManager.db.collection("Sets").get().addOnSuccessListener((t)-> {
                 t.getDocuments().forEach((documentSnapshot) -> {
                     if(documentSnapshot.get("userid").equals(FirebaseManager.firebaseAuth.getUid()))
