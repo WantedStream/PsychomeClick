@@ -22,6 +22,7 @@ import com.example.psychomeclick.views.SetRecycler;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -109,13 +110,13 @@ public class EditSetFragment extends Fragment {
 
         v.findViewById(R.id.addCard).setOnClickListener((V)->{
             JsonArray newWord=new JsonArray(3);
-            newWord.add("");
-            newWord.add("");
-            newWord.add("");
+            newWord.add( JsonParser.parseString(""));
+            newWord.add( JsonParser.parseString(""));
+            newWord.add(JsonParser.parseString(""));
          cards.add(newWord);
 
 
-            FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString().replace("null","\"\"")).addOnSuccessListener((d) -> {
+            FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString()).addOnSuccessListener((d) -> {
 
                 ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(newWord);
             });

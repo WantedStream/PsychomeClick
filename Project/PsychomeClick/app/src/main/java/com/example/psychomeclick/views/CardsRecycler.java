@@ -109,11 +109,12 @@ public class CardsRecycler extends RecyclerView {
             void bind(JsonArray card) {
                 if(card.get(0).isJsonNull()) term.setText("");
                 else term.setText(card.get(0).getAsString());
-                meaning.setText(card.get(1).getAsString());
+                if(card.get(1).isJsonNull()) meaning.setText("");
+                else meaning.setText(card.get(0).getAsString());
                 term.addTextChangedListener(new TextWatcher() {
                     public void afterTextChanged(Editable s) {
                         card.set(0,new Gson().fromJson( s.toString(), JsonElement.class));
-                     FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString().replace("null","\"\"")).addOnSuccessListener((d) -> {
+                     FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString()).addOnSuccessListener((d) -> {
                         });
 
                     }
@@ -127,7 +128,7 @@ public class CardsRecycler extends RecyclerView {
                 meaning.addTextChangedListener(new TextWatcher() {
                     public void afterTextChanged(Editable s) {
                         card.set(1,new Gson().fromJson( s.toString(), JsonElement.class));
-                        FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString().replace("null","\"\"")).addOnSuccessListener((d) -> {
+                        FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString()).addOnSuccessListener((d) -> {
                         });
 
                     }
