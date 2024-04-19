@@ -21,6 +21,7 @@ import com.example.psychomeclick.views.CardsRecycler;
 import com.example.psychomeclick.views.SetRecycler;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -100,11 +101,10 @@ public class EditSetFragment extends Fragment {
 
             Gson gson = new Gson();
            JsonArray cards = gson.fromJson(t.get("cards")+"", JsonArray.class);
+           cardsRecycler.setSetId(setId);
             cards.forEach(e->{
-                JsonArray word=e.getAsJsonArray();
-                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(new Card(word.get(0).getAsString(),word.get(1).getAsString(),word.get(2).getAsString()));
+                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(e.getAsJsonArray());
             });
-            cardsRecycler.setAdapter();
 
 
         v.findViewById(R.id.addCard).setOnClickListener((V)->{
@@ -115,7 +115,7 @@ public class EditSetFragment extends Fragment {
          cards.add(newWord);
 
 
-            FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString()).addOnSuccessListener((d) -> {
+            FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString().replace("null","\"\"")).addOnSuccessListener((d) -> {
 
                 ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(newWord);
             });

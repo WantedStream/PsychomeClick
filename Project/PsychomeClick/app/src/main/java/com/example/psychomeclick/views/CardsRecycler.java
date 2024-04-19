@@ -23,8 +23,10 @@ import com.example.psychomeclick.model.FirebaseManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
-
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,9 +65,9 @@ public class CardsRecycler extends RecyclerView {
         Context context;
        // List<Card> cardList;
         JsonArray cardList;
-        public CardAdapter(Context context, JsonArray cardList) {
+        public CardAdapter(Context context) {
             this.context = context;
-            this.cardList =cardList;
+            this.cardList =new JsonArray();
         }
 
         public void addCard(JsonArray card) {
@@ -105,22 +107,39 @@ public class CardsRecycler extends RecyclerView {
             }
 
             void bind(JsonArray card) {
-                term.setText(card.get(0).getAsString());
+                if(card.get(0).isJsonNull()) term.setText("");
+                else term.setText(card.get(0).getAsString());
                 meaning.setText(card.get(1).getAsString());
                 term.addTextChangedListener(new TextWatcher() {
                     public void afterTextChanged(Editable s) {
-                        card.setTerm(s.toString());
+                        card.set(0,new Gson().fromJson( s.toString(), JsonElement.class));
+                     FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString().replace("null","\"\"")).addOnSuccessListener((d) -> {
+                        });
+
                     }
 
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }
-
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                     }
                 });
 
+                meaning.addTextChangedListener(new TextWatcher() {
+                    public void afterTextChanged(Editable s) {
+                        card.set(1,new Gson().fromJson( s.toString(), JsonElement.class));
+                        FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString().replace("null","\"\"")).addOnSuccessListener((d) -> {
+                        });
+
+                    }
+
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+                });
 
             }
+
         }}
     }
 
