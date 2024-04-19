@@ -14,15 +14,15 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/setsbtn"
+            android:id="@+id/mysets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sets"
+            android:text="mysets"
             android:textSize="60dp"
             android:paddingHorizontal="60dp"/>
 
         <Button
-            android:id="@+id/videosbtn"
+            android:id="@+id/allsets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="60dp"

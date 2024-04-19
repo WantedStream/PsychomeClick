@@ -69,7 +69,7 @@ public class BookFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v= inflater.inflate(R.layout.fragment_book, container, false);
-        v.findViewById(R.id.setsbtn).setOnClickListener((b)->{
+        v.findViewById(R.id.mysets).setOnClickListener((b)->{
            // Intent intent = new Intent(getActivity(), NewSetActivity.class);
             //startActivity(intent);
             //this.getActivity().finish();
@@ -78,10 +78,11 @@ public class BookFragment extends Fragment {
             transaction.replace(R.id.contentFragment, new SetsFragment());
             transaction.commit();
         });
-        v.findViewById(R.id.videosbtn).setOnClickListener((b)->{
-            Intent intent = new Intent(getActivity(), VideosActivity.class);
-            startActivity(intent);
-            this.getActivity().finish();
+        v.findViewById(R.id.allsets).setOnClickListener((b)->{
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new AllSetsFragment());
+            transaction.commit();
         });
         return v;
     }

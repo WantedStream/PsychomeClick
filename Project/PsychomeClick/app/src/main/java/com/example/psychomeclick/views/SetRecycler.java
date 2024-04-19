@@ -70,7 +70,10 @@ public class SetRecycler extends RecyclerView {
             adapter.notifyDataSetChanged();
           smoothScrollToPosition(adapter.getItemCount() - 1);
         }
-
+        public void removeAllSets() {
+            sets= new ArrayList<>();
+            adapter.notifyDataSetChanged();
+        }
         @NonNull
         @Override
         public SetsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
