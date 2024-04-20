@@ -6,10 +6,7 @@
     tools:context=".fragments.QuestionListFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+
 
 
 
@@ -18,12 +15,13 @@
                 android:id="@+id/recyclerquestions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 />
 
 
 
 
 
-    </LinearLayout>
+
 
 </FrameLayout>

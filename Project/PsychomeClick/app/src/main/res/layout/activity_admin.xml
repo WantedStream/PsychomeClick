@@ -10,45 +10,68 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#009688">
+        android:background="@drawable/bg3">
 
-        <Button
-            android:id="@+id/insertQuestionBtn"
+        <TextView
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="add question"
 
-            />
+            android:gravity="center"
+            android:textSize="60dp"
+            android:color="#331116"
+            android:text="admin page" />
+
+
         <Button
             android:id="@+id/listQuestionBtn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="center"
             android:text="list questions"
 
             />
-        <Button
-            android:id="@+id/treeSubjectBtn"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="treeSubjectBtn"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            />
-        <FrameLayout
-            android:id="@+id/contentFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="50" />
+            <FrameLayout
+                android:id="@+id/contentFragment"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+               />
 
-        <Button
-            android:id="@+id/returnToMainMenuBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30dp"
-            android:layout_weight="1"
-            android:text="main menu" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/returnToMainMenuBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/fui_transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/backarrow" />
+
+                <Button
+                    android:id="@+id/insertQuestionBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="200dp"
+                    android:backgroundTint="@color/fui_transparent"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textSize="40dp"
+
+                    />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

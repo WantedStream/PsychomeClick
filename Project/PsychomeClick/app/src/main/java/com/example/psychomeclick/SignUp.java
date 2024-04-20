@@ -87,17 +87,17 @@ public class SignUp extends AppCompatActivity {
             firebaseAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(task -> {
                 HashMap<String, Object> user = new HashMap<>();
                 user.put("username", username);user.put("email", email);user.put("phone", phone);user.put("userprogress", "{}");
-                db.collection("Users").document(task.getUser().getUid()).set(user).addOnCompleteListener(t-> {
+                db.collection("Users").document(task.getUser().getUid()).set(user).addOnSuccessListener(t-> {
+                    task.getUser().sendEmailVerification().addOnSuccessListener((a)->{Toast.makeText(getApplicationContext(),"user created,email Verification sent",Toast.LENGTH_SHORT).show();});
+                   // LogIn.logIn(username,password,this);
 
-                    Toast.makeText(getApplicationContext(),"user created",Toast.LENGTH_SHORT).show();
-                    task.getUser().sendEmailVerification();
-                    LogIn.logIn(username,password,this);
-
-
+                });
 
                         }).addOnFailureListener((errorTask)->{
                 String str = (errorTask.getMessage() + "").substring((errorTask.getMessage() + "").lastIndexOf(":") + 1);
-                try {
+                    Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+
+                    try {
                     throw errorTask.getCause();
                 } catch (FirebaseAuthWeakPasswordException exception) {
                     this.passwordErrors.setText(exception.getReason());
@@ -116,7 +116,7 @@ public class SignUp extends AppCompatActivity {
 
                 });
 
-                    });
+
 
 
 
