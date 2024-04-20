@@ -63,14 +63,16 @@ public class TestActivity extends AppCompatActivity {
         answeredQuestions =userProgressJson.getAsJsonArray(subject);
         System.out.println(answeredQuestions);
         System.out.println(questionIdList);
-        Iterator<JsonElement> iterator = answeredQuestions.iterator();
-        while (iterator.hasNext()) {
-            JsonElement e=iterator.next();
-            if (!questionIdList.contains(e.getAsJsonArray().get(0).getAsString())) {
-                iterator.remove();
+        if(!answeredQuestions.isEmpty()){
+            Iterator<JsonElement> iterator = answeredQuestions.iterator();
+            while (iterator.hasNext()) {
+                JsonElement e=iterator.next();
+                if (!questionIdList.contains(e.getAsJsonArray().get(0).getAsString())) {
+                    iterator.remove();
+                }
             }
         }
-        System.out.println(answeredQuestions);
+
         String updatedJsonString = FirebaseManager.userData.getGson().toJson(userProgressJson);
         FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
             prevbtn.setEnabled(true);
@@ -125,13 +127,7 @@ public class TestActivity extends AppCompatActivity {
 
         if(FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex))==getSelectedAnswer()){
             except.setBorderColor(Color.GREEN);
-            System.out.println("AAA"+FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex)));
         }
-        else{
-            System.out.println("something wrong");
-        }
-        System.out.println(FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex)));
-        System.out.println(except);
 
 
     }

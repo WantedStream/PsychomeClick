@@ -32,6 +32,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.helpers.QuestionLocationHelper;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -165,8 +166,9 @@ public class EditQuestionFragment extends Fragment {
                 List<String> subjects = (List<String>) subjectsArrayDoc.get("subjects");
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item,subjects);
                 subjectSpinner.setAdapter(adapter);
-
-                    addListeners(v);
+                int index=subjects.indexOf(QuestionLocationHelper.findQuestionLocation(id,tree.getString("tree")));
+                subjectSpinner.setSelection(index);
+                addListeners(v);
             });
         });
 
