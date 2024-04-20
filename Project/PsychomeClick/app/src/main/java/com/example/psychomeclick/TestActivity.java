@@ -61,9 +61,8 @@ public class TestActivity extends AppCompatActivity {
         //remove removed question from users answer list
        JsonObject userProgressJson= FirebaseManager.userData.getJsonProgress();
         answeredQuestions =userProgressJson.getAsJsonArray(subject);
-        System.out.println(answeredQuestions);
-        System.out.println(questionIdList);
-        if(!answeredQuestions.isEmpty()){
+
+        if(answeredQuestions!=null){
             Iterator<JsonElement> iterator = answeredQuestions.iterator();
             while (iterator.hasNext()) {
                 JsonElement e=iterator.next();
@@ -72,7 +71,14 @@ public class TestActivity extends AppCompatActivity {
                 }
             }
         }
+        else{
+            userProgressJson.add(subject,new JsonArray());
+        }
 
+        updateUserProg(userProgressJson);
+
+    }
+    private void updateUserProg(JsonObject userProgressJson){
         String updatedJsonString = FirebaseManager.userData.getGson().toJson(userProgressJson);
         FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
             prevbtn.setEnabled(true);
@@ -88,9 +94,10 @@ public class TestActivity extends AppCompatActivity {
             loadQuestion(currentIndex);
             updateButtons();
         });
-
     }
-    private void innitView(){
+
+
+        private void innitView(){
         prevbtn= findViewById(R.id.prevbtn);backbtn= findViewById(R.id.gobackbtn);nextbtn = findViewById(R.id.nextbtn);
         img1=(BorderTogglingButton) findViewById(R.id.img1);img2=(BorderTogglingButton) findViewById(R.id.img2);img3=(BorderTogglingButton) findViewById(R.id.img3);img4=(BorderTogglingButton) findViewById(R.id.img4);
 
