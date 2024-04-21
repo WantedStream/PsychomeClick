@@ -58,6 +58,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         TextView messageText;
         ImageView iconImage;
         RelativeLayout parent;
+        boolean grad=true;
         MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.message_text);
@@ -68,8 +69,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         void bind(Message message) {
 
             messageText.setText("");
-            if (message.isGraduallyWrite()) {
+            if (message.isGraduallyWrite()&&grad) {
                 graduallyWriteText(messageText, message.getText());
+                grad=false;
             } else {
                 messageText.setText(message.getText());
             }

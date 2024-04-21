@@ -2,6 +2,7 @@ package com.example.psychomeclick;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -31,13 +32,19 @@ public class ChatBotActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_bot);
+        findViewById(R.id.backbtn).setOnClickListener((b)->{
+            Intent intent = new Intent(this,UserActivity.class);
+            startActivity(intent);
+            finish();
+        });
+
         String apiKey = "AIzaSyBOiEJFefMXc9TqHUPoG0845A5tDeZ6B7E";
         GenerativeModel gm = new GenerativeModel( "gemini-pro",apiKey);
         GenerativeModelFutures model = GenerativeModelFutures.from(gm);
 
         Content.Builder userContentBuilder = new Content.Builder();
         userContentBuilder.setRole("user");
-       userContentBuilder.addText("Your name is PsychoBot. You are an ai I use in psychometric app. your role is to provide answers in a chat to help topics related to israeli hebrew psychometric questions. you can talk both in english and hebrew. note that the name of the user talking to you is "+ FirebaseManager.userData.getName()+".");
+       userContentBuilder.addText("Your name is PsychoBot. You are an ai I use in psychometric app. your role is to provide answers in a chat to help topics related to the Psychometric Entrance Test (PET) in israel and its questions(The Psychometric Entrance Test (PET) – commonly known in Hebrew as \"ha-Psikhometri\" – is a standardized test that serves as an entrance exam for institutions of higher education in Israel. The PET covers three areas: quantitative reasoning, verbal reasoning and English language. It is administered by the National Institute for Testing and Evaluation (NITE) and plays a considerable role in the admissions process. A score combining students' performance on the PET with the average score of their high school matriculation tests (aka Bagrut) has been found to be a highly predictive indicator of students' academic performance in their first year of higher education.). this is a test. you can talk both in english and hebrew, but each message will be only in hebrew or english, and try to make short messages. note that the name of the user talking to you is "+ FirebaseManager.userData.getName()+".");
         Content userContent = userContentBuilder.build();
 
         Content.Builder modelContentBuilder = new Content.Builder();
