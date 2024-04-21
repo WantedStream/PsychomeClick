@@ -1,14 +1,11 @@
 package com.example.psychomeclick.model;
 
 public class Card {
-    /*private String term;
+    private String term;
     private String meaning;
-    private String imageId;
-*/
-  /*  public Card(String term, String meaning, String imageId) {
+    public Card(String term, String meaning) {
         this.term = term;
         this.meaning = meaning;
-        this.imageId = imageId;
     }
 
     public String getTerm() {
@@ -19,10 +16,6 @@ public class Card {
         return meaning;
     }
 
-    public String getImageId() {
-        return imageId;
-    }
     public void setTerm(String term) {this.term=term;}
-    public void setMeaning(String meaning) {this.meaning=term;}
-    public void setImageId(String imageId) {this.imageId=term;}*/
+    public void setMeaning(String meaning) {this.meaning=meaning;}
 }

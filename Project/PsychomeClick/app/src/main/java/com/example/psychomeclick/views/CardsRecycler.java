@@ -26,6 +26,7 @@ import com.example.psychomeclick.R;
 import com.example.psychomeclick.fragments.EditSetFragment;
 import com.example.psychomeclick.model.Card;
 import com.example.psychomeclick.model.FirebaseManager;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -35,6 +36,8 @@ import com.google.gson.JsonParser;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.grpc.internal.JsonUtil;
 
 public class CardsRecycler extends RecyclerView {
     private CardAdapter adapter;
@@ -73,18 +76,23 @@ public class CardsRecycler extends RecyclerView {
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
 
         Context context;
-        JsonArray cardList;
+        List<Card> cardList;
         public CardAdapter(Context context) {
             this.context = context;
-            this.cardList =new JsonArray();
+            this.cardList =new ArrayList<Card>();
         }
 
-        public void addCard(JsonArray card) {
+        public void addCard(Card card) {
             cardList.add(card);
             adapter.notifyDataSetChanged();
+           updateCardsInDb(cardList,setId);
             smoothScrollToPosition(adapter.getItemCount() - 1);
         }
-
+        public void removeCard(Card card) {
+            cardList.remove(card);
+            adapter.notifyDataSetChanged();
+            updateCardsInDb(cardList,setId);
+        }
         @NonNull
         @Override
         public CardsRecycler.CardAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -100,62 +108,66 @@ public class CardsRecycler extends RecyclerView {
 
         @Override
         public void onBindViewHolder(@NonNull CardsRecycler.CardAdapter.CardViewHolder holder, int position) {
-            JsonArray card = (JsonArray) cardList.get(position);
+            Card card = (Card) cardList.get(position);
             holder.bind(card);
         }
 
         class CardViewHolder extends RecyclerView.ViewHolder {
             EditText term, meaning;
+            TextView numberTv;
+            Card card;
 
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
                 term = itemView.findViewById(R.id.termEt);
                 meaning = itemView.findViewById(R.id.meaningET);
+                numberTv=itemView.findViewById(R.id.numberTv);
+
+                if(canEdit){
+                    term.setOnFocusChangeListener((v,hasFocus)->{
+                        if(!hasFocus&&card!=null){
+                            card.setTerm(term.getText().toString());
+                            updateCardsInDb(cardList,setId);
+                        }
+                    });
+                    meaning.setOnFocusChangeListener((v,hasFocus)->{
+                        if(!hasFocus&&card!=null){
+                            card.setMeaning(meaning.getText().toString());
+                            updateCardsInDb(cardList,setId);
+                        }
+                    });
+                }
+
 
             }
 
-            void bind(JsonArray card) {
-                if(card.get(0).isJsonNull()) term.setText("");
-                else term.setText(card.get(0).getAsString());
-                if(card.get(1).isJsonNull()) meaning.setText("");
-                else meaning.setText(card.get(1).getAsString());
+            void bind(Card card) {
+                numberTv.setText(cardList.indexOf(card)+"");
+                 term.setText(card.getTerm());
+                 meaning.setText(card.getMeaning());
                 if(!canEdit){
                     disableEditText(term);
                     disableEditText(meaning);
                     return;
                 }
-
-                term.addTextChangedListener(new TextWatcher() {
-                    public void afterTextChanged(Editable s) {
-                        card.set(0,new Gson().fromJson( s.toString(), JsonElement.class));
-                     FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString()).addOnSuccessListener((d) -> {
-                        });
-
-                    }
-
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    }
-                });
-
-                meaning.addTextChangedListener(new TextWatcher() {
-                    public void afterTextChanged(Editable s) {
-                        card.set(1,new Gson().fromJson( s.toString(), JsonElement.class));
-                        FirebaseManager.db.collection("Sets").document(setId).update("cards", cardList.toString()).addOnSuccessListener((d) -> {
-                        });
-
-                    }
-
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    }
-                });
+                this.card=card;
 
             }
 
-        }}
 
+        }}
+    private static void updateCardsInDb(List<Card> cardList,String setId){
+        JsonArray allcards = new JsonArray();
+        cardList.forEach((e)->{
+            JsonArray singleCard = new JsonArray();
+            singleCard.add(e.getTerm());
+            singleCard.add(e.getMeaning());
+            allcards.add(singleCard);
+        });
+        System.out.println(allcards);
+        FirebaseManager.db.collection("Sets").document(setId).update("cards", allcards.toString()).addOnSuccessListener((d) -> {
+
+        });
+    }
     }
 

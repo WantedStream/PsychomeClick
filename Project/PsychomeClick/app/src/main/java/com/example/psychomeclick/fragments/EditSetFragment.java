@@ -107,7 +107,8 @@ public class EditSetFragment extends Fragment {
            cardsRecycler.setSetId(setId);
 
             cards.forEach(e->{
-                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(e.getAsJsonArray());
+                JsonArray singleCard=e.getAsJsonArray();
+                ((CardsRecycler.CardAdapter) cardsRecycler.getAdapter()).addCard(new Card(singleCard.get(0).getAsString(),singleCard.get(1).getAsString()));
             });
             cardsRecycler.setCanEdit(canEdit);
 
@@ -115,16 +116,7 @@ public class EditSetFragment extends Fragment {
                 addListeners();
 
                 v.findViewById(R.id.addCard).setOnClickListener((V)->{
-                    JsonArray newWord=new JsonArray(3);
-                    newWord.add( JsonParser.parseString(""));
-                    newWord.add( JsonParser.parseString(""));
-                    cards.add(newWord);
-
-
-                    FirebaseManager.db.collection("Sets").document(setId).update("cards", cards.toString()).addOnSuccessListener((d) -> {
-
-                        ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(newWord);
-                    });
+                        ((CardsRecycler.CardAdapter) (cardsRecycler.getAdapter())).addCard(new Card("",""));
 
                 });
             }
