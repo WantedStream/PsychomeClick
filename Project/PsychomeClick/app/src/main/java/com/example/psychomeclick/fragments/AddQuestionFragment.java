@@ -176,11 +176,12 @@ public class AddQuestionFragment extends Fragment {
         //setCorrectAnswer
         qdocument.set(q).addOnSuccessListener(tsk-> {
             //sets the 5 images
-            counter[0]=0;
+            counter[0]=0;//used for last
+            int index=0;
             for(Map.Entry<Integer,Uri> entry : this.imageMap.entrySet()) {
 
-                StorageReference fileRef = FirebaseManager.firebaseStorage.getReference().child("QuestionStorage/" +qdocument.getId()+"/images"+ counter[0]);
-
+                StorageReference fileRef = FirebaseManager.firebaseStorage.getReference().child("QuestionStorage/" +qdocument.getId()+"/images"+ index);
+                index++;
                 fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
                     counter[0]=counter[0]+1;
                     System.out.println(counter[0]);

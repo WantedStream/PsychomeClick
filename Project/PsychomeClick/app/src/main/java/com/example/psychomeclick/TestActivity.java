@@ -62,7 +62,7 @@ public class TestActivity extends AppCompatActivity {
        JsonObject userProgressJson= FirebaseManager.userData.getJsonProgress();
         answeredQuestions =userProgressJson.getAsJsonArray(subject);
 
-        if(answeredQuestions!=null){
+        if(answeredQuestions!=null&&!answeredQuestions.isEmpty()){
             Iterator<JsonElement> iterator = answeredQuestions.iterator();
             while (iterator.hasNext()) {
                 JsonElement e=iterator.next();
@@ -72,20 +72,30 @@ public class TestActivity extends AppCompatActivity {
             }
         }
         else{
-            userProgressJson.add(subject,new JsonArray());
+            JsonArray firstQuestionifEmpty=new JsonArray();
+            firstQuestionifEmpty.add(questionIdList.get(0));
+            firstQuestionifEmpty.add("-1");
+            JsonArray totalArray=new JsonArray();
+            totalArray.add(firstQuestionifEmpty);
+            userProgressJson.add(subject,totalArray);
             answeredQuestions =userProgressJson.getAsJsonArray(subject);
+            System.out.println("ADAD UPDATED"+answeredQuestions);
         }
 
         updateUserProg(userProgressJson);
 
     }
     private void updateUserProg(JsonObject userProgressJson){
+
         String updatedJsonString = FirebaseManager.userData.getGson().toJson(userProgressJson);
+        System.out.println(userProgressJson +"->>>>>>>>"+ updatedJsonString);
         FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getUid()).update("userprogress",updatedJsonString).addOnCompleteListener((t)->{
             prevbtn.setEnabled(true);
             nextbtn.setEnabled(true);
             backbtn.setEnabled(true);
             FirebaseManager.userData.setUserProgress(updatedJsonString);
+            System.out.println(updatedJsonString);
+            System.out.println(FirebaseManager.userData.getUserProgress());
             if(answeredQuestions.size()==0){
                 currentIndex=0;
             }
@@ -94,6 +104,7 @@ public class TestActivity extends AppCompatActivity {
             }
             loadQuestion(currentIndex);
             updateButtons();
+            System.out.println(FirebaseManager.userData.getUserProgress());
         });
     }
 
@@ -132,7 +143,7 @@ public class TestActivity extends AppCompatActivity {
         this.img4.disable();
         except.enable();
 
-
+        System.out.println("SADDDDDDDDDDDDDDafdsvxzXC");
         if(FirebaseManager.QuestionMap.get(this.questionIdList.get(currentIndex))==getSelectedAnswer()){
             except.setBorderColor(Color.GREEN);
         }
@@ -192,6 +203,8 @@ public class TestActivity extends AppCompatActivity {
     private void updateUserAnswer(){
         Gson gson = FirebaseManager.userData.getGson();
         JsonObject jsonObject = gson.fromJson(FirebaseManager.userData.getUserProgress(), JsonObject.class);
+        System.out.println(jsonObject.getAsJsonArray(subject));
+        System.out.println(FirebaseManager.userData.getUserProgress());
         JsonArray jsonQuestion=jsonObject.getAsJsonArray(subject).getAsJsonArray().get(currentIndex).getAsJsonArray();
 
         JsonElement newElement =gson.toJsonTree(getSelectedAnswer());
