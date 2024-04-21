@@ -43,7 +43,14 @@ public class QuestionLocationHelper {
         addQuestionToSubject(jsonObject,questionId,newLcation);
         return jsonObject.toString();
     }
-    public static JsonObject removeQuestionFromTree(JsonObject root, String questionId) {
+
+    public static String AddQuestionLocation(String questionId, String jsonString,String newLcation) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
+        addQuestionToSubject(jsonObject,questionId,newLcation);
+        return jsonObject.toString();
+    }
+    private static JsonObject removeQuestionFromTree(JsonObject root, String questionId) {
         if (root.has("questionList")) {
             JsonArray questionList = root.getAsJsonArray("questionList");
             for (int i = 0; i < questionList.size(); i++) {
@@ -63,7 +70,7 @@ public class QuestionLocationHelper {
         return root;
     }
 
-    public static JsonObject addQuestionToSubject(JsonObject root, String questionId, String subjectName) {
+    private static JsonObject addQuestionToSubject(JsonObject root, String questionId, String subjectName) {
         if (root.get("name").getAsString().equals(subjectName)) {
             root.getAsJsonArray("questionList").add(new Gson().toJsonTree(questionId));
             return root;

@@ -83,39 +83,7 @@ public class FirebaseManager {
      public static UserData userData;
     public static HashMap<String,Integer> QuestionMap=new HashMap<>();
 
-    public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap,Fragment f, Fragment to){
-        StorageReference storageRef = firebaseStorage.getReference();
-        Context context=f.getContext();
-        HashMap<String, Object> q = new HashMap<>();
-        q.put("correctAnswer",correctAnswer);
-       DocumentReference qdocument = db.collection("Questions").document();
-        qdocument.set(q).addOnSuccessListener(tsk-> {
 
-            int x=0;
-            for(Map.Entry<Integer,Uri> entry : imageMap.entrySet()) {
-
-                StorageReference fileRef = storageRef.child("QuestionStorage/" +qdocument.getId()+"/images"+x);
-                x++;
-                System.out.println(entry.getKey()+"   "+entry.getValue());
-                fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
-                    Toast.makeText(context.getApplicationContext(),"question added",Toast.LENGTH_SHORT).show();
-
-                    if(to!=null){
-                        FragmentManager fm = f.getParentFragmentManager();
-                        FragmentTransaction transaction = fm.beginTransaction();
-                        transaction.replace(R.id.contentFragment, new QuestionListFragment());
-                        transaction.commit();
-                    }
-
-                }).addOnFailureListener(exception -> {
-                    Toast.makeText(context.getApplicationContext(),"problem." +
-                            "",Toast.LENGTH_SHORT).show();
-                }).addOnProgressListener(snapshot -> {
-                    double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                });
-            }
-        });
-    }
 
 
     public static void insertToQuestionCells(Queue<LinearLayout> qlist,Context c){

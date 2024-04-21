@@ -1,5 +1,9 @@
 package com.example.psychomeclick.fragments;
 
+import static com.example.psychomeclick.helpers.QuestionLocationHelper.AddQuestionLocation;
+import static com.example.psychomeclick.helpers.QuestionLocationHelper.ChangeQuestionLocation;
+
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -18,20 +22,31 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.psychomeclick.R;
+import com.example.psychomeclick.helpers.QuestionLocationHelper;
 import com.example.psychomeclick.model.FirebaseManager;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -51,6 +66,9 @@ public class AddQuestionFragment extends Fragment {
     private String mParam2;
     private ImageView currentImage;
     private LinkedHashMap<Integer,Uri> imageMap=new LinkedHashMap<>();
+    private ImageView image0,image1,image2,image3,image4;
+    private RadioGroup rGroup;
+    private Spinner subjectSpinner;
    private final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
                this.currentImage.setImageURI(uris);
@@ -93,51 +111,29 @@ public class AddQuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_add_question, container, false);
-        createStuff(view);
+        innit(view);
         return view;
     }
 
-    private void createStuff(View v) {
-        //try{
-          //  Bitmap bm = BitmapFactory.decodeResource( getResources(), R.drawable.aa);
-          //  String extStorageDirectory = Environment.getExternalStorageDirectory().toString();
+    private void innit(View v) {
+         image0=(ImageView) v.findViewById(R.id.questingImg);
+         image1 = (ImageView) v.findViewById(R.id.firstAnswerImg);
+         image2 = (ImageView) v.findViewById(R.id.secondImageAnswer);
+         image3 = (ImageView) v.findViewById(R.id.thirdAnswerImg);
+         image4 =(ImageView) v.findViewById(R.id.fourthAnswerImg);
+        rGroup = (RadioGroup) v.findViewById(R.id.answerRadios);
+        subjectSpinner=(Spinner) v.findViewById(R.id.subjectSpinner);
 
-          //  File file = new File(extStorageDirectory, "photo1.PNG");
-          //  FileOutputStream outStream = new FileOutputStream(file);
-           // bm.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-          //  outStream.flush();
-           // outStream.close();
-       // }
-        //catch(Exception e){
-        //    System.out.println(e+"     ERRROR!!!!!!!!!!!!");
-       // }
-        ImageView questionImg=(ImageView) v.findViewById(R.id.questingImg);
-        ImageView firstAnswerImg = (ImageView) v.findViewById(R.id.firstAnswerImg);
-        ImageView secondAnswerImg = (ImageView) v.findViewById(R.id.secondImageAnswer);
-        ImageView thirdAnswerImg = (ImageView) v.findViewById(R.id.thirdAnswerImg);
-        ImageView fourthAnswerImg =(ImageView) v.findViewById(R.id.fourthAnswerImg);
-        ((Button) v.findViewById(R.id.addQuestionBtn)).setOnClickListener((btn) -> {
-            chooseImage(questionImg);
+        FirebaseManager.db.collection("SubjectTree").get().addOnSuccessListener((task2)->{
+            DocumentSnapshot tree= task2.getDocuments().get(0);
+            DocumentSnapshot subjectsArrayDoc= task2.getDocuments().get(1);
+            List<String> subjects = (List<String>) subjectsArrayDoc.get("subjects");
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item,subjects);
+            subjectSpinner.setAdapter(adapter);
+            subjectSpinner.setSelection(0);
+            addListeners(v);
         });
-        ((Button) v.findViewById(R.id.addFirstAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage(firstAnswerImg);
-        });
-        ((Button) v.findViewById(R.id.addSecondAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage(secondAnswerImg);
-        });
-        ((Button) v.findViewById(R.id.addThirdAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage(thirdAnswerImg);
-        });
-        ((Button) v.findViewById(R.id.addFourthAnswerBtn)).setOnClickListener((btn) -> {
-            chooseImage(fourthAnswerImg);
-        });
-        ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
-           FirebaseManager.addQuestiontoDB(((EditText) v.findViewById(R.id.rightAnswerET)).getText().toString(),this.imageMap,this,null);
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, new QuestionListFragment());
-            transaction.commit();
-        });
+
     }
     private void chooseImage(ImageView img){
         // Registers a photo picker activity launcher in multi-select mode.
@@ -147,5 +143,63 @@ public class AddQuestionFragment extends Fragment {
              .build());
     }
 
+    private void addListeners(View v){
+        ((Button) v.findViewById(R.id.addQuestionBtn)).setOnClickListener((btn) -> {
+            chooseImage(image0);
+        });
+        ((Button) v.findViewById(R.id.addFirstAnswerBtn)).setOnClickListener((btn) -> {
+            chooseImage(image1);
+        });
+        ((Button) v.findViewById(R.id.addSecondAnswerBtn)).setOnClickListener((btn) -> {
+            chooseImage(image2);
+        });
+        ((Button) v.findViewById(R.id.addThirdAnswerBtn)).setOnClickListener((btn) -> {
+            chooseImage(image3);
+        });
+        ((Button) v.findViewById(R.id.addFourthAnswerBtn)).setOnClickListener((btn) -> {
+            chooseImage(image4);
+        });
+        ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
+            addQuestiontoDB(((RadioButton)v.findViewById(rGroup.getCheckedRadioButtonId())).getText().toString(),subjectSpinner.getSelectedItem().toString());
+            FragmentManager fm = getParentFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new QuestionListFragment());
+            transaction.commit();
+        });
+    }
 
+    public void addQuestiontoDB(String correctAnswer,String subject){
+        int[] counter=new int[1];
+        HashMap<String, Object> q = new HashMap<>();
+        q.put("correctAnswer",correctAnswer);
+        DocumentReference qdocument = FirebaseManager.db.collection("Questions").document();
+        //setCorrectAnswer
+        qdocument.set(q).addOnSuccessListener(tsk-> {
+            //sets the 5 images
+            counter[0]=0;
+            for(Map.Entry<Integer,Uri> entry : this.imageMap.entrySet()) {
+
+                StorageReference fileRef = FirebaseManager.firebaseStorage.getReference().child("QuestionStorage/" +qdocument.getId()+"/images"+ counter[0]);
+
+                fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
+                    counter[0]=counter[0]+1;
+                    System.out.println(counter[0]);
+                    if(counter[0]==5){
+                        //set subject
+                        FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t)-> {
+                            String newjs = AddQuestionLocation(qdocument.getId(), t.get("tree").toString(), subject);
+                            FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree", newjs).addOnSuccessListener((t2) -> {
+                                FragmentManager fm = getFragmentManager();
+                                FragmentTransaction transaction = fm.beginTransaction();
+                                transaction.replace(R.id.contentFragment, new QuestionListFragment());
+                                transaction.commit();
+                            });
+                        });
+                    }
+                });
+
+            }
+
+        });
+    }
 }
