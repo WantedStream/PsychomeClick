@@ -73,7 +73,6 @@ public class CardsRecycler extends RecyclerView {
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
 
         Context context;
-       // List<Card> cardList;
         JsonArray cardList;
         public CardAdapter(Context context) {
             this.context = context;
@@ -81,7 +80,6 @@ public class CardsRecycler extends RecyclerView {
         }
 
         public void addCard(JsonArray card) {
-            JsonArray jsonArray;
             cardList.add(card);
             adapter.notifyDataSetChanged();
             smoothScrollToPosition(adapter.getItemCount() - 1);
@@ -107,7 +105,7 @@ public class CardsRecycler extends RecyclerView {
         }
 
         class CardViewHolder extends RecyclerView.ViewHolder {
-            EditText term, meaning, imageId;
+            EditText term, meaning;
 
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);

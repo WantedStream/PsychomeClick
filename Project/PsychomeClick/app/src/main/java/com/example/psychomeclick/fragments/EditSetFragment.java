@@ -118,7 +118,6 @@ public class EditSetFragment extends Fragment {
                     JsonArray newWord=new JsonArray(3);
                     newWord.add( JsonParser.parseString(""));
                     newWord.add( JsonParser.parseString(""));
-                    newWord.add(JsonParser.parseString(""));
                     cards.add(newWord);
 
 
