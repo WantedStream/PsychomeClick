@@ -85,7 +85,9 @@ public class CardsRecycler extends RecyclerView {
         public void addCard(Card card) {
             cardList.add(card);
             adapter.notifyDataSetChanged();
-           updateCardsInDb(cardList,setId);
+            if (canEdit) {
+                updateCardsInDb(cardList,setId);
+            }
             smoothScrollToPosition(adapter.getItemCount() - 1);
         }
         public void removeCard(Card card) {
@@ -114,15 +116,16 @@ public class CardsRecycler extends RecyclerView {
 
         class CardViewHolder extends RecyclerView.ViewHolder {
             EditText term, meaning;
-            TextView numberTv;
+            TextView numberTv,removeTv;
             Card card;
+
 
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
                 term = itemView.findViewById(R.id.termEt);
                 meaning = itemView.findViewById(R.id.meaningET);
                 numberTv=itemView.findViewById(R.id.numberTv);
-
+                removeTv=itemView.findViewById(R.id.removeCard);
                 if(canEdit){
                     term.setOnFocusChangeListener((v,hasFocus)->{
                         if(!hasFocus&&card!=null){
@@ -136,6 +139,13 @@ public class CardsRecycler extends RecyclerView {
                             updateCardsInDb(cardList,setId);
                         }
                     });
+                    removeTv.setOnClickListener((b)->{
+                        if(this.card!=null)
+                        removeCard(card);
+                    });
+                }
+                else{
+                    removeTv.setVisibility(GONE);
                 }
 
 

@@ -58,6 +58,18 @@
             android:hint="meaning"
             android:background="#FDFDFD"/>
 
+        <TextView
+            android:id="@+id/removeCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:text="❌"
+
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20dp"
+
+            android:textColor="@color/white"/>
 
     </LinearLayout>
 
