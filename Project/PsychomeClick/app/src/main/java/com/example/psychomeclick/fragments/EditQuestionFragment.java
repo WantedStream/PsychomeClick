@@ -1,5 +1,6 @@
 package com.example.psychomeclick.fragments;
 
+import static com.example.psychomeclick.helpers.QuestionLocationHelper.ChangeQuestionLocation;
 import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
 import static com.example.psychomeclick.model.FirebaseManager.firebaseAuth;
 import static com.example.psychomeclick.model.FirebaseManager.firebaseStorage;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -57,7 +59,7 @@ public class EditQuestionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String id;
+    private String qid;
     private ImageView currentlySelectedImage;
     private ImageView questingImg,imageView1,imageView2,imageView3,imageView4;
 
@@ -83,7 +85,7 @@ public class EditQuestionFragment extends Fragment {
                     else if(currentlySelectedImage==imageView4){
                         imageNum=4;
                     }
-                    FirebaseManager.saveImage(firebaseStorage.getReference().child("QuestionStorage/" + id), currentlySelectedImage, "images" +imageNum, getContext());
+                    FirebaseManager.saveImage(firebaseStorage.getReference().child("QuestionStorage/" + qid), currentlySelectedImage, "images" +imageNum, getContext());
                 }
                 });
     /**
@@ -110,7 +112,7 @@ public class EditQuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            id = getArguments().getString(ARG_PARAM1);
+            qid = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -125,7 +127,7 @@ public class EditQuestionFragment extends Fragment {
     }
 
     private void innit(View v){
-        ((TextView) v.findViewById(R.id.idTV)).setText(id);
+        ((TextView) v.findViewById(R.id.idTV)).setText(qid);
         questingImg=v.findViewById(R.id.questingImg);
         imageView1=v.findViewById(R.id.answer1);
         imageView2=v.findViewById(R.id.answer2);
@@ -137,14 +139,14 @@ public class EditQuestionFragment extends Fragment {
 
     }
     private void insertData(View v){
-        FirebaseManager.db.collection("Questions").document(id).get().addOnSuccessListener((t)-> {
+        FirebaseManager.db.collection("Questions").document(qid).get().addOnSuccessListener((t)-> {
             Map<String, Object> data = t.getData();
             StorageReference storageRef = firebaseStorage.getReference();
-            StorageReference fileRef0 = storageRef.child("QuestionStorage/" +id+"/images"+0);
-            StorageReference fileRef1 = storageRef.child("QuestionStorage/" +id+"/images"+1);
-            StorageReference fileRef2 = storageRef.child("QuestionStorage/" +id+"/images"+2);
-            StorageReference fileRef3 = storageRef.child("QuestionStorage/" +id+"/images"+3);
-            StorageReference fileRef4 = storageRef.child("QuestionStorage/" +id+"/images"+4);
+            StorageReference fileRef0 = storageRef.child("QuestionStorage/" +qid+"/images"+0);
+            StorageReference fileRef1 = storageRef.child("QuestionStorage/" +qid+"/images"+1);
+            StorageReference fileRef2 = storageRef.child("QuestionStorage/" +qid+"/images"+2);
+            StorageReference fileRef3 = storageRef.child("QuestionStorage/" +qid+"/images"+3);
+            StorageReference fileRef4 = storageRef.child("QuestionStorage/" +qid+"/images"+4);
 
             FirebaseManager.loadImage(fileRef0, questingImg,this.getContext());
             FirebaseManager.loadImage(fileRef1, imageView1,this.getContext());
@@ -166,7 +168,7 @@ public class EditQuestionFragment extends Fragment {
                 List<String> subjects = (List<String>) subjectsArrayDoc.get("subjects");
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item,subjects);
                 subjectSpinner.setAdapter(adapter);
-                int index=subjects.indexOf(QuestionLocationHelper.findQuestionLocation(id,tree.getString("tree")));
+                int index=subjects.indexOf(QuestionLocationHelper.findQuestionLocation(qid,tree.getString("tree")));
                 subjectSpinner.setSelection(index);
                 addListeners(v);
             });
@@ -199,19 +201,32 @@ public class EditQuestionFragment extends Fragment {
         {
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
-                // This will get the radiobutton that has changed in its check state
                 RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
-                // This puts the value (true/false) into the variable
-             //   boolean isChecked = checkedRadioButton.isChecked();
-                // If the radiobutton that has changed in check state is now checked...
-               // if (isChecked)
-              //  {
-                    // Changes the textview's text to "Checked: example radiobutton text"
-                    FirebaseManager.db.collection("Questions").document(id).update("correctAnswer",checkedRadioButton.getText()).addOnSuccessListener((t)->{
+                    FirebaseManager.db.collection("Questions").document(qid).update("correctAnswer",checkedRadioButton.getText()).addOnSuccessListener((t)->{
 
                    });
-               // }
+
             }
+        });
+        subjectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                subjectSpinner.setEnabled(false);
+                String selectedSubject = (String) parentView.getItemAtPosition(position);
+                FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t)->{
+                    String newjs=ChangeQuestionLocation(qid, t.get("tree").toString(), selectedSubject);
+                    FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree",newjs).addOnSuccessListener((t2)->{
+                        subjectSpinner.setEnabled(true);
+                    });
+                });
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
     }
 }

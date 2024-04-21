@@ -73,6 +73,7 @@ public class TestActivity extends AppCompatActivity {
         }
         else{
             userProgressJson.add(subject,new JsonArray());
+            answeredQuestions =userProgressJson.getAsJsonArray(subject);
         }
 
         updateUserProg(userProgressJson);
@@ -84,7 +85,7 @@ public class TestActivity extends AppCompatActivity {
             prevbtn.setEnabled(true);
             nextbtn.setEnabled(true);
             backbtn.setEnabled(true);
-
+            FirebaseManager.userData.setUserProgress(updatedJsonString);
             if(answeredQuestions.size()==0){
                 currentIndex=0;
             }
@@ -158,11 +159,11 @@ public class TestActivity extends AppCompatActivity {
            backbtn.setEnabled(false);
            nextbtn.setEnabled(false);
 
-            String qId=questionIdList.get(index);
+            String xId=questionIdList.get(index);
             JsonObject jsonObject = FirebaseManager.userData.getGson().fromJson(FirebaseManager.userData.getUserProgress(), JsonObject.class);
             JsonArray jsonArray=jsonObject.getAsJsonArray(subject);
             JsonArray singleNewQ=new JsonArray();
-            singleNewQ.add(qId);
+            singleNewQ.add(xId);
             singleNewQ.add(-1);
             jsonArray.add(singleNewQ);
             String updatedJsonString = FirebaseManager.userData.getGson().toJson(jsonObject);

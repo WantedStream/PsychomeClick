@@ -80,7 +80,7 @@ public class FirebaseManager {
     public static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     public static final String PrefLocaltion="LogIn";
-    public static UserData userData;
+     public static UserData userData;
     public static HashMap<String,Integer> QuestionMap=new HashMap<>();
 
     public static void addQuestiontoDB(String correctAnswer, LinkedHashMap<Integer,Uri> imageMap,Fragment f, Fragment to){

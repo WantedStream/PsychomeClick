@@ -68,10 +68,12 @@ public class QuestionLocationHelper {
             root.getAsJsonArray("questionList").add(new Gson().toJsonTree(questionId));
             return root;
         }
+        if(root.has("nodes")){
+            JsonArray nodes = root.getAsJsonArray("nodes");
+            for (int i = 0; i < nodes.size(); i++)
+                addQuestionToSubject(nodes.get(i).getAsJsonObject(), questionId, subjectName);
+        }
 
-        JsonArray nodes = root.getAsJsonArray("nodes");
-        for (int i = 0; i < nodes.size(); i++)
-            addQuestionToSubject(nodes.get(i).getAsJsonObject(), questionId, subjectName); // Recursive call without setting child}
 
         return root;
     }
