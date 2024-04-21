@@ -25,7 +25,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#328DE8"
-                    android:text="the question" />
+                    android:text="the question"
+                    android:layout_marginTop="30dp"/>
 
                 <ImageView
                     android:id="@+id/questingImg"
@@ -140,7 +141,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#2196F3"
-                android:text="add" />
+                android:text="add"
+                android:layout_marginVertical="30dp"/>
 
 
 

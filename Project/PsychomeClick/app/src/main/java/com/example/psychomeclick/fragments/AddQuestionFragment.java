@@ -48,6 +48,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -160,6 +162,20 @@ public class AddQuestionFragment extends Fragment {
             chooseImage(image4);
         });
         ((Button) v.findViewById(R.id.addToStorage)).setOnClickListener((btn) ->{
+
+
+            AtomicBoolean isOk = new AtomicBoolean(true); // Using AtomicBoolean
+
+            imageMap.forEach((key, value) -> {
+                if (value == null) {
+                    isOk.set(false);
+                }
+            });
+            if(imageMap.size()<5||!isOk.get()){
+                Toast.makeText(getActivity(), "all 5 images must be put",
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
             addQuestiontoDB(((RadioButton)v.findViewById(rGroup.getCheckedRadioButtonId())).getText().toString(),subjectSpinner.getSelectedItem().toString());
             FragmentManager fm = getParentFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();

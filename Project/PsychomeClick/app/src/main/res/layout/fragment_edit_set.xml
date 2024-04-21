@@ -102,18 +102,36 @@
 
             </LinearLayout>
         </LinearLayout>
-        <com.example.psychomeclick.views.CardsRecycler
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cardRecycler">
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.example.psychomeclick.views.CardsRecycler
+                    android:id="@+id/cardRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
 
-        </com.example.psychomeclick.views.CardsRecycler>
-        <Button
-            android:id="@+id/addCard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            android:gravity="center"/>
+                </com.example.psychomeclick.views.CardsRecycler>
+
+                <Button
+                    android:id="@+id/addCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="@color/fui_transparent"
+                    android:text="+"
+                    android:textSize="40dp"
+                    android:padding="0dp"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 </FrameLayout>
