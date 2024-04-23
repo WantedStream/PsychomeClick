@@ -191,6 +191,8 @@ public class AddQuestionFragment extends Fragment {
         DocumentReference qdocument = FirebaseManager.db.collection("Questions").document();
         //setCorrectAnswer
         qdocument.set(q).addOnSuccessListener(tsk-> {
+            FirebaseManager.QuestionMap.put(qdocument.getId(),Integer.parseInt(correctAnswer));
+
             //sets the 5 images
             counter[0]=0;//used for last
             int index=0;
@@ -206,7 +208,7 @@ public class AddQuestionFragment extends Fragment {
                         FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t)-> {
                             String newjs = AddQuestionLocation(qdocument.getId(), t.get("tree").toString(), subject);
                             FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree", newjs).addOnSuccessListener((t2) -> {
-                                FragmentManager fm = getFragmentManager();
+                                FragmentManager fm = getParentFragmentManager();
                                 FragmentTransaction transaction = fm.beginTransaction();
                                 transaction.replace(R.id.contentFragment, new QuestionListFragment());
                                 transaction.commit();

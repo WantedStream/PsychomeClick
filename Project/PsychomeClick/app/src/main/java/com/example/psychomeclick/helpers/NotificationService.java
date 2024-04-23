@@ -1,52 +1,51 @@
 package com.example.psychomeclick.helpers;
 
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.IBinder;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
+import android.os.Build;
 
 import com.example.psychomeclick.R;
 
-import java.sql.SQLOutput;
-
-import io.grpc.internal.JsonUtil;
+import java.util.Random;
 
 public class NotificationService extends Service {
+    private static final String CHANNEL_ID = "NotificationChannel";
+    private static final int NOTIFICATION_ID = 1001;
+    private static final long INTERVAL = 10 * 1000; // 10 seconds interval
 
-    private static final String TAG = "NotificationService";
-    private static final String CHANNEL_ID = "notification_channel";
-    private static final int NOTIFICATION_ID = 101;
-    public static final String[] messages = {"dont forget to learn english!", "a question a day gives one wrong answer away!", "talk to psychoBot!", "reminder-your grade depends on your studies"}; // Replace with your messages
+    private String[] notificationMessages = {
+            "Notification 1",
+            "Notification 2",
+            "Notification 3"
+            // Add more messages as needed
+    };
+
+    private Random random = new Random();
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
+    private BroadcastReceiver bootReceiver;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        startNotificationScheduler();
+        registerBootReceiver();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        scheduleRandomNotification();
-        return START_NOT_STICKY;
-    }
-
-    private void scheduleRandomNotification() {
-        long minDelay = 60 * 1000; // Minimum delay (1 minute)
-        long maxDelay = 60 * 60 * 1000; // Maximum delay (1 hour)
-
-        // Generate random delay within the specified range
-        long delay = (long) (Math.random() * (maxDelay - minDelay)) + minDelay;
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(this, NotificationBroadcastReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), delay, pendingIntent);
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterBootReceiver();
     }
 
     @Override
@@ -54,32 +53,62 @@ public class NotificationService extends Service {
         return null;
     }
 
+    private void startNotificationScheduler() {
+        Intent intent = new Intent(this, NotificationPublisher.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
+    }
 
-    public static class NotificationBroadcastReceiver extends BroadcastReceiver {
+    private void registerBootReceiver() {
+        bootReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+                    startNotificationScheduler();
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BOOT_COMPLETED);
+        registerReceiver(bootReceiver, filter);
+    }
 
+    private void unregisterBootReceiver() {
+        if (bootReceiver != null) {
+            unregisterReceiver(bootReceiver);
+            bootReceiver = null;
+        }
+    }
+
+    public class NotificationPublisher extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            int randomIndex = (int) (Math.random() * messages.length);
-            String message = messages[randomIndex];
-            createNotification(message,context);
+            String message = notificationMessages[random.nextInt(notificationMessages.length)];
+            showNotification(context, message);
         }
+    }
 
-        private static void createNotification(String message,Context serviceContext) {
-            NotificationManager notificationManager = (NotificationManager) serviceContext.getSystemService(NOTIFICATION_SERVICE);
+    private void showNotification(Context context, String message) {
+        createNotificationChannel(context);
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Notification Channel", NotificationManager.IMPORTANCE_DEFAULT);
-                notificationManager.createNotificationChannel(channel);
-            }
+        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle("Random Notification")
+                .setContentText(message);
 
-            Notification.Builder builder = new Notification.Builder(serviceContext, CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher) // Replace with your icon resource
-                    .setContentTitle("hi!")
-                    .setContentText(message)
-                    .setAutoCancel(true);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
 
-            notificationManager.notify(NOTIFICATION_ID, builder.build());
+    private void createNotificationChannel(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Notification Channel";
+            String description = "Channel for notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

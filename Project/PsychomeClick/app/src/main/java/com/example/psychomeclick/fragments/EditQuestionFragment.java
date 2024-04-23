@@ -203,7 +203,7 @@ public class EditQuestionFragment extends Fragment {
             {
                 RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
                     FirebaseManager.db.collection("Questions").document(qid).update("correctAnswer",checkedRadioButton.getText()).addOnSuccessListener((t)->{
-
+                            FirebaseManager.QuestionMap.put(qid,Integer.parseInt(checkedRadioButton.getText().toString()));
                    });
 
             }
