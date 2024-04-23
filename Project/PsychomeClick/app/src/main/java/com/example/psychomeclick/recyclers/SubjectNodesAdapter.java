@@ -1,6 +1,4 @@
-package com.example.psychomeclick.helpers;
-
-import static androidx.core.content.ContextCompat.startActivity;
+package com.example.psychomeclick.recyclers;
 
 import android.content.Intent;
 import android.view.LayoutInflater;

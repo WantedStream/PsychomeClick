@@ -3,13 +3,9 @@ package com.example.psychomeclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
-import com.example.psychomeclick.fragments.SimulationsFragment;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,11 +13,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class pdftestpage extends AppCompatActivity {
+public class PdfTestPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.example.psychomeclick.model;
+package com.example.psychomeclick.fragments;
 
 import static android.content.ContentValues.TAG;
 import static com.example.psychomeclick.model.FirebaseManager.db;
@@ -15,9 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.helpers.SubjectNodesAdapter;
-import com.example.psychomeclick.views.PercentageRingView;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.example.psychomeclick.recyclers.SubjectNodesAdapter;
+import com.example.psychomeclick.model.Node;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.psychomeclick.views;
+package com.example.psychomeclick.recyclers;
 
 import android.content.Context;
 import android.util.AttributeSet;

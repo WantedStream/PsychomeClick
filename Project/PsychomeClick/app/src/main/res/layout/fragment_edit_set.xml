@@ -105,14 +105,14 @@
 
 
 
-                <com.example.psychomeclick.views.CardsRecycler
+                <com.example.psychomeclick.recyclers.CardsRecycler
                     android:id="@+id/cardRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
 
 
-                </com.example.psychomeclick.views.CardsRecycler>
+                </com.example.psychomeclick.recyclers.CardsRecycler>
 
                 <Button
                     android:id="@+id/addCard"

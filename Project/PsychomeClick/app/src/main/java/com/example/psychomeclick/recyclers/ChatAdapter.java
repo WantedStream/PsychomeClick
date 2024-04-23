@@ -1,6 +1,5 @@
-package com.example.psychomeclick.helpers;
+package com.example.psychomeclick.recyclers;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.Gravity;
@@ -8,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.views.Message;
+import com.example.psychomeclick.model.Message;
 
 import java.util.ArrayList;
 import java.util.List;

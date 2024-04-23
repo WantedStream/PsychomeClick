@@ -23,12 +23,7 @@
             android:enabled="true"
             android:exported="false">
         </receiver>
-        <activity
-            android:name=".VideosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".NewSetActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ChatBotActivity"
             android:exported="false" />
@@ -47,7 +42,7 @@
             android:exported="false"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".pdftestpage"
+            android:name=".PdfTestPageActivity"
             android:exported="false" />
         <activity
             android:name=".AdminActivity"
@@ -59,10 +54,10 @@
             android:name=".SettingsPage"
             android:exported="false" />
         <activity
-            android:name=".LogIn"
+            android:name=".LogInActivity"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

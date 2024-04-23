@@ -1,4 +1,4 @@
-package com.example.psychomeclick.views;
+package com.example.psychomeclick.model;
 import android.graphics.Bitmap;
 
 public class Message {

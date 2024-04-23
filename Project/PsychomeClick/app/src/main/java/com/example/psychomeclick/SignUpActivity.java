@@ -6,35 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.psychomeclick.model.FirebaseManager;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.*;
 
-import javax.security.auth.callback.Callback;
-
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     EditText userNameEt,emailEt,phoneEt,passwordEt,RepeatPasswordEt;
 
@@ -63,7 +45,7 @@ public class SignUp extends AppCompatActivity {
         this.passwordErrors=findViewById(R.id.passwordErrorTV);
         this.passwordErrors.setText("");
 
-        findViewById(R.id.logInLinkbt).setOnClickListener(v -> {Intent intent = new Intent(this,LogIn.class);
+        findViewById(R.id.logInLinkbt).setOnClickListener(v -> {Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);
             finish();});
         addBetterButtonFunction();

@@ -12,12 +12,7 @@ import android.widget.EditText;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.CardSet;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.views.SetRecycler;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
+import com.example.psychomeclick.recyclers.SetRecycler;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,7 +86,7 @@ public class AllSetsFragment extends Fragment {
             SetRecycler.SetAdapter adapter= (SetRecycler.SetAdapter) setRecycler.getAdapter();
             adapter.removeAllSets();
             t.getDocuments().forEach((documentSnapshot) -> {
-                if(documentSnapshot.get("title").toString().contains(str))
+                if(documentSnapshot.get("title").toString().contains(str)&&(Boolean)documentSnapshot.get("public"))
                     ((SetRecycler.SetAdapter) setRecycler.getAdapter()).addSet(new CardSet(documentSnapshot.getId(),documentSnapshot.get("title")+"",documentSnapshot.get("date")+"",Boolean.parseBoolean(documentSnapshot.get("public")+""),documentSnapshot.get("description")+"",documentSnapshot.get("cards")+"",documentSnapshot.get("userId")+""));
             });
 

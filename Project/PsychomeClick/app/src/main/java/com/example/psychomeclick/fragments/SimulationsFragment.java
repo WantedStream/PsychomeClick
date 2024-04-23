@@ -13,9 +13,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.example.psychomeclick.AdminActivity;
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.pdftestpage;
+import com.example.psychomeclick.PdfTestPageActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -106,7 +105,7 @@ public class SimulationsFragment extends Fragment {
                 TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
         btn1.setTextSize(textSize);
         btn1.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), pdftestpage.class);
+            Intent intent = new Intent(getActivity(), PdfTestPageActivity.class);
             intent.putExtra("testTime", text);
             startActivity(intent);
             (this.getActivity()).finish();

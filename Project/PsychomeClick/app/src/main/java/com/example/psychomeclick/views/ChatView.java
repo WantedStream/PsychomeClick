@@ -1,15 +1,14 @@
 package com.example.psychomeclick.views;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.psychomeclick.helpers.ChatAdapter;
+import com.example.psychomeclick.model.Message;
+import com.example.psychomeclick.recyclers.ChatAdapter;
 
 public class ChatView extends RecyclerView {
 

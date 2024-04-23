@@ -1,43 +1,28 @@
-package com.example.psychomeclick.views;
+package com.example.psychomeclick.recyclers;
 
 import static com.example.psychomeclick.fragments.EditSetFragment.disableEditText;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.fragments.EditSetFragment;
 import com.example.psychomeclick.model.Card;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.grpc.internal.JsonUtil;
 
 public class CardsRecycler extends RecyclerView {
     private CardAdapter adapter;

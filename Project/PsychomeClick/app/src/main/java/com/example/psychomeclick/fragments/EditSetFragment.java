@@ -1,7 +1,6 @@
 package com.example.psychomeclick.fragments;
 
 import android.graphics.Color;
-import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,20 +17,10 @@ import android.widget.TextView;
 
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.Card;
-import com.example.psychomeclick.model.CardSet;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.views.CardsRecycler;
-import com.example.psychomeclick.views.SetRecycler;
+import com.example.psychomeclick.recyclers.CardsRecycler;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -150,7 +139,7 @@ public class EditSetFragment extends Fragment {
             }public void beforeTextChanged(CharSequence s, int start, int count, int after) {}public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
         publicSwitch.setOnCheckedChangeListener((b,isChecked)->{
-            FirebaseManager.db.collection("Sets").document(setId).update("public",isChecked+"");
+            FirebaseManager.db.collection("Sets").document(setId).update("public",isChecked);
 
         });
     }

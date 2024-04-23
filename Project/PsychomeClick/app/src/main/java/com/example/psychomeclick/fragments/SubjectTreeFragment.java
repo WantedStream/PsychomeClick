@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.helpers.GraphAdapter;
+import com.example.psychomeclick.recyclers.GraphAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

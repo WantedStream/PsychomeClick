@@ -1,37 +1,23 @@
 package com.example.psychomeclick.fragments;
 
-import static com.example.psychomeclick.model.FirebaseManager.insertToQuestionCells;
-
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.helpers.QuestionListAdapter;
+import com.example.psychomeclick.recyclers.QuestionListAdapter;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.Question;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
 /**

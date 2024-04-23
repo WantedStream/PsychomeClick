@@ -1,6 +1,5 @@
 package com.example.psychomeclick.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,10 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.psychomeclick.NewSetActivity;
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.VideosActivity;
-import com.example.psychomeclick.model.GeneralFragment;
 
 /**
  * A simple {@link Fragment} subclass.

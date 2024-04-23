@@ -41,10 +41,10 @@
                 />
         </LinearLayout>
 
-        <com.example.psychomeclick.views.SetRecycler
+        <com.example.psychomeclick.recyclers.SetRecycler
             android:id="@+id/setAllRecycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.example.psychomeclick.views.SetRecycler>
+            android:layout_height="wrap_content"></com.example.psychomeclick.recyclers.SetRecycler>
     </LinearLayout>
 
 </FrameLayout>

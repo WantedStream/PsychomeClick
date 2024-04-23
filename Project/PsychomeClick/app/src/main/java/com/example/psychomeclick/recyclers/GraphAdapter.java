@@ -1,4 +1,4 @@
-package com.example.psychomeclick.helpers;
+package com.example.psychomeclick.recyclers;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +18,6 @@ import dev.bandb.graphview.graph.Node;
 import dev.bandb.graphview.layouts.GraphLayoutManager;
 import dev.bandb.graphview.layouts.tree.BuchheimWalkerConfiguration;
 import dev.bandb.graphview.layouts.tree.BuchheimWalkerLayoutManager;
-import dev.bandb.graphview.layouts.tree.TreeEdgeDecoration;
 
 public class GraphAdapter extends AbstractGraphAdapter{
     @NonNull

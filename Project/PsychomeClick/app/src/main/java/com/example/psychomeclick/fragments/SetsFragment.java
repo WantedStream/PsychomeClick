@@ -11,14 +11,11 @@ import android.view.ViewGroup;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.model.CardSet;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.views.SetRecycler;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.example.psychomeclick.recyclers.SetRecycler;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**

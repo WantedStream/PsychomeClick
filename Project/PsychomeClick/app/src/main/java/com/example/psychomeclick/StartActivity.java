@@ -4,24 +4,12 @@ import static com.example.psychomeclick.model.FirebaseManager.PrefLocaltion;
 import static com.example.psychomeclick.model.FirebaseManager.firebaseAuth;
 import static com.example.psychomeclick.model.FirebaseManager.userData;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
-
-import androidx.core.splashscreen.SplashScreen;
-import androidx.core.view.WindowCompat;
-import androidx.core.view.WindowInsetsControllerCompat;
 
 import com.example.psychomeclick.helpers.NotificationService;
 import com.example.psychomeclick.model.FirebaseManager;
@@ -51,7 +39,7 @@ public class StartActivity<T> extends Activity {
             Map<String,String> emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
             if(emailAndPass==null){
                 //never logged in or created an account
-                LogIn.saveShareRef("","",getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
+                LogInActivity.saveShareRef("","",getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
             }
             emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
             String email=emailAndPass.get("email"),password=emailAndPass.get("password");

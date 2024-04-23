@@ -1,17 +1,12 @@
-package com.example.psychomeclick.helpers;
+package com.example.psychomeclick.recyclers;
 
 
-import android.content.Context;
-import android.content.Intent;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
@@ -19,17 +14,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.TestActivity;
 import com.example.psychomeclick.fragments.EditQuestionFragment;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.model.Node;
-import com.example.psychomeclick.model.Question;
-import com.example.psychomeclick.views.PercentageRingView;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Stack;
 
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.DataViewHolder>{
     private List<String> dataList;

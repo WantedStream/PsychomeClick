@@ -12,7 +12,7 @@
         android:orientation="vertical"
         android:padding="30dp">
 
-        <com.example.psychomeclick.views.SetRecycler
+        <com.example.psychomeclick.recyclers.SetRecycler
             android:id="@+id/setRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
