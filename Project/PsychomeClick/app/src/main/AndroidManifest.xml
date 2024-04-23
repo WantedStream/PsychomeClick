@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PsychomeClick"
         tools:targetApi="31">
+
+        <service
+            android:name=".helpers.NotificationService"
+            android:enabled="true"
+            android:exported="false" />
+        <receiver
+            android:name=".helpers.NotificationService$NotificationBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+        </receiver>
         <activity
             android:name=".VideosActivity"
             android:exported="false" />
@@ -56,6 +67,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

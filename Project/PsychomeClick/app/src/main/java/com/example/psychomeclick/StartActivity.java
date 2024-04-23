@@ -23,6 +23,7 @@ import androidx.core.splashscreen.SplashScreen;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import com.example.psychomeclick.helpers.NotificationService;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.model.UserData;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -104,6 +105,7 @@ public class StartActivity<T> extends Activity {
     }
     private void checkBothThreadsFinished() {
         if (pullQuestionFinished && loginFinished) {
+            this.startService(new Intent(this, NotificationService.class));
             startActivity(nextIntent);
             finish();
         }
