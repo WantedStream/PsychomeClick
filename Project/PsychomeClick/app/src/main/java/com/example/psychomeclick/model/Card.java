@@ -7,7 +7,10 @@ public class Card {
         this.term = term;
         this.meaning = meaning;
     }
-
+    public Card() {
+        this.term = "";
+        this.meaning = "";
+    }
     public String getTerm() {
         return term;
     }

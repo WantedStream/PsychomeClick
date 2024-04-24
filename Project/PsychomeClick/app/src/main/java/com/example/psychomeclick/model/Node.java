@@ -7,17 +7,31 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Node {
-    private String name;
-    private Node[] nodes;
+    protected String name;
+    protected Node[] nodes;
 
-    private String[] questionList;
+    protected String[] questionList;
 
-    public int percent;
+    protected int percent;
+
+    public Node(String name, Node[] nodes, String[] questionList, int percent) {
+        this.name = name;
+        this.nodes = nodes;
+        this.questionList = questionList;
+        this.percent = percent;
+    }
+    public Node() {
+        this.name = "";
+        this.nodes = null;
+        this.questionList = null;
+        this.percent = 0;
+    }
     private static void listNodes(Node node) {
         System.out.println("Node Name: " + node.getName());
         if (node.getNodes() != null) {
@@ -72,5 +86,29 @@ public class Node {
     }
 
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setNodes(Node[] nodes) {
+        this.nodes = nodes;
+    }
+
+    public void setQuestionList(String[] questionList) {
+        this.questionList = questionList;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name='" + name + '\'' +
+                ", nodes=" + Arrays.toString(nodes) +
+                ", questionList=" + Arrays.toString(questionList) +
+                ", percent=" + percent +
+                '}';
+    }
 }
