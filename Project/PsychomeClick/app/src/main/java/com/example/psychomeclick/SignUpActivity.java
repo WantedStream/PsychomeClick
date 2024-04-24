@@ -71,8 +71,8 @@ public class SignUpActivity extends AppCompatActivity {
                 user.put("username", username);user.put("email", email);user.put("phone", phone);user.put("userprogress", "{}");
                 db.collection("Users").document(task.getUser().getUid()).set(user).addOnSuccessListener(t-> {
                     task.getUser().sendEmailVerification().addOnSuccessListener((a)->{Toast.makeText(getApplicationContext(),"user created,email Verification sent",Toast.LENGTH_SHORT).show();});
-                   // LogIn.logIn(username,password,this);
-
+                    Intent myIntent = new Intent(this, LogInActivity.class);
+                    startActivity(myIntent);
                 });
 
                         }).addOnFailureListener((errorTask)->{

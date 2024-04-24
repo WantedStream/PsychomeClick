@@ -31,6 +31,7 @@
             android:backgroundTint="#03A9F4"
             android:textSize="60dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="20dp"
             />
         <Button
             android:id="@+id/gosignUpBtn"
@@ -39,19 +40,13 @@
             android:text="יצירת משתמש"
             android:backgroundTint="#03A9F4"
             android:textSize="50dp"
+            android:layout_marginHorizontal="20dp"
+
             android:layout_marginBottom="10dp"
 
             />
 
-        <Button
-            android:id="@+id/goenterNoUserBtn"
-            android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:text="כניסה ללא משתמש"
-            android:backgroundTint="#03A9F4"
-            android:textSize="40dp"
 
-            />
         <Button
             android:id="@+id/goaboutBtn"
             android:layout_width="wrap_content"

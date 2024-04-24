@@ -22,9 +22,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
-        findViewById(R.id.goenterNoUserBtn).setOnClickListener((v) -> {
-        });
+
         findViewById(R.id.goaboutBtn).setOnClickListener((v) -> {
+            Intent intent = new Intent(this, AboutUsActivity.class);
+            startActivity(intent);
         });
 
     }

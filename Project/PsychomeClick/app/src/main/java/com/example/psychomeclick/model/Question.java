@@ -11,19 +11,16 @@ import java.util.Map;
 public class Question {
     private Map<Byte, Bitmap> images;
     private byte rightAnswer;
-    private  int difficulty;
     private String questionTag;
-    public Question(Map<Byte, Bitmap> images, String questionTag, byte rightAnswer,int difficulty) {
+    public Question(Map<Byte, Bitmap> images, String questionTag, byte rightAnswer) {
         this.images = images;
         this.rightAnswer=rightAnswer;
         this.questionTag = questionTag;
-        this.difficulty = difficulty;
     }
     public Question(String questionTag, byte rightAnswer,int difficulty) {
         this.images = new HashMap<>();
         this.rightAnswer=rightAnswer;
         this.questionTag = questionTag;
-        this.difficulty = difficulty;
     }
     @Override
     public String toString() {
@@ -34,7 +31,6 @@ public class Question {
                 ", answer3=" +this.images.get(3) +
                 ", answer4=" + this.images.get(4) +
                 ", id=" + questionTag +
-                ", difficulty=" + difficulty +
                 '}';
     }
 
@@ -51,9 +47,6 @@ public class Question {
         return questionTag;
     }
 
-    public int getDifficulty() {
-        return difficulty;
-    }
 
 
     public void setImages(Map<Byte, Bitmap> bitmapMap) {
@@ -69,8 +62,5 @@ public class Question {
         this.questionTag = questionTag;
     }
 
-    public void setDifficulty(int difficulty) {
-        this.difficulty = difficulty;
-    }
 
 }
