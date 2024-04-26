@@ -63,7 +63,6 @@ public class SetRecycler extends RecyclerView {
 
         Context context;
         List<CardSet> sets;
-        boolean isAddSet = false; // Flag for "ADD SET" item
 
         public SetAdapter(Context context) {
             this.context = context;

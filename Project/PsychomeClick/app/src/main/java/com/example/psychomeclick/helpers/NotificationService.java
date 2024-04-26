@@ -20,7 +20,6 @@ import java.util.Random;
 public class NotificationService extends Service {
     private static final String CHANNEL_ID = "NotificationChannel";
     private static final int NOTIFICATION_ID = 1001;
-    private static final long INTERVAL = 10 * 1000; // 10 seconds interval
 
     private String[] notificationMessages = {
             "Notification 1",
@@ -56,7 +55,11 @@ public class NotificationService extends Service {
     private void startNotificationScheduler() {
         Intent intent = new Intent(this, NotificationPublisher.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), INTERVAL, pendingIntent);
+        // Generate a random delay between min and max interval (in milliseconds)
+        long minInterval = 60 * 60 * 1000; // 1 hour minimum interval (adjust as needed)
+        long maxInterval = 8 * 60 * 60 * 1000; // 8 hours maximum interval (adjust as needed)
+        long randomDelay = (long) (random.nextDouble() * (maxInterval - minInterval)) + minInterval;
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), randomDelay, pendingIntent);
     }
 
     private void registerBootReceiver() {
