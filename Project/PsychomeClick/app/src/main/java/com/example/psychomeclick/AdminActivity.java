@@ -3,16 +3,13 @@ package com.example.psychomeclick;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.ListFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.example.psychomeclick.fragments.QuestionListFragment;
-import com.example.psychomeclick.fragments.SubjectTreeFragment;
 
 public class AdminActivity extends AppCompatActivity {
 

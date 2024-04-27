@@ -50,6 +50,11 @@ public class SignUpActivity extends AppCompatActivity {
             finish();});
         addBetterButtonFunction();
 
+        findViewById(R.id.back).setOnClickListener((b)->{
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        });
     }
 
 

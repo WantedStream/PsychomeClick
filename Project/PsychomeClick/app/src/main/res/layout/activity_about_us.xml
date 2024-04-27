@@ -6,4 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".AboutUsActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/bg">
+
+        <TextView
+            android:textColor="#3D06BF"
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="about us"
+            android:textSize="50dp"
+            />
+        <TextView
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="#4C0478"
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today, in order to begin studying at most academies, you need to pass the israeli Psychometric exam, know as just the psychometry.Unfortunately, most people dont have the time or the money to study for this test properly."
+            />
+        <TextView
+            android:padding="10dp"
+            android:textSize="20dp"
+            android:textColor="#4C0478"
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The PsychomeClick app, provides a solution for those who wish to study for this test with ease. The application, which has a simple graphical interface without too many options that hurt the learning process, has exactly the options that one that learns for this test needs. "
+            />
+        <Button
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/fui_transparent"
+            android:gravity="center"
+            android:padding="0dp"
+            android:text="⬅️"
+
+            android:textSize="50dp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

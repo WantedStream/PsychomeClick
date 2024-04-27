@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.recyclers.QuestionListAdapter;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.model.Question;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +34,6 @@ public class QuestionListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private List<Question> questionList;
 
     ImageView question,first,second,third,fourth;
     public QuestionListFragment() {

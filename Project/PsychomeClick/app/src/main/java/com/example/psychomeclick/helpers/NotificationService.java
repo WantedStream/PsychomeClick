@@ -38,7 +38,7 @@ public class NotificationService extends Service {
         super.onCreate();
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         startNotificationScheduler();
-        registerBootReceiver();
+       // registerBootReceiver();
     }
 
     @Override

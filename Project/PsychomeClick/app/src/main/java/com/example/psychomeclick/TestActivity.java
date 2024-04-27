@@ -18,8 +18,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.psychomeclick.model.FirebaseManager;
-import com.example.psychomeclick.model.Question;
-import com.example.psychomeclick.model.UserData;
+
 import com.example.psychomeclick.views.BorderTogglingButton;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;

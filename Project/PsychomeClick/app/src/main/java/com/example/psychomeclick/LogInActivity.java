@@ -40,7 +40,13 @@ public class LogInActivity extends AppCompatActivity {
         this.passwordErrors.setText("");
 
         findViewById(R.id.button).setOnClickListener( View -> {
+            if(!this.emailEt.getText().toString().equals("")&&!this.passwordEt.getText().toString().equals(""))
             logIn(this.emailEt.getText().toString(),this.passwordEt.getText().toString(),this);
+        });
+        findViewById(R.id.back).setOnClickListener((b)->{
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
     public static void logIn(String email,String password, Activity activity){

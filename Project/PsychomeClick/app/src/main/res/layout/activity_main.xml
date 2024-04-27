@@ -17,8 +17,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="פסיכו-קליק"
-            android:textSize="80sp"
+            android:text="PsychomeClick"
+            android:textSize="58dp"
             android:gravity="center"
             android:layout_marginBottom="40sp"
             android:textColor="#3FA7B5"/>
@@ -26,18 +26,18 @@
         <Button
             android:id="@+id/gologInBtn"
             android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:text="כניסה"
+            android:layout_height="wrap_content"
+            android:text="login"
             android:backgroundTint="#03A9F4"
-            android:textSize="60dp"
+            android:textSize="50dp"
             android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="20dp"
             />
         <Button
             android:id="@+id/gosignUpBtn"
             android:layout_width="match_parent"
-            android:layout_height="100sp"
-            android:text="יצירת משתמש"
+            android:layout_height="wrap_content"
+            android:text="create user"
             android:backgroundTint="#03A9F4"
             android:textSize="50dp"
             android:layout_marginHorizontal="20dp"
@@ -51,7 +51,7 @@
             android:id="@+id/goaboutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="אודות"
+            android:text="about"
             android:textSize="20dp"
                 android:backgroundTint="#0466BC"
             />

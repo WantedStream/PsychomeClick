@@ -1,4 +1,4 @@
-package com.example.psychomeclick.model;
+package com.example.psychomeclick.useless;
 
 import android.graphics.Bitmap;
 

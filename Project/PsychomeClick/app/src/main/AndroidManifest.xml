@@ -55,9 +55,6 @@
             android:name=".UserActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsPage"
-            android:exported="false" />
-        <activity
             android:name=".LogInActivity"
             android:exported="false" />
         <activity
