@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class UserData {
     protected String name,email;
 
-    private String phone,userProgress;
+    protected String phone,userProgress;
 
-    private Gson gson;
-    private HashMap<String,String[]> subjectMap;
+    protected Gson gson;
+
     public UserData() {
     }
 
@@ -22,7 +22,6 @@ public class UserData {
 
         this.phone=phone;
         this.userProgress=userProgressstr;
-        this.subjectMap=new HashMap<>();
         this.gson=new Gson();
     }
     public void updateUserProgress(String userProgress){

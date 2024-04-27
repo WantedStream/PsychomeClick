@@ -7,7 +7,7 @@ public class Message {
     protected boolean graduallyWrite;
     protected int icon;
 
-    public Message(String text, boolean isLeft, int color, boolean graduallyWrite, int icon) {
+    public Message(String text, boolean isLeft, boolean graduallyWrite, int icon) {
         this.text = text;
         this.isLeft = isLeft;
         this.graduallyWrite = graduallyWrite;

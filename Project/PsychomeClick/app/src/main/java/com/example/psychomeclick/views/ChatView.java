@@ -37,8 +37,8 @@ public class ChatView extends RecyclerView {
         setAdapter(adapter);
     }
 
-    public void addMessage(String text, boolean isLeft, int color, boolean graduallyWrite, int icon) {
-        Message message = new Message(text, isLeft, color, graduallyWrite, icon);
+    public void addMessage(String text, boolean isLeft, boolean graduallyWrite, int icon) {
+        Message message = new Message(text, isLeft, graduallyWrite, icon);
         adapter.addMessage(message);
         scrollToPosition(adapter.getItemCount() - 1);
     }

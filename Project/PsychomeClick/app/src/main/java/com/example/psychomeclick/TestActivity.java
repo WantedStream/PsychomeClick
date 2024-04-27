@@ -1,6 +1,5 @@
 package com.example.psychomeclick;
 
-import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

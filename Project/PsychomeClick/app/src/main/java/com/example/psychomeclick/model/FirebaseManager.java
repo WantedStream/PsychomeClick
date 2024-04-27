@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.signature.ObjectKey;
+import com.google.common.collect.ImmutableList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,22 +34,7 @@ public class FirebaseManager {
      public static UserData userData;
     public static HashMap<String,Integer> QuestionMap=new HashMap<>();
 
-
-
-
-    public static void insertToQuestionCells(Queue<LinearLayout> qlist,Context c){
-        StorageReference storageRef=firebaseStorage.getReference();
-        db.collection("Questions").get().addOnSuccessListener((getCollectTask)->{
-            for (DocumentSnapshot document:getCollectTask.getDocuments()) {
-                String questionId = document.getId();
-                StorageReference fileRef = storageRef.child("QuestionStorage/" +questionId+"/images"+0);
-               setQuestionCell(fileRef,qlist.remove(),c);
-            }
-            while(!qlist.isEmpty())qlist.remove().setVisibility(View.GONE);
-        });
-
-
-    }
+    public static final ImmutableList<String> adminList = ImmutableList.of("t1", "coolusername","newusername","");
 
     public static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
@@ -75,13 +61,7 @@ public class FirebaseManager {
 
 
     }
-    public static void setQuestionCell(@NonNull StorageReference storageRef,LinearLayout cellayout,Context c){
-       String path= storageRef.getPath();
-        int begin=path.indexOf('/',1),end=path.indexOf('/',begin+1);
-        ( (TextView)cellayout.getChildAt(0)).setText(storageRef.getPath().substring(begin+1,end));
-            loadImage(storageRef, (ImageView) cellayout.getChildAt(1),c);
 
-    }
 
 
 }

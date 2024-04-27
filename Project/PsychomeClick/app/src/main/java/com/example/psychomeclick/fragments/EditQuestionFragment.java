@@ -1,7 +1,6 @@
 package com.example.psychomeclick.fragments;
 
 import static com.example.psychomeclick.helpers.QuestionLocationHelper.ChangeQuestionLocation;
-import static com.example.psychomeclick.model.Constants.QUESTION_IMAGE_COUNT;
 import static com.example.psychomeclick.model.FirebaseManager.firebaseAuth;
 import static com.example.psychomeclick.model.FirebaseManager.firebaseStorage;
 

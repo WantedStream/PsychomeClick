@@ -1,6 +1,6 @@
 package com.example.psychomeclick;
 
-import static com.example.psychomeclick.model.Constants.adminList;
+import static com.example.psychomeclick.model.FirebaseManager.adminList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
