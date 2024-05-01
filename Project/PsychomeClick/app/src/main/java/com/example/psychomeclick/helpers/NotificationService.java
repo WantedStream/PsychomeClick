@@ -20,15 +20,11 @@ import java.util.Random;
 public class NotificationService extends Service {
     private static final String CHANNEL_ID = "NotificationChannel";
     private static final int NOTIFICATION_ID = 1001;
+    private static final String NOTIFICATION_ACTION = "com.example.psychomeclick.NOTIFICATION_PUBLISH"; //for limiting broadcast
 
-    private String[] notificationMessages = {
-            "Notification 1",
-            "Notification 2",
-            "Notification 3"
-            // Add more messages as needed
-    };
 
-    private Random random = new Random();
+
+    private static Random random = new Random();
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     private BroadcastReceiver bootReceiver;
@@ -54,6 +50,7 @@ public class NotificationService extends Service {
 
     private void startNotificationScheduler() {
         Intent intent = new Intent(this, NotificationPublisher.class);
+        intent.setAction(NOTIFICATION_ACTION);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
         // Generate a random delay between min and max interval (in milliseconds)
         long minInterval = 60 * 60 * 1000; // 1 hour minimum interval (adjust as needed)
@@ -82,36 +79,44 @@ public class NotificationService extends Service {
         }
     }
 
-    public class NotificationPublisher extends BroadcastReceiver {
+    public static class NotificationPublisher extends BroadcastReceiver {
+        private String[] notificationMessages = {
+                "Notification 1",
+                "Notification 2",
+                "Notification 3"
+                // Add more messages as needed
+        };
         @Override
         public void onReceive(Context context, Intent intent) {
             String message = notificationMessages[random.nextInt(notificationMessages.length)];
             showNotification(context, message);
         }
-    }
 
-    private void showNotification(Context context, String message) {
-        createNotificationChannel(context);
+        private void showNotification(Context context, String message) {
+            createNotificationChannel(context);
 
-        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle("Random Notification")
-                .setContentText(message);
+            Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle("Random Notification")
+                    .setContentText(message);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-    }
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        }
 
-    private void createNotificationChannel(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "Notification Channel";
-            String description = "Channel for notifications";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
+        private void createNotificationChannel(Context context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = "Notification Channel";
+                String description = "Channel for notifications";
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+                channel.setDescription(description);
 
-            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+                NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+                notificationManager.createNotificationChannel(channel);
+            }
         }
     }
+
+
 }
