@@ -18,6 +18,7 @@ public class StopView extends View {
     private int textColor;
     private float textSize;
     private Paint paint;
+    private int sxa;
 
     public StopView(Context context, AttributeSet attrs) {
         super(context, attrs);
