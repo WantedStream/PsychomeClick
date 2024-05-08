@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.psychomeclick.fragments.BookFragment;
 import com.example.psychomeclick.fragments.SimulationsFragment;
+import com.example.psychomeclick.fragments.StopperFragment;
 import com.example.psychomeclick.model.FirebaseManager;
 import com.example.psychomeclick.fragments.GeneralFragment;
 import com.google.gson.Gson;
@@ -57,6 +58,12 @@ public class UserActivity extends AppCompatActivity{
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new BookFragment());
+            transaction.commit();
+        });
+        findViewById(R.id.clockBtn).setOnClickListener((t)->{
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.replace(R.id.contentFragment, new StopperFragment());
             transaction.commit();
         });
     }

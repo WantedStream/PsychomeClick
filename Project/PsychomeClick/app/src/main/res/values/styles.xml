@@ -9,4 +9,11 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
+
+    <declare-styleable name="StopWatchStopperView">
+        <attr name="stopText" format="string" />
+        <attr name="stopColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
 </resources>
