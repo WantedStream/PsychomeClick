@@ -6,9 +6,10 @@ import android.util.AttributeSet;
 
 
 public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatImageButton {
-    private boolean isBorderEnabled = false;
-    private OnBorderToggleListener onBorderToggleListener;
+    protected boolean isBorderEnabled = false;
+    protected OnBorderToggleListener onBorderToggleListener;
 
+    protected int number=-1;
     public BorderTogglingButton(Context context) {
         super(context);
         init();
@@ -24,6 +25,12 @@ public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatIma
         init();
     }
 
+    public int getNumber(){
+        return this.number;
+    }
+    private void setNumber(int number){
+        this.number=number;
+    }
     private void init() {
         // Set initial appearance (without border)
         setBorderEnabled(false);

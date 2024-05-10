@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.psychomeclick.BetterTestActivity;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.TestActivity;
 import com.example.psychomeclick.model.Node;
@@ -47,7 +48,7 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
             if(nodes!=null){
                 updateRecyclerView(Arrays.asList(nodes));
             } else if (data.getQuestionList()!=null&&data.getQuestionList().length>0) {
-                Intent intent = new Intent(holder.itemView.getContext(), TestActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), BetterTestActivity.class);
                 intent.putExtra("questionList", data.getQuestionList());
                 intent.putExtra("subject",data.getName());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
