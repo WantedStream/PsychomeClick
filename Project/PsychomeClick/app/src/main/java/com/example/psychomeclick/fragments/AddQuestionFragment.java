@@ -177,10 +177,10 @@ public class AddQuestionFragment extends Fragment {
                 return;
             }
             addQuestiontoDB(((RadioButton)v.findViewById(rGroup.getCheckedRadioButtonId())).getText().toString(),subjectSpinner.getSelectedItem().toString());
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, new QuestionListFragment());
-            transaction.commit();
+            //  FragmentManager fm = getParentFragmentManager();
+          //  FragmentTransaction transaction = fm.beginTransaction();
+          //  transaction.replace(R.id.contentFragment, new QuestionListFragment());
+          //  transaction.commit();
         });
     }
 
@@ -202,16 +202,18 @@ public class AddQuestionFragment extends Fragment {
                 index++;
                 fileRef.putFile(entry.getValue()).addOnSuccessListener(taskSnapshot -> {
                     counter[0]=counter[0]+1;
-                    System.out.println(counter[0]);
+                    System.out.println(counter[0]+"asd");
                     if(counter[0]==5){
                         //set subject
                         FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t)-> {
                             String newjs = AddQuestionLocation(qdocument.getId(), t.get("tree").toString(), subject);
                             FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree", newjs).addOnSuccessListener((t2) -> {
-                                FragmentManager fm = getParentFragmentManager();
+                                FragmentManager fm =getParentFragmentManager();
                                 FragmentTransaction transaction = fm.beginTransaction();
+                                System.out.println("asds");
                                 transaction.replace(R.id.contentFragment, new QuestionListFragment());
                                 transaction.commit();
+
                             });
                         });
                     }

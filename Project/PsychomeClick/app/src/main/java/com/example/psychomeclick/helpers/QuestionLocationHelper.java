@@ -50,7 +50,7 @@ public class QuestionLocationHelper {
         addQuestionToSubject(jsonObject,questionId,newLcation);
         return jsonObject.toString();
     }
-    private static JsonObject removeQuestionFromTree(JsonObject root, String questionId) {
+    public static JsonObject removeQuestionFromTree(JsonObject root, String questionId) {
         if (root.has("questionList")) {
             JsonArray questionList = root.getAsJsonArray("questionList");
             for (int i = 0; i < questionList.size(); i++) {

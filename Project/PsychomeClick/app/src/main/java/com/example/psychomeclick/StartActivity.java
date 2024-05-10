@@ -29,9 +29,9 @@ public class StartActivity<T> extends Activity {
         FirebaseManager.db.collection("Questions").get().addOnCompleteListener((t)->{
             for (DocumentSnapshot doc: t.getResult().getDocuments()) {
                 FirebaseManager.QuestionMap.put(doc.getId(),(Integer.parseInt(doc.get("correctAnswer").toString())));
-                pullQuestionFinished=true;
-                checkBothThreadsFinished();
             }
+            pullQuestionFinished=true;
+            checkBothThreadsFinished();
         });
     });
 

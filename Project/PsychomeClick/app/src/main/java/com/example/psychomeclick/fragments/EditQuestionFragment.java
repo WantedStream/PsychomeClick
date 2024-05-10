@@ -4,7 +4,9 @@ import static com.example.psychomeclick.helpers.QuestionLocationHelper.ChangeQue
 import static com.example.psychomeclick.model.FirebaseManager.firebaseAuth;
 import static com.example.psychomeclick.model.FirebaseManager.firebaseStorage;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,10 +39,18 @@ import android.widget.TextView;
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.helpers.QuestionLocationHelper;
 import com.example.psychomeclick.model.FirebaseManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,6 +76,8 @@ public class EditQuestionFragment extends Fragment {
 
     private RadioGroup rGroup;
     private Spinner subjectSpinner;
+
+    private Button deleteBtn;
     final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
             registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
                 if(uris!=null) {
@@ -134,6 +148,7 @@ public class EditQuestionFragment extends Fragment {
         imageView4=v.findViewById(R.id.answer4);
         rGroup= (RadioGroup)v.findViewById(R.id.answerRadios);
         subjectSpinner= (Spinner) v.findViewById(R.id.subjectSpinner);
+        deleteBtn = (Button) v.findViewById(R.id.deleteBtn);
         insertData(v);
 
     }
@@ -180,30 +195,28 @@ public class EditQuestionFragment extends Fragment {
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
                 .build());
     }
-    private void addListeners(View v){
-        questingImg.setOnClickListener((b)->{
-            chooseImage((ImageView)b);
+    private void addListeners(View v) {
+        questingImg.setOnClickListener((b) -> {
+            chooseImage((ImageView) b);
         });
-        imageView1.setOnClickListener((b)->{
-            chooseImage((ImageView)b);
+        imageView1.setOnClickListener((b) -> {
+            chooseImage((ImageView) b);
         });
-        imageView2.setOnClickListener((b)->{
-            chooseImage((ImageView)b);
+        imageView2.setOnClickListener((b) -> {
+            chooseImage((ImageView) b);
         });
-        imageView3.setOnClickListener((b)->{
-            chooseImage((ImageView)b);
+        imageView3.setOnClickListener((b) -> {
+            chooseImage((ImageView) b);
         });
-        imageView4.setOnClickListener((b)->{
-            chooseImage((ImageView)b);
+        imageView4.setOnClickListener((b) -> {
+            chooseImage((ImageView) b);
         });
-        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
-                    FirebaseManager.db.collection("Questions").document(qid).update("correctAnswer",checkedRadioButton.getText()).addOnSuccessListener((t)->{
-                            FirebaseManager.QuestionMap.put(qid,Integer.parseInt(checkedRadioButton.getText().toString()));
-                   });
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton checkedRadioButton = (RadioButton) group.findViewById(checkedId);
+                FirebaseManager.db.collection("Questions").document(qid).update("correctAnswer", checkedRadioButton.getText()).addOnSuccessListener((t) -> {
+                    FirebaseManager.QuestionMap.put(qid, Integer.parseInt(checkedRadioButton.getText().toString()));
+                });
 
             }
         });
@@ -212,9 +225,9 @@ public class EditQuestionFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 subjectSpinner.setEnabled(false);
                 String selectedSubject = (String) parentView.getItemAtPosition(position);
-                FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t)->{
-                    String newjs=ChangeQuestionLocation(qid, t.get("tree").toString(), selectedSubject);
-                    FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree",newjs).addOnSuccessListener((t2)->{
+                FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t) -> {
+                    String newjs = ChangeQuestionLocation(qid, t.get("tree").toString(), selectedSubject);
+                    FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree", newjs).addOnSuccessListener((t2) -> {
                         subjectSpinner.setEnabled(true);
                     });
                 });
@@ -226,6 +239,53 @@ public class EditQuestionFragment extends Fragment {
                 // your code here
             }
 
+        });
+
+        deleteBtn.setOnClickListener((b) -> {
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").get().addOnSuccessListener((t)->{
+                           String newTree= QuestionLocationHelper.removeQuestionFromTree( new Gson().fromJson(t.getString("tree"), JsonObject.class),qid).toString();
+                            FirebaseManager.db.collection("SubjectTree").document("SubjectTreeDoc").update("tree",newTree).addOnSuccessListener((t2->{
+                                FirebaseManager.db.collection("Questions").document(qid).delete().addOnSuccessListener((t3)->{
+
+
+                                        firebaseStorage.getReference("QuestionStorage/" + qid).listAll()
+                                                .addOnSuccessListener((OnSuccessListener<ListResult>) listResult -> {
+                                                    final List<Task<Void>> deletionTasks = new ArrayList<>();
+                                                    List<StorageReference> files = listResult.getItems();
+                                                    for (StorageReference file : files) {
+                                                        deletionTasks.add(file.delete().addOnSuccessListener(task -> {
+
+                                                        }));
+                                                    }
+                                                    Task<Void> allTasks = Tasks.whenAll(deletionTasks);
+                                                    allTasks.addOnSuccessListener(task -> {
+                                                        FirebaseManager.QuestionMap.remove(qid);
+                                                        FragmentManager fm = getParentFragmentManager();
+                                                        FragmentTransaction transaction = fm.beginTransaction();
+                                                        transaction.replace(R.id.contentFragment, new QuestionListFragment());
+                                                        transaction.commit();                                                    });
+                                                });
+
+
+
+                                    });
+                            }));
+                        });
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+
+
+                            break;
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setMessage("Are you sure you want to delete?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
         });
     }
 }
