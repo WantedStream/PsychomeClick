@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +33,7 @@ public class BetterTestActivity extends AppCompatActivity {
     ImageButton backbtn,prevbtn,nextbtn;
     ImageView img0;
     BorderTogglingButton img1,img2,img3,img4;
-    List<String> allQuestions;
+
     JsonArray userQuestions;
     String subject;
     int currentIndex;
@@ -62,8 +64,81 @@ public class BetterTestActivity extends AppCompatActivity {
         img3=findViewById(R.id.img3);
         img4=findViewById(R.id.img4);
 
+        img1.setOnBorderToggledListener(b->{
+            JsonArray qtmp= userQuestions.get(currentIndex).getAsJsonArray();
+            if(b==true){
+                qtmp.set(1,new JsonPrimitive(1));
+                img2.disable();
+                img3.disable();
+                img4.disable();
+                if(FirebaseManager.QuestionMap.get(qtmp.get(0).getAsString())==qtmp.get(1).getAsInt())
+                    img1.setBorderColor(Color.GREEN);
+                else
+                    img1.setBorderColor(Color.RED);
+            }
+            else{
+                qtmp.set(1, new JsonPrimitive(-1));
+            }
+            updateUserProgress(false);
+        });
+        img2.setOnBorderToggledListener(b->{
+            JsonArray qtmp= userQuestions.get(currentIndex).getAsJsonArray();
+            if(b==true){
+                qtmp.set(1,new JsonPrimitive(2));
+                img1.disable();
+                img3.disable();
+                img4.disable();
+                if(FirebaseManager.QuestionMap.get(qtmp.get(0).getAsString())==qtmp.get(1).getAsInt())
+                    img2.setBorderColor(Color.GREEN);
+                else
+                    img2.setBorderColor(Color.RED);
+            }
+            else{
+                qtmp.set(1, new JsonPrimitive(-1));
+            }
+            updateUserProgress(false);
+        });
+        img3.setOnBorderToggledListener(b->{
+            JsonArray qtmp= userQuestions.get(currentIndex).getAsJsonArray();
+            if(b==true){
+                qtmp.set(1,new JsonPrimitive(3));
+                img1.disable();
+                img2.disable();
+                img4.disable();
+                if(FirebaseManager.QuestionMap.get(qtmp.get(0).getAsString())==qtmp.get(1).getAsInt())
+                    img3.setBorderColor(Color.GREEN);
+                else
+                    img3.setBorderColor(Color.RED);
+            }
+            else{
+                qtmp.set(1, new JsonPrimitive(-1));
+            }
+            updateUserProgress(false);
+        });
+        img4.setOnBorderToggledListener(b->{
+            JsonArray qtmp= userQuestions.get(currentIndex).getAsJsonArray();
+            if(b==true){
+                qtmp.set(1,new JsonPrimitive(4));
+                img1.disable();
+                img2.disable();
+                img3.disable();
+                if(FirebaseManager.QuestionMap.get(qtmp.get(0).getAsString())==qtmp.get(1).getAsInt())
+                    img4.setBorderColor(Color.GREEN);
+                else
+                    img4.setBorderColor(Color.RED);
+            }
+            else{
+                qtmp.set(1, new JsonPrimitive(-1));
+            }
+            updateUserProgress(false);
+        });
+
+
+
+
+
         Bundle extras = getIntent().getExtras();
-        allQuestions=Arrays.asList(extras.getStringArray("questionList"));
+        List<String>  allQuestions=Arrays.asList(extras.getStringArray("questionList"));
         subject=extras.getString("subject");
 
 
@@ -72,36 +147,40 @@ public class BetterTestActivity extends AppCompatActivity {
         if(userQuestions==null){
             userQuestions=new JsonArray();
         }
-        else{
-            //remove removed question from users answer list
-            Iterator<JsonElement> iterator = userQuestions.iterator();
-            while (iterator.hasNext()) {
-                JsonElement e=iterator.next();
-                if (!allQuestions.contains(e.getAsJsonArray().get(0).getAsString())) {
-                    iterator.remove();
-                }
-            }
-            //reposition stuff for order matching
-            for (int i = 0; i < userQuestions.size(); i++) {
 
-            }
 
+        JsonArray newUserQuestions=new JsonArray();
+        for (int i = 0; i < allQuestions.size(); i++) {
+            String currentQuestionId=allQuestions.get(i);
+            JsonArray question= deleteFromList(currentQuestionId,userQuestions);
+            System.out.println(question);
+            if(question==null){
+                question= new JsonArray();
+                question.add(currentQuestionId);
+                question.add(-1);
+            }
+                newUserQuestions.add(question);
         }
 
+        userQuestions=newUserQuestions;
 
-        //first time user opened it.
-        if(userQuestions.isEmpty()){
-            JsonArray newQuestion= new JsonArray();
-            newQuestion.add(allQuestions.get(0));
-            newQuestion.add(-1);
-            userQuestions.add(newQuestion);
-            currentIndex=0;
-        }
+        currentIndex=userQuestions.size()-1;
 
-        updateUserProgress();
+        updateUserProgress(true);
 
     }
-    public void updateUserProgress() {
+
+    public JsonArray deleteFromList(String qid,JsonArray list){
+        for (JsonElement q:list) {
+            if(q.getAsJsonArray().get(0).getAsString().equals(qid)){
+                list.remove(q);
+                return q.getAsJsonArray();
+            }
+            System.out.println(q.getAsJsonArray().get(0).getAsString()+"=="+qid);
+        }
+        return null;
+    }
+    public void updateUserProgress(Boolean updateImages) {
         JsonObject newProgress= FirebaseManager.userData.getJsonProgress().getAsJsonObject();
         newProgress.add(subject, userQuestions);
         backbtn.setVisibility(View.INVISIBLE);
@@ -121,28 +200,39 @@ public class BetterTestActivity extends AppCompatActivity {
             img4.setEnabled(true);
             FirebaseManager.userData.setUserProgress(newProgress.toString());
             updateButtonStatus();
-            updateImages();
+
+            if(updateImages){
+                updateToggleBoxes();
+                updateImages();
+            }
+
         });
     }
 
     public void prevQuestion(){
         currentIndex=currentIndex-1;
+        updateToggleBoxes();
         updateButtonStatus();
         updateImages();
+
     }
     public void nextQuestion(){
-            currentIndex=currentIndex+1;
-            if(currentIndex==userQuestions.size()){
-                JsonArray jsonElement= new JsonArray();
-                jsonElement.add(allQuestions.get(currentIndex));
-                jsonElement.add(-1);
-                userQuestions.add(jsonElement);
-                updateUserProgress();
-            }
-            else{
-                updateButtonStatus();
-                updateImages();
-            }
+          currentIndex=currentIndex+1;
+          updateToggleBoxes();
+          updateButtonStatus();
+          updateImages();
+    }
+    public void updateToggleBoxes(){
+        img1.disable();
+        img2.disable();
+        img3.disable();
+        img4.disable();
+        switch (userQuestions.get(currentIndex).getAsJsonArray().get(1).getAsInt()){
+            case 1:img1.toggleBorder();break;
+            case 2:img2.toggleBorder();break;
+            case 3:img3.toggleBorder();break;
+            case 4:img4.toggleBorder();break;
+        }
     }
     public void updateButtonStatus(){
         if(currentIndex>0){
@@ -152,7 +242,7 @@ public class BetterTestActivity extends AppCompatActivity {
             prevbtn.setVisibility(View.INVISIBLE);
         }
 
-        if(currentIndex==allQuestions.size()-1){
+        if(currentIndex==userQuestions.size()-1){
             nextbtn.setVisibility(View.INVISIBLE);
         }
         else{
