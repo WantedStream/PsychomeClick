@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BetterTestActivity"
+    tools:context=".TestActivity"
     android:background="@mipmap/ic_launcher_background">
     <ScrollView
         android:layout_width="match_parent"

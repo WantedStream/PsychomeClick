@@ -15,7 +15,7 @@
         android:theme="@style/Theme.PsychomeClick"
         tools:targetApi="31">
         <activity
-            android:name=".BetterTestActivity"
+            android:name=".TestActivity"
             android:exported="false" />
         <activity
             android:name=".AboutUsActivity"
@@ -45,10 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TestActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
+
         <activity
             android:name=".PdfTestPageActivity"
             android:exported="false" />
