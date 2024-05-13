@@ -94,6 +94,16 @@
                 android:layout_weight="5"
                 />
             <ImageButton
+                android:id="@+id/clockBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:background="@drawable/timer"
+                android:layout_marginVertical="25dp"
+                android:layout_marginHorizontal="18dp"
+                android:layout_weight="5"
+                />
+            <ImageButton
                 android:id="@+id/aibtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -102,15 +112,7 @@
 
                 android:layout_weight="5"
               />
-            <ImageButton
-                android:id="@+id/clockBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
 
-                android:background="@drawable/timer"
-                android:layout_margin="18dp"
-                android:layout_weight="5"
-                />
         </LinearLayout>
 
     </LinearLayout>
