@@ -97,7 +97,7 @@ public class NotificationService extends Service {
 
             Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_launcher_round)
-                    .setContentTitle("Random Notification")
+                    .setContentTitle("Psycho time!")
                     .setContentText(message);
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
