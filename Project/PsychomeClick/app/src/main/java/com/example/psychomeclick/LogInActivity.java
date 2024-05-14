@@ -19,9 +19,9 @@ import java.util.LinkedHashMap;
 
 public class LogInActivity extends AppCompatActivity {
 
-    EditText userNameEt,emailEt,phoneEt,passwordEt,RepeatPasswordEt;
+    EditText emailEt,passwordEt;
 
-    TextView emailErrors,phoneErrors,usernameErrors,passwordErrors;
+    TextView emailErrors,passwordErrors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

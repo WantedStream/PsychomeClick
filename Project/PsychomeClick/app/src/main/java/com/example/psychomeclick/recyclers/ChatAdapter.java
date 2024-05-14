@@ -99,10 +99,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 public void run() {
                     textView.setText(text.substring(0, index++));
                     if (index <= text.length()) {
-                        handler.postDelayed(this, 50); // Adjust the delay time as needed
+                        handler.postDelayed(this, 50); // Adjust the delay time
                     }
                 }
-            }, 50); // Adjust the initial delay time as needed
+            }, 50); // Adjust the initial delay time
         }
     }
 }

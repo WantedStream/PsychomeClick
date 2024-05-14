@@ -1,13 +1,11 @@
 package com.example.psychomeclick.fragments;
 
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.widget.TextView;
 
 import com.example.psychomeclick.R;
 
-import org.w3c.dom.Text;
 
 import java.util.Locale;
 

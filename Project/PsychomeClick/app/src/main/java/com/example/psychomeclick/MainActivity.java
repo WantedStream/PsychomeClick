@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //  Map<String,String> emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
         findViewById(R.id.gologInBtn).setOnClickListener((v) -> {
             Intent intent = new Intent(this, LogInActivity.class);
             startActivity(intent);

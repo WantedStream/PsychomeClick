@@ -1,5 +1,4 @@
 package com.example.psychomeclick.model;
-import android.graphics.Bitmap;
 
 public class Message {
     protected String text;

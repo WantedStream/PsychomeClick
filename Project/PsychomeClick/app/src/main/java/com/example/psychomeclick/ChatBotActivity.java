@@ -3,9 +3,7 @@ package com.example.psychomeclick;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import com.example.psychomeclick.model.FirebaseManager;
 
 import com.example.psychomeclick.views.ChatView;
-import com.google.ai.client.generativeai.Chat;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.ChatFutures;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;

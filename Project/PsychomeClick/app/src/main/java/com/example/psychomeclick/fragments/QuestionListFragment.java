@@ -16,7 +16,6 @@ import com.example.psychomeclick.recyclers.QuestionListAdapter;
 import com.example.psychomeclick.model.FirebaseManager;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 /**

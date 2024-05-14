@@ -31,13 +31,6 @@ public class AdminActivity extends AppCompatActivity {
             transaction.commit();
         });
 
-       // findViewById(R.id.treeSubjectBtn).setOnClickListener((t)->{
-        //    FragmentManager fm = getSupportFragmentManager();
-        //    FragmentTransaction transaction = fm.beginTransaction();
-        //    transaction.replace(R.id.contentFragment, new SubjectTreeFragment());
-        //    transaction.commit();
-       // });
-
         ((ImageButton) findViewById(R.id.returnToMainMenuBtn)).setOnClickListener((t)->{
             Intent intent = new Intent(this,UserActivity.class);
             startActivity(intent);

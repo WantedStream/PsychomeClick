@@ -26,7 +26,6 @@ public class PdfTestPageActivity extends AppCompatActivity {
         WebView webview1 = (WebView) findViewById(R.id.webview1);
         webview1.getSettings().setJavaScriptEnabled(true);
         webview1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-       // String pdf = getIntent().getStringExtra("link");
             String testTime=getIntent().getStringExtra("testTime").toString();
         webview1.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
 

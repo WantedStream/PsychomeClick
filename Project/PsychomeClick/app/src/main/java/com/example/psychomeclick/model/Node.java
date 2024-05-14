@@ -1,16 +1,7 @@
 package com.example.psychomeclick.model;
-
-import android.util.Pair;
-
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Node {
     protected String name;

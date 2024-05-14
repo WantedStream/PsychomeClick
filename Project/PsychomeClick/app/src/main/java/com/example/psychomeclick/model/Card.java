@@ -1,8 +1,8 @@
 package com.example.psychomeclick.model;
 
 public class Card {
-    private String term;
-    private String meaning;
+    protected String term;
+    protected String meaning;
     public Card(String term, String meaning) {
         this.term = term;
         this.meaning = meaning;
