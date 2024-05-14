@@ -1,0 +1,65 @@
+@startuml
+class com.example.psychomeclick.recyclers.SubjectNodesAdapter {
+- List<Node> dataList
+- Stack<List<Node>> formerLists
++ DataViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(DataViewHolder,int)
++ int getItemCount()
+- void updateRecyclerView(List<Node>)
++ void backToFormerNodes()
+- void putToFormerList(List<Node>)
+}
+
+
+class com.example.psychomeclick.recyclers.SubjectNodesAdapter$DataViewHolder {
+~ TextView textView
+~ PercentageRingView percentageRingView
+}
+
+class com.example.psychomeclick.recyclers.ChatAdapter {
+- List<Message> messages
+- Context context
++ MessageViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(MessageViewHolder,int)
++ int getItemCount()
++ void addMessage(Message)
+}
+
+
+class com.example.psychomeclick.recyclers.ChatAdapter$MessageViewHolder {
+~ TextView messageText
+~ ImageView iconImage
+~ RelativeLayout parent
+~ boolean grad
+~ void bind(Message)
+- void graduallyWriteText(TextView,String)
+}
+
+
+class com.example.psychomeclick.recyclers.QuestionListAdapter {
+- List<String> dataList
+- FragmentManager fragmentManager
++ DataViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(DataViewHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.psychomeclick.recyclers.QuestionListAdapter$DataViewHolder {
+~ TextView textView
+~ ImageView imageView
+~ Button btn
+}
+
+
+
+com.example.psychomeclick.recyclers.Adapter <|-- com.example.psychomeclick.recyclers.SubjectNodesAdapter
+com.example.psychomeclick.recyclers.SubjectNodesAdapter +.. com.example.psychomeclick.recyclers.SubjectNodesAdapter$DataViewHolder
+com.example.psychomeclick.recyclers.ViewHolder <|-- com.example.psychomeclick.recyclers.SubjectNodesAdapter$DataViewHolder
+com.example.psychomeclick.recyclers.Adapter <|-- com.example.psychomeclick.recyclers.ChatAdapter
+com.example.psychomeclick.recyclers.ChatAdapter +.. com.example.psychomeclick.recyclers.ChatAdapter$MessageViewHolder
+com.example.psychomeclick.recyclers.ViewHolder <|-- com.example.psychomeclick.recyclers.ChatAdapter$MessageViewHolder
+com.example.psychomeclick.recyclers.Adapter <|-- com.example.psychomeclick.recyclers.QuestionListAdapter
+com.example.psychomeclick.recyclers.QuestionListAdapter +.. com.example.psychomeclick.recyclers.QuestionListAdapter$DataViewHolder
+com.example.psychomeclick.recyclers.ViewHolder <|-- com.example.psychomeclick.recyclers.QuestionListAdapter$DataViewHolder
+@enduml

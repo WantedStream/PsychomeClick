@@ -1,0 +1,18 @@
+@startuml
+class com.example.psychomeclick.views.PercentageRingView {
+- int percentage
+- Paint innerRingPaint
+- Paint outerRingPaint
+- Paint textPaint
+- RectF innerRingBounds
+- RectF outerRingBounds
+- void init()
+# void onDraw(Canvas)
++ void setPercentage(int)
+}
+
+
+
+
+android.view.View <|-- com.example.psychomeclick.views.PercentageRingView
+@enduml

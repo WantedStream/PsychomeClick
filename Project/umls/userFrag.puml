@@ -1,0 +1,77 @@
+@startuml
+class com.example.psychomeclick.fragments.SimulationsFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SimulationsFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void createButtons(View)
+- void createSingleButton(View,LinearLayout,String)
+}
+
+
+class com.example.psychomeclick.fragments.StopperFragment {
+- TextView stopperTv
+- Button startBtn
+- Spinner spinner
+- CheckBox checkBox
+- CountDownTimer timer
+- boolean isEssayIncluded
+- int numOfSections
+- int currentSection
+- LinearLayout colorTv
+- TextToSpeech textToSpeech
+~ boolean isEssay
+- {static} long essayDuration
+- {static} long breakDuration
+- {static} long sectionDuration
+~ boolean paused
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void initViews(View)
+- void setListeners()
+- void startTest()
+- void startEssayTimer()
+- void startBreakTimer()
+- void startNextSection()
+- void pauseTest()
+- void nextSection()
+- void finishTest()
+- void playSound(String)
+- String formatTime(long)
+- long parseTime(String)
++ void onDestroy()
+}
+
+
+class com.example.psychomeclick.fragments.BookFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} BookFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.psychomeclick.fragments.GeneralFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} GeneralFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void makeStuff(View)
+}
+
+
+
+
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.SimulationsFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.StopperFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.BookFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.GeneralFragment
+@enduml

@@ -1,0 +1,58 @@
+@startuml
+class com.example.psychomeclick.model.Message {
+# String text
+# boolean isLeft
+# boolean graduallyWrite
+# int icon
++ String getText()
++ boolean isLeft()
++ boolean isGraduallyWrite()
++ int getIcon()
++ void setText(String)
++ void setLeft(boolean)
++ void setGraduallyWrite(boolean)
++ void setIcon(int)
++ String toString()
+}
+
+
+class com.example.psychomeclick.model.Node {
+# String name
+# Node[] nodes
+# String[] questionList
+# int percent
+- {static} void listNodes(Node)
++ void setPercent(int)
++ String getName()
++ Node[] getNodes()
++ String[] getQuestionList()
++ int getSubPercents()
++ void setName(String)
++ void setNodes(Node[])
++ void setQuestionList(String[])
++ int getPercent()
++ String toString()
+}
+
+
+class com.example.psychomeclick.model.UserData {
+# String name
+# String phone
+# Gson gson
++ void updateUserProgress(String)
++ String getName()
++ String getEmail()
++ String getUserProgress()
++ JsonArray getSubjectQuestion(String)
++ JsonObject getJsonProgress()
++ void setName(String)
++ void setEmail(String)
++ void setUserProgress(String)
++ String toString()
++ String getPhone()
++ void setPhone(String)
++ Gson getGson()
+}
+
+
+@enduml

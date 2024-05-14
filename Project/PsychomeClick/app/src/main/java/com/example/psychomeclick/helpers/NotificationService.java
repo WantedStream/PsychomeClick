@@ -81,9 +81,9 @@ public class NotificationService extends Service {
 
     public static class NotificationPublisher extends BroadcastReceiver {
         private String[] notificationMessages = {
-                "Notification 1",
-                "Notification 2",
-                "Notification 3"
+                "dont forget to do a simulations! thats why we have a stopper...",
+                "have you checked our AI bot yet?",
+                "Its always a good idea to do an analogies or graphs questions every day..."
                 // Add more messages as needed
         };
         @Override

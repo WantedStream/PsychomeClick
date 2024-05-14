@@ -1,0 +1,48 @@
+@startuml
+class com.example.psychomeclick.UserActivity {
+# void onCreate(Bundle)
++ void onStart()
++ void createStuff()
++ {static} void deleteUserFromShared(SharedPreferences)
+}
+
+class com.example.psychomeclick.PdfTestPageActivity {
+# void onCreate(Bundle)
+}
+
+class com.example.psychomeclick.ChatBotActivity {
+# void onCreate(Bundle)
++ void addInitialMessage(ChatFutures,Content)
+}
+
+class com.example.psychomeclick.AdminActivity {
+# void onCreate(Bundle)
+}
+
+class com.example.psychomeclick.TestActivity {
+~ ImageButton backbtn
+~ ImageView img0
+~ BorderTogglingButton img1
+~ JsonArray userQuestions
+~ String subject
+~ int currentIndex
+# void onCreate(Bundle)
++ JsonArray deleteFromList(String,JsonArray)
++ void updateUserProgress(Boolean)
++ void prevQuestion()
++ void nextQuestion()
++ void updateToggleBoxes()
++ void updateButtonStatus()
++ void updateImages()
+- {static} void loadImage(StorageReference,ImageView,Context)
+}
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.UserActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.PdfTestPageActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.ChatBotActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.AdminActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.TestActivity
+@enduml

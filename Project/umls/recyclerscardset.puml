@@ -1,0 +1,72 @@
+@startuml
+class com.example.psychomeclick.recyclers.SetRecycler {
+- SetAdapter adapter
+- Fragment f
+- boolean canDelete
+- void init(Context)
++ void setFragment(Fragment)
++ void setCanDelete(boolean)
+}
+
+
+class com.example.psychomeclick.recyclers.SetRecycler$SetAdapter {
+~ Context context
+~ List<CardSet> sets
++ void addSet(CardSet)
++ void removeAllSets()
++ SetsViewHolder onCreateViewHolder(ViewGroup,int)
++ int getItemCount()
++ void onBindViewHolder(SetsViewHolder,int)
+}
+
+
+class com.example.psychomeclick.recyclers.SetRecycler$SetAdapter$SetsViewHolder {
+~ TextView length
+~ Button deleteBtn
+~ void bind(CardSet)
+}
+
+
+class com.example.psychomeclick.recyclers.CardsRecycler {
+- CardAdapter adapter
+- String setId
+- boolean canEdit
++ void setSetId(String)
+- void init(Context)
++ void setCanEdit(boolean)
+- {static} void updateCardsInDb(List<Card>,String)
+}
+
+
+class com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter {
+~ Context context
+~ List<Card> cardList
++ void addCard(Card)
++ void removeCard(Card)
++ CardsRecycler.CardAdapter.CardViewHolder onCreateViewHolder(ViewGroup,int)
++ int getItemCount()
++ void onBindViewHolder(CardsRecycler.CardAdapter.CardViewHolder,int)
+}
+
+
+class com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter$CardViewHolder {
+~ EditText term
+~ TextView numberTv
+~ Card card
+~ void bind(Card)
+}
+
+
+
+
+androidx.recyclerview.widget.RecyclerView <|-- com.example.psychomeclick.recyclers.SetRecycler
+com.example.psychomeclick.recyclers.SetRecycler +.. com.example.psychomeclick.recyclers.SetRecycler$SetAdapter
+com.example.psychomeclick.recyclers.Adapter <|-- com.example.psychomeclick.recyclers.SetRecycler$SetAdapter
+com.example.psychomeclick.recyclers.SetRecycler$SetAdapter +.. com.example.psychomeclick.recyclers.SetRecycler$SetAdapter$SetsViewHolder
+com.example.psychomeclick.recyclers.ViewHolder <|-- com.example.psychomeclick.recyclers.SetRecycler$SetAdapter$SetsViewHolder
+androidx.recyclerview.widget.RecyclerView <|-- com.example.psychomeclick.recyclers.CardsRecycler
+com.example.psychomeclick.recyclers.CardsRecycler +.. com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter
+com.example.psychomeclick.recyclers.Adapter <|-- com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter
+com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter +.. com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter$CardViewHolder
+com.example.psychomeclick.recyclers.ViewHolder <|-- com.example.psychomeclick.recyclers.CardsRecycler$CardAdapter$CardViewHolder
+@enduml

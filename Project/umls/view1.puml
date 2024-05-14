@@ -1,0 +1,34 @@
+@startuml
+class com.example.psychomeclick.views.PercentageRingView {
+- int percentage
+- Paint innerRingPaint
+- Paint outerRingPaint
+- Paint textPaint
+- RectF innerRingBounds
+- RectF outerRingBounds
+- void init()
+# void onDraw(Canvas)
++ void setPercentage(int)
+}
+
+
+class com.example.psychomeclick.views.StopView {
+- String stopText
+- int stopColor
+- int textColor
+- float textSize
+- Paint paint
+- int sxa
+# void onDraw(Canvas)
++ void setText(String)
++ void setStopColor(int)
++ void setTextColor(int)
++ void setTextSize(float)
+}
+
+
+
+
+android.view.View <|-- com.example.psychomeclick.views.PercentageRingView
+android.view.View <|-- com.example.psychomeclick.views.StopView
+@enduml

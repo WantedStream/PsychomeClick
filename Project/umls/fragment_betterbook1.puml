@@ -1,0 +1,29 @@
+@startuml
+class com.example.psychomeclick.fragments.BookFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} BookFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.psychomeclick.fragments.GeneralFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} GeneralFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void makeStuff(View)
+}
+
+
+
+
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.BookFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.GeneralFragment
+@enduml

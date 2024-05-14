@@ -1,0 +1,51 @@
+@startuml
+class com.example.psychomeclick.model.CardSet {
+# String title
+# String date
+# boolean isPublic
+# String description
+# String id
+# String cards
+# String userId
++ String getDescription()
++ boolean isPublic()
++ String getDate()
++ String getTitle()
++ String getCards()
++ String getId()
++ String getUserId()
++ void setDescription(String)
++ void setIsPublic(boolean)
++ void setDate(String)
++ void setTitle(String)
++ void setCards(String)
++ void setId(String)
++ void setUserId(String)
++ String toString()
+}
+
+
+class com.example.psychomeclick.model.Card {
+- String term
+- String meaning
++ String getTerm()
++ String getMeaning()
++ void setTerm(String)
++ void setMeaning(String)
+}
+
+
+class com.example.psychomeclick.model.FirebaseManager {
++ {static} FirebaseFirestore db
++ {static} FirebaseAuth firebaseAuth
++ {static} FirebaseStorage firebaseStorage
++ {static} String PrefLocaltion
++ {static} UserData userData
++ {static} HashMap<String,Integer> QuestionMap
++ {static} ImmutableList<String> adminList
++ {static} void loadImage(StorageReference,ImageView,Context)
++ {static} void saveImage(StorageReference,ImageView,String,Context)
+}
+
+
+@enduml

@@ -1,0 +1,91 @@
+@startuml
+class com.example.psychomeclick.fragments.AddQuestionFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+- ImageView currentImage
+- LinkedHashMap<Integer,Uri> imageMap
+- ImageView image0
+- RadioGroup rGroup
+- Spinner subjectSpinner
+- ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia
++ {static} AddQuestionFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void innit(View)
+- void chooseImage(ImageView)
+- void addListeners(View)
++ void addQuestiontoDB(String,String)
+}
+
+
+class com.example.psychomeclick.fragments.AllSetsFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+~ EditText searchEt
++ {static} AllSetsFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void innitView(View)
+- void doSearch(String,View)
+}
+
+
+class com.example.psychomeclick.fragments.EditSetFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String setId
+~ EditText titleEt
+~ Switch publicSwitch
++ {static} EditSetFragment newInstance(String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void innit(View)
+- void addData(View)
++ void addListeners()
++ {static} void disableEditText(EditText)
+}
+
+
+class com.example.psychomeclick.fragments.BookFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} BookFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.example.psychomeclick.fragments.EditQuestionFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String qid
+- ImageView currentlySelectedImage
+- ImageView questingImg
+- RadioGroup rGroup
+- Spinner subjectSpinner
+- Button deleteBtn
+~ ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia
++ {static} EditQuestionFragment newInstance(String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void innit(View)
+- void insertData(View)
+- void chooseImage(ImageView)
+- void addListeners(View)
+}
+
+
+
+
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.AddQuestionFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.AllSetsFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.EditSetFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.BookFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.EditQuestionFragment
+@enduml

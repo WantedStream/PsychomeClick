@@ -1,0 +1,49 @@
+@startuml
+class com.example.psychomeclick.fragments.AllSetsFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
+~ EditText searchEt
++ {static} AllSetsFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void innitView(View)
+- void doSearch(String,View)
+}
+
+
+class com.example.psychomeclick.fragments.EditSetFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String setId
+~ EditText titleEt
+~ Switch publicSwitch
++ {static} EditSetFragment newInstance(String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+- void innit(View)
+- void addData(View)
++ void addListeners()
++ {static} void disableEditText(EditText)
+}
+
+
+class com.example.psychomeclick.fragments.SetsFragment {
+- {static} String ARG_PARAM1
+- {static} String ARG_PARAM2
+- String mParam1
+- String mParam2
++ {static} SetsFragment newInstance(String,String)
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void innitView(View)
+}
+
+
+
+
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.AllSetsFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.EditSetFragment
+androidx.fragment.app.Fragment <|-- com.example.psychomeclick.fragments.SetsFragment
+@enduml

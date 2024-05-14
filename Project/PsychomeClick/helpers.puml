@@ -1,0 +1,46 @@
+@startuml
+class com.example.psychomeclick.helpers.NotificationService {
+- {static} String CHANNEL_ID
+- {static} int NOTIFICATION_ID
+- {static} String NOTIFICATION_ACTION
+- {static} Random random
+- AlarmManager alarmManager
+- PendingIntent pendingIntent
+- BroadcastReceiver bootReceiver
++ void onCreate()
++ void onDestroy()
++ IBinder onBind(Intent)
+- void startNotificationScheduler()
+- void registerBootReceiver()
+- void unregisterBootReceiver()
+}
+
+
+class com.example.psychomeclick.helpers.NotificationService$NotificationPublisher {
+- String[] notificationMessages
++ void onReceive(Context,Intent)
+- void showNotification(Context,String)
+- void createNotificationChannel(Context)
+}
+
+
+class com.example.psychomeclick.helpers.QuestionLocationHelper {
++ {static} String findQuestionLocation(String,String)
+- {static} String findQuestionLocationHelper(JsonObject,String)
++ {static} String ChangeQuestionLocation(String,String,String)
++ {static} String AddQuestionLocation(String,String,String)
++ {static} JsonObject removeQuestionFromTree(JsonObject,String)
+- {static} JsonObject addQuestionToSubject(JsonObject,String,String)
+}
+
+class com.example.psychomeclick.helpers.MyAppGlideModule {
++ void registerComponents(Context,Glide,Registry)
+}
+
+
+
+android.app.Service <|-- com.example.psychomeclick.helpers.NotificationService
+com.example.psychomeclick.helpers.NotificationService +.. com.example.psychomeclick.helpers.NotificationService$NotificationPublisher
+com.example.psychomeclick.helpers.BroadcastReceiver <|-- com.example.psychomeclick.helpers.NotificationService$NotificationPublisher
+com.example.psychomeclick.helpers.AppGlideModule <|-- com.example.psychomeclick.helpers.MyAppGlideModule
+@enduml

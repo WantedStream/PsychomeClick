@@ -1,0 +1,35 @@
+@startuml
+class com.example.psychomeclick.views.BorderTogglingButton {
+# boolean isBorderEnabled
+# OnBorderToggleListener onBorderToggleListener
+# int number
++ int getNumber()
+- void setNumber(int)
+- void init()
++ void toggleBorder()
++ void enable()
++ void disable()
+- void setBorderEnabled(boolean)
++ void setBorderColor(int)
++ boolean isOn()
++ void setOnBorderToggledListener(OnBorderToggleListener)
+}
+
+
+interface com.example.psychomeclick.views.BorderTogglingButton$OnBorderToggleListener {
+~ void onBorderToggled(boolean)
+}
+
+class com.example.psychomeclick.views.ChatView {
+- ChatAdapter adapter
+- void init(Context)
++ void addMessage(String,boolean,boolean,int)
+}
+
+
+
+
+com.example.psychomeclick.views.AppCompatImageButton <|-- com.example.psychomeclick.views.BorderTogglingButton
+com.example.psychomeclick.views.BorderTogglingButton +.. com.example.psychomeclick.views.BorderTogglingButton$OnBorderToggleListener
+androidx.recyclerview.widget.RecyclerView <|-- com.example.psychomeclick.views.ChatView
+@enduml

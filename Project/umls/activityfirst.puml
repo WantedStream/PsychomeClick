@@ -1,0 +1,46 @@
+@startuml
+class com.example.psychomeclick.MainActivity {
+# void onCreate(Bundle)
+}
+
+class com.example.psychomeclick.SignUpActivity {
+~ EditText userNameEt
+~ TextView emailErrors
+# void onCreate(Bundle)
+- void addBetterButtonFunction()
+}
+
+
+class com.example.psychomeclick.AboutUsActivity {
+# void onCreate(Bundle)
+}
+
+class com.example.psychomeclick.StartActivity {
+~ boolean pullQuestionFinished
+~ boolean loginFinished
+~ Intent nextIntent
+~ Thread pullQuestionToMapThread
+~ Thread loginThread
+# void onCreate(Bundle)
+- void checkBothThreadsFinished()
++ {static} Map<String,String> getUserFromShared(SharedPreferences)
+}
+
+
+class com.example.psychomeclick.LogInActivity {
+~ EditText userNameEt
+~ TextView emailErrors
+# void onCreate(Bundle)
++ {static} void logIn(String,String,Activity)
++ {static} void saveShareRef(String,String,SharedPreferences)
+}
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.SignUpActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.AboutUsActivity
+android.app.Activity <|-- com.example.psychomeclick.StartActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.psychomeclick.LogInActivity
+@enduml
