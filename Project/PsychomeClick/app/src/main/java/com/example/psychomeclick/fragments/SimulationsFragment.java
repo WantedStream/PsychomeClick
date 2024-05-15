@@ -1,6 +1,7 @@
 package com.example.psychomeclick.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,15 @@ import android.widget.RelativeLayout;
 
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.PdfTestPageActivity;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,10 +115,41 @@ public class SimulationsFragment extends Fragment {
                 TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
         btn1.setTextSize(textSize);
         btn1.setOnClickListener(v -> {
+
+            Executor executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                try {
+                    // Fetch the HTML content from the URL
+                    Document document = Jsoup.connect("https://www.nite.org.il/psychometric-entrance-test/preparation/hebrew-practice-tests/").get();
+                    Elements td = document.select("td");
+
+                    Element span = td.select("span:containsOwn(" + text+ ")").first();
+                    if (span != null) {
+                        Element linkElement = span.parent();
+                        String url = linkElement.attr("href");
+                        System.out.println("Found link: " + url);
+                        // ALL webview methods must be called on the SAME THREAD
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        intent.setDataAndType(Uri.parse(url), "application/pdf");
+                        startActivity(intent);
+                        //webview1.post(() -> webview1.loadUrl("https://drive.google.com/viewerng/viewer?embedded=true&url=" + url));
+                    } else {
+                        System.out.println(text + " not found");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+          /*  Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl));
+            intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
+            startActivity(intent);
+
             Intent intent = new Intent(getActivity(), PdfTestPageActivity.class);
             intent.putExtra("testTime", text);
             startActivity(intent);
-            (this.getActivity()).finish();
+            (this.getActivity()).finish();*/
         });
         linearLayout.addView(btn1);
 

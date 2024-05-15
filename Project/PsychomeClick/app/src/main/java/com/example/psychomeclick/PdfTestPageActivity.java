@@ -28,7 +28,15 @@ public class PdfTestPageActivity extends AppCompatActivity {
         webview1.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
             String testTime=getIntent().getStringExtra("testTime").toString();
         webview1.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+        WebSettings settings = webview1.getSettings();
 
+       /* settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowContentAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setDomStorageEnabled(true);*/
         // Create an Executor
         Executor executor = Executors.newSingleThreadExecutor();
 
