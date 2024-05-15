@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.psychomeclick.R;
-import com.example.psychomeclick.PdfTestPageActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -142,14 +141,7 @@ public class SimulationsFragment extends Fragment {
                 }
             });
 
-          /*  Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl));
-            intent.setDataAndType(Uri.parse(pdfUrl), "application/pdf");
-            startActivity(intent);
 
-            Intent intent = new Intent(getActivity(), PdfTestPageActivity.class);
-            intent.putExtra("testTime", text);
-            startActivity(intent);
-            (this.getActivity()).finish();*/
         });
         linearLayout.addView(btn1);
 
@@ -157,3 +149,6 @@ public class SimulationsFragment extends Fragment {
 
 
     }
+
+
+

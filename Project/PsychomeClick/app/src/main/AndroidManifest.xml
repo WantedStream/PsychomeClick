@@ -49,9 +49,6 @@
         </activity>
 
         <activity
-            android:name=".PdfTestPageActivity"
-            android:exported="false" />
-        <activity
             android:name=".AdminActivity"
             android:exported="false" />
         <activity
