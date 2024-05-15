@@ -159,7 +159,7 @@ public class CardsRecycler extends RecyclerView {
             singleCard.add(e.getMeaning());
             allcards.add(singleCard);
         });
-        System.out.println(allcards);
+
         FirebaseManager.db.collection("Sets").document(setId).update("cards", allcards.toString()).addOnSuccessListener((d) -> {
 
         });
