@@ -74,7 +74,7 @@ public class QuestionListFragment extends Fragment {
 
 
        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-        //createStuff(view);
+
         makeContent(view);
         return view;
     }

@@ -43,9 +43,8 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         Node data = dataList.get(position);
         holder.textView.setText(data.getName());
         holder.percentageRingView.setPercentage(data.getSubPercents());
-        // Update the click listener of the percentageRingView
         holder.percentageRingView.setOnClickListener((v) -> {
-            Node[] nodes = data.getNodes(); // Assuming getNodes() returns a list of nodes
+            Node[] nodes = data.getNodes();
 
             if(nodes!=null){
                 updateRecyclerView(Arrays.asList(nodes));
@@ -78,7 +77,6 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
             textView = itemView.findViewById(R.id.subjectTV);
             percentageRingView = itemView.findViewById(R.id.percentage);
 
-            //percentageRingView.setOnClickListener();
         }
     }
 

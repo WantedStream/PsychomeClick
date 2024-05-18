@@ -56,7 +56,6 @@ public class StopperFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        // Initialize UI elements
         stopperTv = view.findViewById(R.id.stopperTv);
         infoTv = view.findViewById(R.id.infoTv);
         timerTv = view.findViewById(R.id.timerTv);
@@ -78,7 +77,6 @@ public class StopperFragment extends Fragment {
     }
 
     private void setListeners() {
-        // Set click listeners
         startBtn.setOnClickListener(v -> startTest());
         finishTestBtn.setOnClickListener(v -> finishTest());
         pauseBtn.setOnClickListener(v -> pauseTest());
@@ -86,12 +84,9 @@ public class StopperFragment extends Fragment {
     }
 
     private void startTest() {
-        // Handle start button click
-        // Retrieve values from UI elements (checkbox and spinner)
         isEssayIncluded = checkBox.isChecked();
         numOfSections = spinner.getSelectedItemPosition();
 
-        // Start essay timer if included
         if (isEssayIncluded) {
             startEssayTimer();
         } else {
@@ -101,7 +96,6 @@ public class StopperFragment extends Fragment {
             nextSection();
         }
 
-        // Update UI elements visibility and text
         startBtn.setVisibility(View.GONE);
         finishTestBtn.setVisibility(View.VISIBLE);
         pauseBtn.setVisibility(View.VISIBLE);
@@ -109,7 +103,6 @@ public class StopperFragment extends Fragment {
     }
 
     private void startEssayTimer() {
-        // Start the timer for the essay
         infoTv.setText("Essay");
         playSound("Essay");
         colorTv.setBackgroundColor(Color.GREEN);
@@ -128,7 +121,6 @@ public class StopperFragment extends Fragment {
     }
 
     private void startBreakTimer() {
-        // Start the timer for the break
         if(numOfSections==0){
             finishTest();
             return;
@@ -181,7 +173,6 @@ public class StopperFragment extends Fragment {
     private void pauseTest() {
         Long time = parseTime(timerTv.getText().toString())*1000; // Store remaining time before pausing
         timer.cancel();
-        // Toggle between pausing and resuming the timer
         if (paused) {
             if(isEssay){
                 timer= new CountDownTimer(time, 1000) {
@@ -214,13 +205,12 @@ public class StopperFragment extends Fragment {
             pauseBtn.setText("Pause");
             colorTv.setBackgroundColor(Color.GREEN);
         } else {
-            // If not paused, pause the timer
             timer.cancel();
             pauseBtn.setText("Resume");
             colorTv.setBackgroundColor(Color.RED);
 
         }
-        // Toggle the paused state
+
         paused = !paused;
     }
 
@@ -234,7 +224,6 @@ public class StopperFragment extends Fragment {
 
     private void finishTest() {
         timer.cancel();
-        // Reset UI to initial state
         stopperTv.setText("Stopper");
         infoTv.setText("Info");
         timerTv.setText("00:00");
@@ -243,7 +232,6 @@ public class StopperFragment extends Fragment {
         pauseBtn.setVisibility(View.GONE);
         nextPerekBtn.setVisibility(View.GONE);
         currentSection = 0;
-        // Play "Test Ended" sound
         playSound("the test has finished!");
         colorTv.setBackgroundColor(Color.GRAY);
     }
@@ -255,13 +243,11 @@ public class StopperFragment extends Fragment {
     }
 
     private String formatTime(long seconds) {
-        // Format time in mm:ss format
         long minutes = seconds / 60;
         long secs = seconds % 60;
         return String.format("%02d:%02d", minutes, secs);
     }
     private long parseTime(String time) {
-        // Parse time from mm:ss format to seconds
         String[] parts = time.split(":");
         long minutes = Long.parseLong(parts[0]);
         long seconds = Long.parseLong(parts[1]);
@@ -270,6 +256,6 @@ public class StopperFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // Release media player resources if any
+
     }
 }

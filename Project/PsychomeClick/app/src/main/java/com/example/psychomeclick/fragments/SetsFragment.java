@@ -83,11 +83,11 @@ public class SetsFragment extends Fragment {
                     if(documentSnapshot.get("userid").equals(FirebaseManager.firebaseAuth.getUid()))
                     ((SetRecycler.SetAdapter) setRecycler.getAdapter()).addSet(new CardSet(documentSnapshot.getId(),documentSnapshot.get("title")+"",documentSnapshot.get("date")+"",Boolean.parseBoolean(documentSnapshot.get("public")+""),documentSnapshot.get("description")+"",documentSnapshot.get("cards")+"",documentSnapshot.get("userId")+""));
                 });
-                //  ((SetRecycler.SetAdapter)setRecycler.getAdapter()).addSet(setRecycler.NEWSET);
+
                 v.findViewById(R.id.addSet).setOnClickListener((b) -> {
 
                     HashMap<String, Object> map = new HashMap<>();
-                    // map.put("cards", "{ \"\": { \"meaning\": \"\", \"image\": \"\" } }");
+
                     map.put("cards", "[]");
                     map.put("date", new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()) + "");
                     map.put("description", "");

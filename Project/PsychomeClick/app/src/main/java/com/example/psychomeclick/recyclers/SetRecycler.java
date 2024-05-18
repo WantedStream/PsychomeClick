@@ -69,7 +69,7 @@ public class SetRecycler extends RecyclerView {
             this.sets = new ArrayList<>();
         }
 
-        public void addSet(CardSet set) {// Set flag for "ADD SET" before adding new set
+        public void addSet(CardSet set) {
             sets.add(set);
             adapter.notifyDataSetChanged();
           smoothScrollToPosition(adapter.getItemCount() - 1);
@@ -94,7 +94,7 @@ public class SetRecycler extends RecyclerView {
         @Override
         public void onBindViewHolder(@NonNull SetsViewHolder holder, int position) {
             CardSet set = sets.get(position);
-            holder.bind(set); // Check both set and position for "ADD SET"
+            holder.bind(set);
         }
 
         class SetsViewHolder extends RecyclerView.ViewHolder {

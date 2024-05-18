@@ -32,7 +32,7 @@ public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatIma
         this.number=number;
     }
     private void init() {
-        // Set initial appearance (without border)
+        // set initial appearance (no border)
         setBorderEnabled(false);
         setOnClickListener(v -> toggleBorder());
 
@@ -56,11 +56,11 @@ public class BorderTogglingButton extends androidx.appcompat.widget.AppCompatIma
     }
     private void setBorderEnabled(boolean enabled) {
         if (enabled) {
-            // Set border color and width
+            // set border color and width
             getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             getBackground().setAlpha(255); // Set alpha to opaque
         } else {
-            // Remove border
+            // remove border
             getBackground().clearColorFilter();
         }
     }

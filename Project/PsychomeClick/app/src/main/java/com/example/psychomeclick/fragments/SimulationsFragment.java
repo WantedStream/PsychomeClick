@@ -118,7 +118,7 @@ public class SimulationsFragment extends Fragment {
             Executor executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
                 try {
-                    // Fetch the HTML content from the URL
+
                     Document document = Jsoup.connect("https://www.nite.org.il/psychometric-entrance-test/preparation/hebrew-practice-tests/").get();
                     Elements td = document.select("td");
 
@@ -127,7 +127,6 @@ public class SimulationsFragment extends Fragment {
                         Element linkElement = span.parent();
                         String url = linkElement.attr("href");
                         System.out.println("Found link: " + url);
-                        // ALL webview methods must be called on the SAME THREAD
 
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         intent.setDataAndType(Uri.parse(url), "application/pdf");

@@ -84,7 +84,6 @@ public class NotificationService extends Service {
                 "dont forget to do a simulations! thats why we have a stopper...",
                 "have you checked our AI bot yet?",
                 "Its always a good idea to do an analogies or graphs questions every day..."
-                // Add more messages as needed
         };
         @Override
         public void onReceive(Context context, Intent intent) {

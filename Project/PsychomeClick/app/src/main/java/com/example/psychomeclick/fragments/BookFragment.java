@@ -66,9 +66,7 @@ public class BookFragment extends Fragment {
 
         View v= inflater.inflate(R.layout.fragment_book, container, false);
         v.findViewById(R.id.mysets).setOnClickListener((b)->{
-           // Intent intent = new Intent(getActivity(), NewSetActivity.class);
-            //startActivity(intent);
-            //this.getActivity().finish();
+
             FragmentManager fm = getParentFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new SetsFragment());

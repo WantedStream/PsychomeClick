@@ -82,7 +82,7 @@ public class ChatBotActivity extends AppCompatActivity {
                     public void onFailure(Throwable t) {
                         t.printStackTrace();
                         String resultText = t.getMessage();
-                        // Handle failure
+
                     }
                 }, getMainExecutor());
                 ((EditText) findViewById(R.id.msgText)).setText("");
@@ -99,7 +99,6 @@ public class ChatBotActivity extends AppCompatActivity {
                 ((EditText)  findViewById(R.id.msgText)).setText("");
                 ChatView chatView = findViewById(R.id.chatView);
 
-                // Example usage:
 
                 chatView.addMessage(resultText, true, true, R.drawable.robot_foreground);
             }

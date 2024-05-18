@@ -49,7 +49,7 @@ public class FirebaseManager {
                        imageRef.child(name).putBytes(data).addOnSuccessListener(taskSnapshot -> {
                             })
                        .addOnFailureListener(exception -> {
-                                // Handle any errors getting the download URL
+                                //  errors getting URL
                                 Log.e("FirebaseStorage", "Error getting download URL: " + exception.getMessage());
 
                         });

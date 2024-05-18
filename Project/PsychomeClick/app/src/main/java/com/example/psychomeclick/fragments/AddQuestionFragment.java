@@ -1,7 +1,6 @@
 package com.example.psychomeclick.fragments;
 
 import static com.example.psychomeclick.helpers.QuestionLocationHelper.AddQuestionLocation;
-import static com.example.psychomeclick.model.FirebaseManager.firebaseStorage;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -165,10 +164,7 @@ public class AddQuestionFragment extends Fragment {
                 return;
             }
             addQuestiontoDB(((RadioButton)v.findViewById(rGroup.getCheckedRadioButtonId())).getText().toString(),subjectSpinner.getSelectedItem().toString());
-            //  FragmentManager fm = getParentFragmentManager();
-          //  FragmentTransaction transaction = fm.beginTransaction();
-          //  transaction.replace(R.id.contentFragment, new QuestionListFragment());
-          //  transaction.commit();
+
         });
     }
 

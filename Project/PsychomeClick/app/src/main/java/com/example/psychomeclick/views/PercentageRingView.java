@@ -59,15 +59,14 @@ public class PercentageRingView extends View {
         int centerY = getHeight() / 2;
         int radius = Math.min(centerX, centerY) - 50;
 
-        // Draw inner ring
+        // draw inner ring
         innerRingBounds.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
         canvas.drawArc(innerRingBounds, -90, 360, false, innerRingPaint);
 
-        // Draw outer ring based on percentage
+        // draw outer ring based on percentage
         outerRingBounds.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
         canvas.drawArc(outerRingBounds, -90, (float) (3.6 * percentage), false, outerRingPaint);
 
-        // Draw text inside the circle
         String text = percentage + "%";
         canvas.drawText(text, centerX, centerY + (textPaint.getTextSize() / 3), textPaint);
     }
