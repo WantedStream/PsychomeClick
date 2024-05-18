@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@drawable/bg3">
+        android:background="@mipmap/ic_launcher_background">
         <TextView
             android:id="@+id/logTV"
             android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
             android:backgroundTint="@color/fui_transparent"
             android:textSize="50dp"
             android:padding="0dp"
-            android:text="⬅️"
+            android:background="@drawable/betterleftarrow"
             android:gravity="center"
             android:layout_gravity="left"/>
     </LinearLayout>

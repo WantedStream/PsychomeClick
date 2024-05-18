@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ import java.util.Stack;
 public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapter.DataViewHolder> {
     private List<Node> dataList;
     private Stack<List<Node>> formerLists;
+
+    private Button upbutton;
     public SubjectNodesAdapter(List<Node> dataList) {
         this.dataList = dataList;
     }
@@ -79,6 +82,9 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         }
     }
 
+    public void setUpButton(Button b){
+        upbutton=b;
+    }
     private void updateRecyclerView(List<Node> nodes) {
         putToFormerList(dataList);
         dataList.clear(); // Clear the existing list
@@ -92,11 +98,16 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         dataList.addAll(this.formerLists.pop()); // Add the new nodes to the list
         notifyDataSetChanged();
 
+        if(this.formerLists.size()<=1){
+            this.upbutton.setVisibility(View.INVISIBLE);
+        }
     }
     private void putToFormerList(List<Node> nodes){
         List<Node> tmp=new ArrayList<>();
         for (Node node:nodes) tmp.add(node);
         if(!tmp.isEmpty())
        this.formerLists.push(tmp);
+
+        this.upbutton.setVisibility(View.VISIBLE);
     }
 }

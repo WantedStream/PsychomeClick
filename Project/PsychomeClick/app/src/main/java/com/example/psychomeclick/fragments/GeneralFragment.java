@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.psychomeclick.R;
 import com.example.psychomeclick.recyclers.SubjectNodesAdapter;
@@ -84,10 +85,12 @@ public class GeneralFragment extends Fragment {
 
         SubjectNodesAdapter adapter = new SubjectNodesAdapter(dataList);
         recyclerView.setAdapter(adapter);
-        v.findViewById(R.id.backToFormerNode).setOnClickListener((b)->{
+        Button upbtn=  v.findViewById(R.id.backToFormerNode);
+        upbtn.setVisibility(View.INVISIBLE);
+        upbtn.setOnClickListener((b)->{
             adapter.backToFormerNodes();
         });
-
+        adapter.setUpButton(upbtn);
         db.collection("SubjectTree")
                 .get()
                 .addOnCompleteListener((task)->{

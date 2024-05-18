@@ -5,8 +5,11 @@ import static com.example.psychomeclick.model.FirebaseManager.firebaseStorage;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -64,29 +67,8 @@ public class EditQuestionFragment extends Fragment {
     private Spinner subjectSpinner;
 
     private Button deleteBtn;
-    final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
-            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
-                if(uris!=null) {
-                    currentlySelectedImage.setImageURI(uris);
-                    int imageNum=0;
-                    if(currentlySelectedImage==imageView1){
-                        imageNum=1;
 
-                    }
-                    else if(currentlySelectedImage==imageView2){
-                        imageNum=2;
 
-                    }
-                    else if(currentlySelectedImage==imageView3){
-                        imageNum=3;
-
-                    }
-                    else if(currentlySelectedImage==imageView4){
-                        imageNum=4;
-                    }
-                    FirebaseManager.saveImage(firebaseStorage.getReference().child("QuestionStorage/" + qid), currentlySelectedImage, "images" +imageNum, getContext());
-                }
-                });
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -175,11 +157,37 @@ public class EditQuestionFragment extends Fragment {
         });
 
     }
+
+
+    private ActivityResultLauncher<String> pickMultipleMedia  = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            result -> {
+                // Handle the obtained URI (result)
+                if(result!=null) {
+                    currentlySelectedImage.setImageURI(result);
+                    int imageNum=0;
+                    if(currentlySelectedImage==imageView1){
+                        imageNum=1;
+
+                    }
+                    else if(currentlySelectedImage==imageView2){
+                        imageNum=2;
+
+                    }
+                    else if(currentlySelectedImage==imageView3){
+                        imageNum=3;
+
+                    }
+                    else if(currentlySelectedImage==imageView4){
+                        imageNum=4;
+                    }
+                    FirebaseManager.saveImage(firebaseStorage.getReference().child("QuestionStorage/" + qid), currentlySelectedImage, "images" +imageNum, getContext());
+                }
+            });
+
+
     private  void chooseImage(ImageView img){
         this.currentlySelectedImage=img;
-        pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build());
+        pickMultipleMedia .launch("image/*");
     }
     private void addListeners(View v) {
         questingImg.setOnClickListener((b) -> {
@@ -275,109 +283,5 @@ public class EditQuestionFragment extends Fragment {
         });
     }
 }
-    /*private void makeStuff(View v){
-        ((TextView) v.findViewById(R.id.idTV)).setText(id);
-        insertQuestionImages (id,v.findViewById(R.id.questingImg),v.findViewById(R.id.parametersLayout),v.findViewById(R.id.imagesLayout),this.getContext());
-        (v).findViewById(R.id.resetBtn).setOnClickListener((b)->{
-            reset();
-        });
-        (v).findViewById(R.id.backBtn).setOnClickListener((b)->{
-            FragmentManager fm = getParentFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-            transaction.replace(R.id.contentFragment, new QuestionListFragment());
-            transaction.commit();
-        });*/
-     //   v.findViewById(R.id.applyBtn).setOnClickListener((b)->{
-     //       changeQuestionImages(v);
-      //      changeTextImages(v);
-       //     FragmentManager fm = getParentFragmentManager();
-        //    FragmentTransaction transaction = fm.beginTransaction();
-        //    transaction.replace(R.id.contentFragment, new QuestionListFragment());
-        //    transaction.commit();
-       // });
-     //   v.findViewById(R.id.questingImg).setOnClickListener((img)->{
-      //      chooseImage((ImageView) img);
-       // });
 
-
-
-    /*public void insertQuestionImages(String id,ImageView questionImg ,LinearLayout tvsLayout, LinearLayout imagesLayout, Context c){
-        FirebaseManager.db.collection("Questions").document(id).get().addOnSuccessListener((t)->{
-            Map<String,Object> data = t.getData();
-            StorageReference storageRef=firebaseStorage.getReference();
-
-            for (Map.Entry<String,Object> entry:data.entrySet()) {
-                LinearLayout tlayout = new LinearLayout(c);
-
-                TextView tv = new TextView(c);
-                tv.setText(entry.getKey()+":");
-
-                EditText et = new EditText(c);
-                int textSize=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, c.getResources().getDisplayMetrics());
-                et.setTextSize(textSize);
-                tv.setTextSize(textSize);
-                et.setHint(entry.getValue()+"");
-
-                tlayout.addView(tv);
-                tlayout.addView(et);
-
-
-
-                tvsLayout.addView(tlayout);
-
-            }
-
-            StorageReference fileRef0 = storageRef.child("QuestionStorage/" +id+"/images"+0);
-
-            FirebaseManager.loadImage(fileRef0, questionImg,c);
-
-            int height=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, c.getResources().getDisplayMetrics());
-            int width=(int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, c.getResources().getDisplayMetrics());
-
-            for(int i=1;i<QUESTION_IMAGE_COUNT;i++){
-                StorageReference fileRef = storageRef.child("QuestionStorage/" +id+"/images"+i);
-                ImageView imageView = new ImageView(c);
-
-                ViewGroup.LayoutParams params3 = new ViewGroup.LayoutParams(height, width);
-                imageView.setLayoutParams(params3);
-                FirebaseManager.loadImage(fileRef, imageView,c);
-                imageView.setOnClickListener((view)->{
-                });
-
-                imagesLayout.addView(imageView);
-            }
-        });
-
-    }*/
-
-
-
-
-
-    /*private void changeQuestionImages(View v){
-       LinearLayout imagesView=v.findViewById(R.id.imagesLayout);
-        FirebaseManager.saveImage(firebaseStorage.getReference().child("QuestionStorage/" +id),(ImageView)v.findViewById(R.id.questingImg) ,"images"+0,getContext());
-
-        for (int i = 1; i < QUESTION_IMAGE_COUNT; i++) {
-            FirebaseManager.saveImage(firebaseStorage.getReference().child("QuestionStorage/" +id),(ImageView) imagesView.getChildAt(i-1),"images"+i,getContext());
-        }
-
-    }
-    private void changeTextImages(View v){
-        LinearLayout textsView=v.findViewById(R.id.parametersLayout);
-        FirebaseManager.db.collection("Questions").document(id).get().addOnSuccessListener((t)->{
-            Map<String, Object> updates = new HashMap<>();
-            for (int i = 0; i < textsView.getChildCount(); i++) {
-               LinearLayout layout=(LinearLayout) (textsView.getChildAt(i));
-                EditText et = (EditText) layout.getChildAt(1);
-                String value=et.getText().toString();
-                if(value.trim().equals("")){
-                    value=et.getHint()+"";
-                }
-                String field=((TextView)layout.getChildAt(0)).getText().toString();
-                field=field.substring(0,field.length()-1);
-                ((DocumentSnapshot) t).getReference().update(field, value);
-            }
-        });
-    }*/
 

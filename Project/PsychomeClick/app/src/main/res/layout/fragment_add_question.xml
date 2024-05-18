@@ -15,94 +15,141 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/message_bg_round"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:paddingVertical="20dp">
 
                 <Button
-                    android:id="@+id/addQuestionBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:backgroundTint="#328DE8"
-                    android:text="the question"
-                    android:layout_marginTop="30dp"/>
+                        android:id="@+id/addQuestionBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#328DE8"
+                        android:text="the question" />
 
                 <ImageView
                     android:id="@+id/questingImg"
                     android:layout_width="300dp"
                     android:layout_height="100dp"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/message_bg_round"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:paddingVertical="20dp">
 
                 <Button
-                    android:id="@+id/addFirstAnswerBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="first answer"
-                    android:backgroundTint="#328DE8"
-                    />
+                        android:id="@+id/addFirstAnswerBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#328DE8"
+                        android:text="first answer" />
 
                 <ImageView
                     android:id="@+id/firstAnswerImg"
 
-                    android:layout_weight="1"
                     android:layout_width="300dp"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/message_bg_round"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:paddingVertical="20dp">
 
                 <Button
-                    android:id="@+id/addSecondAnswerBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="second answer"
-                    android:backgroundTint="#328DE8"
-                    />
+                        android:id="@+id/addSecondAnswerBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#328DE8"
+                        android:text="second answer" />
 
                 <ImageView
                     android:id="@+id/secondImageAnswer"
 
-                    android:layout_weight="1"
                     android:layout_width="300dp"
-                    android:layout_height="100dp"/>
+                    android:layout_height="100dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/message_bg_round"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                android:paddingVertical="20dp">
 
                 <Button
-                    android:id="@+id/addThirdAnswerBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="third answer"
-                    android:backgroundTint="#328DE8"
-                    />
+                        android:id="@+id/addThirdAnswerBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#328DE8"
+                        android:text="third answer" />
 
                 <ImageView
                     android:id="@+id/thirdAnswerImg"
                     android:layout_width="300dp"
                     android:layout_height="100dp"
                     android:layout_weight="1" />
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/message_bg_round"
+                android:gravity="center"
+                android:paddingVertical="20dp">
 
                 <Button
-                    android:id="@+id/addFourthAnswerBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="fourth answer"
-                    android:backgroundTint="#328DE8"
-                    />
+                        android:id="@+id/addFourthAnswerBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:backgroundTint="#328DE8"
+                        android:text="fourth answer" />
 
                 <ImageView
                     android:id="@+id/fourthAnswerImg"
                     android:layout_width="300dp"
                     android:layout_height="100dp"
                     android:layout_weight="1" />
+            </LinearLayout>
 
 
             <RadioGroup
@@ -134,6 +181,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:layout_marginHorizontal="60dp"
                 />
 
             <Button

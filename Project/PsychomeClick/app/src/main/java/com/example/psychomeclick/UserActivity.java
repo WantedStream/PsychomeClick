@@ -10,8 +10,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.psychomeclick.fragments.BookFragment;
@@ -58,24 +62,28 @@ public class UserActivity extends AppCompatActivity{
             finish();
         });
         findViewById(R.id.general).setOnClickListener((t)->{
+            changeColorOfButton((ImageButton) t);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new GeneralFragment());
             transaction.commit();
         });
         findViewById(R.id.tests).setOnClickListener((t)->{
+            changeColorOfButton((ImageButton) t);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new SimulationsFragment());
             transaction.commit();
         });
         findViewById(R.id.bookbtn).setOnClickListener((t)->{
+            changeColorOfButton((ImageButton) t);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new BookFragment());
             transaction.commit();
         });
         findViewById(R.id.clockBtn).setOnClickListener((t)->{
+            changeColorOfButton((ImageButton) t);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new StopperFragment());
@@ -106,6 +114,7 @@ public class UserActivity extends AppCompatActivity{
         transaction.replace(R.id.contentFragment, new GeneralFragment());
         transaction.commit();
 
+        changeColorOfButton(findViewById(R.id.general));
     }
 
 
@@ -119,5 +128,16 @@ public class UserActivity extends AppCompatActivity{
         String json = gson.toJson(map);
         prefsEditor.putString("currentUser", json);
         prefsEditor.commit();
+    }
+
+
+    public void changeColorOfButton(ImageButton b){
+       this.findViewById(R.id.circle_layout).setBackground(null);
+        this.findViewById(R.id.vi_layout).setBackground(null);
+        this.findViewById(R.id.book_layout).setBackground(null);
+        this.findViewById(R.id.clock_layout).setBackground(null);
+
+        LinearLayout parent = (LinearLayout) b.getParent();
+        parent.setBackgroundColor(Color.MAGENTA);
     }
 }

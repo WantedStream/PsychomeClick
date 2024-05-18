@@ -5,8 +5,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.example.psychomeclick.fragments.QuestionListFragment;
@@ -19,12 +22,15 @@ public class AdminActivity extends AppCompatActivity {
         setContentView(R.layout.activity_admin);
 
         findViewById(R.id.insertQuestionBtn).setOnClickListener((v) ->{
+            changeColorOfButton((Button) v);
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new AddQuestionFragment());
             transaction.commit();
         });
         findViewById(R.id.listQuestionBtn).setOnClickListener((v) ->{
+            changeColorOfButton((Button) v);
+
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.replace(R.id.contentFragment, new QuestionListFragment());
@@ -41,5 +47,16 @@ public class AdminActivity extends AppCompatActivity {
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.contentFragment, new AddQuestionFragment());
         transaction.commit();
+
+        changeColorOfButton(findViewById(R.id.insertQuestionBtn));
+    }
+
+
+    public void changeColorOfButton(Button b){
+        this.findViewById(R.id.plus_layout).setBackground(null);
+        this.findViewById(R.id.question_layout).setBackground(null);
+
+        LinearLayout parent = (LinearLayout) b.getParent();
+        parent.setBackgroundColor(Color.MAGENTA);
     }
 }

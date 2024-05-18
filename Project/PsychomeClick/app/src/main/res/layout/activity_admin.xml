@@ -19,7 +19,7 @@
             android:layout_weight="7"
             android:gravity="center"
             android:textSize="60dp"
-            android:color="#331116"
+            android:textColor="#25CC82"
             android:background="@drawable/button_cyab_purple_background"
             android:text="admin page" />
 
@@ -38,7 +38,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/bg2"
+                android:background="@mipmap/ic_launcher_background"
                />
 
             <LinearLayout
@@ -49,35 +49,64 @@
                 android:orientation="horizontal"
                 android:background="@drawable/button_cyab_purple_background">
 
-                <ImageButton
-                    android:id="@+id/returnToMainMenuBtn"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
-                    android:scaleType="fitXY"
                     android:layout_weight="1"
-                    android:padding="10dp"
-                    android:src="@drawable/backarrow" />
-                <Button
-                    android:id="@+id/listQuestionBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/fui_transparent"
+                    android:orientation="vertical"
+                    android:id="@+id/back_layout">
 
-                    android:layout_weight="1"
-                    android:textSize="45dp"
-                    android:text="❓" />
-                <Button
-                    android:id="@+id/insertQuestionBtn"
+                    <ImageButton
+                        android:id="@+id/returnToMainMenuBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/fui_transparent"
+                        android:padding="10dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/betterleftarrow" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/fui_transparent"
-                    android:gravity="center"
-                    android:text="+"
-                    android:textSize="40dp"
+                    android:orientation="vertical"
+                    android:id="@+id/question_layout"
+                    >
 
-                    />
+                    <Button
+                        android:id="@+id/listQuestionBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+
+                        android:background="@color/fui_transparent"
+                        android:text="❓"
+                        android:textSize="45dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:id="@+id/plus_layout"
+                    >
+
+                    <Button
+                        android:id="@+id/insertQuestionBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/fui_transparent"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textSize="40dp"
+
+                        />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
 

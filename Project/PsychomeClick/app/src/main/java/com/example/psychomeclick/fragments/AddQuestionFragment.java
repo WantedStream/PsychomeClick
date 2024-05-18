@@ -1,6 +1,7 @@
 package com.example.psychomeclick.fragments;
 
 import static com.example.psychomeclick.helpers.QuestionLocationHelper.AddQuestionLocation;
+import static com.example.psychomeclick.model.FirebaseManager.firebaseStorage;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,11 +58,6 @@ public class AddQuestionFragment extends Fragment {
     private ImageView image0,image1,image2,image3,image4;
     private RadioGroup rGroup;
     private Spinner subjectSpinner;
-   private final ActivityResultLauncher<PickVisualMediaRequest> pickMultipleMedia =
-            registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uris -> {
-               this.currentImage.setImageURI(uris);
-                this.imageMap.put(this.currentImage.getId(),uris);
-            });
 
     public AddQuestionFragment() {
         // Required empty public constructor
@@ -123,14 +119,20 @@ public class AddQuestionFragment extends Fragment {
         });
 
     }
-    private void chooseImage(ImageView img){
-        // Registers a photo picker activity launcher in multi-select mode.
-        this.currentImage=img;
-       pickMultipleMedia.launch(new PickVisualMediaRequest.Builder()
-              .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-             .build());
-    }
 
+    private ActivityResultLauncher<String> galleryLauncher = registerForActivityResult(new ActivityResultContracts.GetContent(),
+            result -> {
+                if(result!=null) {
+                    this.currentImage.setImageURI(result);
+                    this.imageMap.put(this.currentImage.getId(),result);
+                }
+            });
+
+
+    private  void chooseImage(ImageView img){
+        this.currentImage=img;
+        galleryLauncher.launch("image/*");
+    }
     private void addListeners(View v){
         ((Button) v.findViewById(R.id.addQuestionBtn)).setOnClickListener((btn) -> {
             chooseImage(image0);

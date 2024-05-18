@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUpActivity"
-    android:background="@drawable/bg4">
+    android:background="@mipmap/ic_launcher_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -166,7 +166,7 @@
             android:backgroundTint="@color/fui_transparent"
             android:textSize="50dp"
             android:padding="0dp"
-            android:text="⬅️"
+            android:background="@drawable/betterleftarrow"
             android:gravity="center"
             android:layout_gravity="left"/>
     </LinearLayout>

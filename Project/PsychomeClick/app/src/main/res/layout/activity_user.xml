@@ -61,86 +61,104 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:background="@drawable/signout_foreground"
-
                 android:layout_weight="5"
-                />
-            <ImageButton
-                android:id="@+id/general"
+
+                android:background="@drawable/signout_foreground" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:background="@drawable/general_foreground"
-
                 android:layout_weight="5"
-                />
-            <ImageButton
-                android:id="@+id/tests"
+                android:orientation="vertical"
+                android:id="@+id/circle_layout"
+                >
+
+                <ImageButton
+                    android:id="@+id/general"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_weight="5"
+
+                    android:background="@drawable/general_foreground" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:background="@drawable/tests_foreground"
-
                 android:layout_weight="5"
-                />
+                android:orientation="vertical"
+                android:id="@+id/vi_layout"
+                >
 
-            <ImageButton
-                android:id="@+id/bookbtn"
+                <ImageButton
+                    android:id="@+id/tests"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_weight="5"
+
+                    android:background="@drawable/tests_foreground" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:background="@drawable/book_foreground"
-
                 android:layout_weight="5"
-                />
-            <ImageButton
-                android:id="@+id/clockBtn"
+                android:orientation="vertical"
+                android:id="@+id/book_layout"
+
+                >
+
+                <ImageButton
+                    android:id="@+id/bookbtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_weight="5"
+
+                    android:background="@drawable/book_foreground" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:background="@drawable/timer"
-                android:layout_marginVertical="25dp"
-                android:layout_marginHorizontal="18dp"
                 android:layout_weight="5"
-                />
-            <ImageButton
-                android:id="@+id/aibtn"
+                android:orientation="vertical"
+                android:id="@+id/clock_layout"
+                >
+
+                <ImageButton
+                    android:id="@+id/clockBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginHorizontal="18dp"
+                    android:layout_marginVertical="25dp"
+                    android:layout_weight="5"
+                    android:background="@drawable/timer" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:background="@drawable/robot_foreground"
-
                 android:layout_weight="5"
-              />
+                android:orientation="vertical"
+                android:id="@+id/bot_layout"
+                >
+
+                <ImageButton
+                    android:id="@+id/aibtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_weight="5"
+
+                    android:background="@drawable/robot_foreground" />
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_gravity="center"
 
-        >
-
-        <Spinner
-            android:id="@+id/spinnerTopics"
-            android:layout_width="260dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="#070707"
-
-            />
-
-    </LinearLayout>
-    -->
 </androidx.constraintlayout.widget.ConstraintLayout>
