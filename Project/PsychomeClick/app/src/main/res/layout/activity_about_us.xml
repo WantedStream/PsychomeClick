@@ -37,7 +37,7 @@
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="The PsychomeClick app, provides a solution for those who wish to study for this test with ease. The application, which has a simple graphical interface without too many options that hurt the learning process, has exactly the options that one that learns for this test needs. "
+            android:text="The PsychomeClick app, which was made by Arthur Yosher, provides a solution for those who wish to study for this test with ease. The application, which has a simple graphical interface without too many options that hurt the learning process, has exactly the options that one that learns for this test needs. "
             />
         <Button
             android:id="@+id/back"

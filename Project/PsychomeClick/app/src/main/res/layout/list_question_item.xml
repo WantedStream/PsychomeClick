@@ -42,7 +42,7 @@
                 android:id="@+id/editbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#12E327"
+                android:backgroundTint="#25CC82"
                 android:text="edit"
                 android:textColor="@color/white" />
         </LinearLayout>
