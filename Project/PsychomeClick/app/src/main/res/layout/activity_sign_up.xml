@@ -24,7 +24,7 @@
             android:id="@+id/signupTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
+            android:textSize="40dp"
             android:layout_gravity="center"
             android:text="SIGN UP"
             android:textColor="#09A116"/>
@@ -32,7 +32,7 @@
             android:id="@+id/userNameTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:textColor="#09A116"
             android:text="User Name" />
 
@@ -43,13 +43,13 @@
             android:ems="10"
             android:inputType="text"
             android:hint="enter username"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
         <TextView
             android:id="@+id/userNameErrorTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text=""
 
             />
@@ -58,7 +58,7 @@
             android:id="@+id/textViewEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="Email"
             android:textColor="#09A116"
             />
@@ -70,20 +70,20 @@
             android:ems="10"
             android:hint="enter email"
             android:inputType="textEmailAddress"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
         <TextView
             android:id="@+id/emailErrorTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text=""
             />
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="Phone"
             android:textColor="#09A116"/>
 
@@ -93,20 +93,20 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="enter phone"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:inputType="phone" />
         <TextView
             android:id="@+id/phoneErrorTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text=""
             />
         <TextView
             android:id="@+id/passwordTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
 
             android:text="password"
             android:textColor="#09A116"/>
@@ -117,13 +117,13 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="enter password"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:inputType="textPassword" />
         <TextView
             android:id="@+id/passwordErrorTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text=""
             />
         <EditText
@@ -132,21 +132,16 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="repeat password"
-            android:textSize="35sp"
-            android:inputType="textPassword" />
-        <TextView
-            android:id="@+id/passwordRepeatErrorTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:text=""
-            />
+            android:textSize="35dp"
+            android:inputType="textPassword"
+            android:layout_marginBottom="30dp"/>
+
 
         <Button
             android:id="@+id/signupBT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
+            android:textSize="40dp"
             android:layout_gravity="center"
             android:text="Sign up!"
             android:backgroundTint="#64CC23"/>
@@ -154,7 +149,7 @@
             android:id="@+id/logInLinkbt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="15dp"
             android:layout_gravity="center"
             android:backgroundTint="@android:color/transparent"
             android:textColor="#009688"

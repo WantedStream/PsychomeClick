@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,8 +14,13 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.HashMap;
+
+
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -67,25 +73,53 @@ public class SignUpActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"all fields are required",Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            boolean isBad=false;
+            if(!username.matches("^[a-zA-Z0-9_]{8,20}$")){
+                this.usernameErrors.setText("name must be 8-20 characters long,and contain only letters,numbers and underscores ");
+                isBad=true;
+            }
+
+
+
+            try {
+                    PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+                Phonenumber.PhoneNumber phoneNumber = phoneUtil.parse(phone, "IL");
+                    if (!phoneUtil.isValidNumber(phoneNumber)) {
+                        this.phoneErrors.setText("Invalid Phone Number");
+                        isBad=true;
+
+                    }
+             } catch (NumberParseException phoneError) {
+                this.phoneErrors.setText("Invalid Phone Number Format");
+                isBad=true;
+            }
+
+
             if(!password.equals(pass2)) {
                 this.passwordErrors.setText("passwords arent the same!");
+                isBad=true;
+            }
+
+            if(isBad==true){
                 return;
             }
+
             firebaseAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(task -> {
                 HashMap<String, Object> user = new HashMap<>();
                 user.put("username", username);user.put("email", email);user.put("phone", phone);user.put("userprogress", "{}");
                 db.collection("Users").document(task.getUser().getUid()).set(user).addOnSuccessListener(t-> {
-                    task.getUser().sendEmailVerification().addOnSuccessListener((a)->{Toast.makeText(getApplicationContext(),"user created,email Verification sent",Toast.LENGTH_SHORT).show();});
+                    task.getUser().sendEmailVerification().addOnSuccessListener((a)->{Toast.makeText(getApplicationContext(),"user created ,email verification sent",Toast.LENGTH_SHORT).show();});
                     Intent myIntent = new Intent(this, LogInActivity.class);
                     startActivity(myIntent);
                 });
 
                         }).addOnFailureListener((errorTask)->{
-                String str = (errorTask.getMessage() + "").substring((errorTask.getMessage() + "").lastIndexOf(":") + 1);
-                    Toast.makeText(getApplicationContext(),str,Toast.LENGTH_SHORT).show();
+                //String str = (errorTask.getMessage() + "").substring((errorTask.getMessage() + "").lastIndexOf(":") + 1);
+                  //  Toast.makeText(getApplicationContext(),errorTask.toString(),Toast.LENGTH_SHORT).show();
 
                     try {
-                    throw errorTask.getCause();
+                    throw errorTask;
                 } catch (FirebaseAuthWeakPasswordException exception) {
                     this.passwordErrors.setText(exception.getReason());
                     this.passwordErrors.requestFocus();
@@ -95,8 +129,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } catch (FirebaseAuthUserCollisionException exception) {
                     this.emailErrors.setText(exception.getMessage());
                     this.emailErrors.requestFocus();
-                } catch (Exception exception) {
-                    System.out.println(exception.getMessage());
+
                 } catch (Throwable ex) {
                     throw new RuntimeException(ex);
                 }

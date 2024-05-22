@@ -108,4 +108,9 @@ dependencies {
 
     // Required for streaming operations (to use `Publisher` from Guava Android)
     implementation("org.reactivestreams:reactive-streams:1.0.4")
+
+
+    //for phone checking
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.37'
+
 }
