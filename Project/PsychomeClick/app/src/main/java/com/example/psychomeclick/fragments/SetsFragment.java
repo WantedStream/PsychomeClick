@@ -34,6 +34,9 @@ public class SetsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Instantiates a new Sets fragment.
+     */
     public SetsFragment() {
         // Required empty public constructor
     }
@@ -46,7 +49,7 @@ public class SetsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SetsFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static SetsFragment newInstance(String param1, String param2) {
         SetsFragment fragment = new SetsFragment();
         Bundle args = new Bundle();
@@ -74,6 +77,11 @@ public class SetsFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Innit view.
+     *
+     * @param v the v
+     */
     public void innitView(View v){
             SetRecycler setRecycler=(SetRecycler)v.findViewById(R.id.setRecycler);
             setRecycler.setFragment(this);

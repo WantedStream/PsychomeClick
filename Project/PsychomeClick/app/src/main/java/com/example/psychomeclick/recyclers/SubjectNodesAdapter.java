@@ -21,11 +21,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * The type Subject nodes adapter.
+ */
 public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapter.DataViewHolder> {
     private List<Node> dataList;
     private Stack<List<Node>> formerLists;
 
     private Button upbutton;
+
+    /**
+     * Instantiates a new Subject nodes adapter.
+     *
+     * @param dataList the data list
+     */
     public SubjectNodesAdapter(List<Node> dataList) {
         this.dataList = dataList;
     }
@@ -67,10 +76,24 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         return dataList.size();
     }
 
+    /**
+     * The type Data view holder.
+     */
     public static class DataViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text view.
+         */
         TextView textView;
+        /**
+         * The Percentage ring view.
+         */
         PercentageRingView percentageRingView;
 
+        /**
+         * Instantiates a new Data view holder.
+         *
+         * @param itemView the item view
+         */
         public DataViewHolder(@NonNull View itemView) {
             super(itemView);
             System.out.println(itemView);
@@ -80,6 +103,11 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         }
     }
 
+    /**
+     * Set up button.
+     *
+     * @param b the b
+     */
     public void setUpButton(Button b){
         upbutton=b;
     }
@@ -89,6 +117,10 @@ public class SubjectNodesAdapter extends RecyclerView.Adapter<SubjectNodesAdapte
         dataList.addAll(nodes); // Add the new nodes to the list
         notifyDataSetChanged(); // Notify the adapter about the change
     }
+
+    /**
+     * Back to former nodes.
+     */
     public void backToFormerNodes() {
         if(formerLists.empty())
             return;

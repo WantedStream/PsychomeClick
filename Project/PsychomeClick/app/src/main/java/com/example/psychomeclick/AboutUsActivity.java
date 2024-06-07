@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+/**
+ * The type About us activity.
+ */
 public class AboutUsActivity extends AppCompatActivity {
 
     @Override

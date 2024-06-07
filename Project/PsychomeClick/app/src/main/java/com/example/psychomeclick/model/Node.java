@@ -3,20 +3,47 @@ import com.google.gson.JsonArray;
 
 import java.util.Arrays;
 
+/**
+ * The type Node.
+ */
 public class Node {
+    /**
+     * The Name.
+     */
     protected String name;
+    /**
+     * The Nodes.
+     */
     protected Node[] nodes;
 
+    /**
+     * The Question list.
+     */
     protected String[] questionList;
 
+    /**
+     * The Percent.
+     */
     protected int percent;
 
+    /**
+     * Instantiates a new Node.
+     *
+     * @param name         the name
+     * @param nodes        the nodes
+     * @param questionList the question list
+     * @param percent      the percent
+     */
     public Node(String name, Node[] nodes, String[] questionList, int percent) {
         this.name = name;
         this.nodes = nodes;
         this.questionList = questionList;
         this.percent = percent;
     }
+
+    /**
+     * Instantiates a new Node.
+     */
     public Node() {
         this.name = "";
         this.nodes = null;
@@ -32,19 +59,45 @@ public class Node {
         }
     }
 
+    /**
+     * Sets percent.
+     *
+     * @param percent the percent
+     */
     public void setPercent(int percent) {
         this.percent = percent;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Get nodes node [ ].
+     *
+     * @return the node [ ]
+     */
     public Node[] getNodes() {
         return this.nodes;
     }
 
+    /**
+     * Get question list string [ ].
+     *
+     * @return the string [ ]
+     */
     public String[] getQuestionList()  {return this.questionList;}
+
+    /**
+     * Gets sub percents.
+     *
+     * @return the sub percents
+     */
     public int getSubPercents() {
    
         int percent=0;
@@ -77,18 +130,38 @@ public class Node {
     }
 
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Sets nodes.
+     *
+     * @param nodes the nodes
+     */
     public void setNodes(Node[] nodes) {
         this.nodes = nodes;
     }
 
+    /**
+     * Sets question list.
+     *
+     * @param questionList the question list
+     */
     public void setQuestionList(String[] questionList) {
         this.questionList = questionList;
     }
 
+    /**
+     * Gets percent.
+     *
+     * @return the percent
+     */
     public int getPercent() {
         return percent;
     }

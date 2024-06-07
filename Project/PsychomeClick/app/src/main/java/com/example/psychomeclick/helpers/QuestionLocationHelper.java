@@ -4,9 +4,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+/**
+ * The type Question location helper.
+ */
 public class QuestionLocationHelper {
 
-        public static String findQuestionLocation(String questionId, String jsonString) {
+    /**
+     * Find question location string.
+     *
+     * @param questionId the question id
+     * @param jsonString the json string
+     * @return the string
+     */
+    public static String findQuestionLocation(String questionId, String jsonString) {
             Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
             return findQuestionLocationHelper(jsonObject, questionId);
@@ -36,6 +46,14 @@ public class QuestionLocationHelper {
         return null; // Question not found
     }
 
+    /**
+     * Change question location string.
+     *
+     * @param questionId the question id
+     * @param jsonString the json string
+     * @param newLcation the new lcation
+     * @return the string
+     */
     public static String ChangeQuestionLocation(String questionId, String jsonString,String newLcation) {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
@@ -44,12 +62,28 @@ public class QuestionLocationHelper {
         return jsonObject.toString();
     }
 
+    /**
+     * Add question location string.
+     *
+     * @param questionId the question id
+     * @param jsonString the json string
+     * @param newLcation the new lcation
+     * @return the string
+     */
     public static String AddQuestionLocation(String questionId, String jsonString,String newLcation) {
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
         addQuestionToSubject(jsonObject,questionId,newLcation);
         return jsonObject.toString();
     }
+
+    /**
+     * Remove question from tree json object.
+     *
+     * @param root       the root
+     * @param questionId the question id
+     * @return the json object
+     */
     public static JsonObject removeQuestionFromTree(JsonObject root, String questionId) {
         if (root.has("questionList")) {
             JsonArray questionList = root.getAsJsonArray("questionList");

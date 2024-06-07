@@ -37,9 +37,24 @@ public class EditSetFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String setId;
 
-     EditText titleEt,descriptionEt,typeEt;
-     Switch publicSwitch;
+    /**
+     * The Title et.
+     */
+    EditText titleEt, /**
+     * The Description et.
+     */
+    descriptionEt, /**
+     * The Type et.
+     */
+    typeEt;
+    /**
+     * The Public switch.
+     */
+    Switch publicSwitch;
 
+    /**
+     * Instantiates a new Edit set fragment.
+     */
     public EditSetFragment() {
         // Required empty public constructor
     }
@@ -51,7 +66,7 @@ public class EditSetFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment AddSetFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static EditSetFragment newInstance(String param1) {
         EditSetFragment fragment = new EditSetFragment();
         Bundle args = new Bundle();
@@ -121,6 +136,10 @@ public class EditSetFragment extends Fragment {
         });
 
     }
+
+    /**
+     * Add listeners.
+     */
     public void addListeners(){
         titleEt.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -144,6 +163,11 @@ public class EditSetFragment extends Fragment {
         });
     }
 
+    /**
+     * Disable edit text.
+     *
+     * @param editText the edit text
+     */
     public static void disableEditText(EditText editText) {
         editText.setFocusable(false);
         editText.setEnabled(false);

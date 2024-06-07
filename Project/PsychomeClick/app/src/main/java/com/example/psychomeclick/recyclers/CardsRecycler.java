@@ -24,24 +24,53 @@ import com.google.gson.JsonArray;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Cards recycler.
+ */
 public class CardsRecycler extends RecyclerView {
     private CardAdapter adapter;
 
     private String setId;
 
     private boolean canEdit;
+
+    /**
+     * Instantiates a new Cards recycler.
+     *
+     * @param context the context
+     */
     public CardsRecycler(@NonNull Context context) {
         super(context);
         init(context);
     }
+
+    /**
+     * Set set id.
+     *
+     * @param setId the set id
+     */
     public void setSetId(String setId){
         this.setId=setId;
     }
+
+    /**
+     * Instantiates a new Cards recycler.
+     *
+     * @param context the context
+     * @param attrs   the attrs
+     */
     public CardsRecycler(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
+    /**
+     * Instantiates a new Cards recycler.
+     *
+     * @param context      the context
+     * @param attrs        the attrs
+     * @param defStyleAttr the def style attr
+     */
     public CardsRecycler(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
@@ -54,19 +83,44 @@ public class CardsRecycler extends RecyclerView {
         setAdapter(adapter);
     }
 
+    /**
+     * Sets can edit.
+     *
+     * @param canEdit the can edit
+     */
     public void setCanEdit(boolean canEdit) {
         this.canEdit = canEdit;
     }
 
+    /**
+     * The type Card adapter.
+     */
     public class CardAdapter extends RecyclerView.Adapter<CardsRecycler.CardAdapter.CardViewHolder> {
 
+        /**
+         * The Context.
+         */
         Context context;
+        /**
+         * The Card list.
+         */
         List<Card> cardList;
+
+        /**
+         * Instantiates a new Card adapter.
+         *
+         * @param context the context
+         */
         public CardAdapter(Context context) {
             this.context = context;
             this.cardList =new ArrayList<Card>();
         }
 
+        /**
+         * Add card.
+         *
+         * @param card the card
+         */
         public void addCard(Card card) {
             cardList.add(card);
             adapter.notifyDataSetChanged();
@@ -75,6 +129,12 @@ public class CardsRecycler extends RecyclerView {
             }
             smoothScrollToPosition(adapter.getItemCount() - 1);
         }
+
+        /**
+         * Remove card.
+         *
+         * @param card the card
+         */
         public void removeCard(Card card) {
             cardList.remove(card);
             adapter.notifyDataSetChanged();
@@ -99,12 +159,35 @@ public class CardsRecycler extends RecyclerView {
             holder.bind(card);
         }
 
+        /**
+         * The type Card view holder.
+         */
         class CardViewHolder extends RecyclerView.ViewHolder {
-            EditText term, meaning;
-            TextView numberTv,removeTv;
+            /**
+             * The Term.
+             */
+            EditText term, /**
+             * The Meaning.
+             */
+            meaning;
+            /**
+             * The Number tv.
+             */
+            TextView numberTv, /**
+             * The Remove tv.
+             */
+            removeTv;
+            /**
+             * The Card.
+             */
             Card card;
 
 
+            /**
+             * Instantiates a new Card view holder.
+             *
+             * @param itemView the item view
+             */
             public CardViewHolder(@NonNull View itemView) {
                 super(itemView);
                 term = itemView.findViewById(R.id.termEt);
@@ -136,6 +219,11 @@ public class CardsRecycler extends RecyclerView {
 
             }
 
+            /**
+             * Bind.
+             *
+             * @param card the card
+             */
             void bind(Card card) {
                 numberTv.setText(cardList.indexOf(card)+"");
                  term.setText(card.getTerm());

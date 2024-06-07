@@ -41,6 +41,9 @@ public class SimulationsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Instantiates a new Simulations fragment.
+     */
     public SimulationsFragment() {
         // Required empty public constructor
     }
@@ -53,7 +56,7 @@ public class SimulationsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SimulationsFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static SimulationsFragment newInstance(String param1, String param2) {
         SimulationsFragment fragment = new SimulationsFragment();
         Bundle args = new Bundle();

@@ -30,7 +30,14 @@ public class AllSetsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * The Search et.
+     */
     EditText searchEt;
+
+    /**
+     * Instantiates a new All sets fragment.
+     */
     public AllSetsFragment() {
         // Required empty public constructor
     }
@@ -43,7 +50,7 @@ public class AllSetsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment AllSetsFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static AllSetsFragment newInstance(String param1, String param2) {
         AllSetsFragment fragment = new AllSetsFragment();
         Bundle args = new Bundle();
@@ -71,6 +78,11 @@ public class AllSetsFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Innit view.
+     *
+     * @param v the v
+     */
     public void innitView(View v){
         searchEt=v.findViewById(R.id.searchEt);
         doSearch("",v);

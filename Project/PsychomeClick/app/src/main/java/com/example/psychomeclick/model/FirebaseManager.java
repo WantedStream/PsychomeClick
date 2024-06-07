@@ -20,17 +20,48 @@ import com.google.firebase.storage.StorageReference;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
+/**
+ * The type Firebase manager.
+ */
 public class FirebaseManager {
-   public static FirebaseFirestore db = FirebaseFirestore.getInstance();
-   public static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    /**
+     * The constant db.
+     */
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    /**
+     * The constant firebaseAuth.
+     */
+    public static FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    /**
+     * The constant firebaseStorage.
+     */
     public static FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
+    /**
+     * The constant PrefLocaltion.
+     */
     public static final String PrefLocaltion="LogIn";
-     public static UserData userData;
+    /**
+     * The constant userData.
+     */
+    public static UserData userData;
+    /**
+     * The constant QuestionMap.
+     */
     public static HashMap<String,Integer> QuestionMap=new HashMap<>();
 
+    /**
+     * The constant adminList.
+     */
     public static final ImmutableList<String> adminList = ImmutableList.of("t1", "coolusername","newusername","");
 
+    /**
+     * Load image.
+     *
+     * @param imageRef  the image ref
+     * @param imageView the image view
+     * @param c         the c
+     */
     public static void loadImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView, Context c) {
         Glide.with(c)
                 .load(imageRef)
@@ -38,6 +69,15 @@ public class FirebaseManager {
                             .into(imageView);
 
     }
+
+    /**
+     * Save image.
+     *
+     * @param imageRef  the image ref
+     * @param imageView the image view
+     * @param name      the name
+     * @param c         the c
+     */
     public static void saveImage(@NonNull StorageReference imageRef, @NonNull ImageView imageView,String name, Context c) {
 
         Drawable drawable = imageView.getDrawable();

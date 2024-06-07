@@ -34,7 +34,26 @@ public class QuestionListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ImageView question,first,second,third,fourth;
+    /**
+     * The Question.
+     */
+    ImageView question, /**
+     * The First.
+     */
+    first, /**
+     * The Second.
+     */
+    second, /**
+     * The Third.
+     */
+    third, /**
+     * The Fourth.
+     */
+    fourth;
+
+    /**
+     * Instantiates a new Question list fragment.
+     */
     public QuestionListFragment() {
         // Required empty public constructor
     }
@@ -47,7 +66,7 @@ public class QuestionListFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment QuestionListFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static QuestionListFragment newInstance(String param1, String param2) {
         QuestionListFragment fragment = new QuestionListFragment();
         Bundle args = new Bundle();

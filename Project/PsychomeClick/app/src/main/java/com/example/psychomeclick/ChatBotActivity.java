@@ -23,6 +23,9 @@ import com.google.common.util.concurrent.ListenableFuture;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Chat bot activity.
+ */
 public class ChatBotActivity extends AppCompatActivity {
 
     @Override
@@ -89,6 +92,13 @@ public class ChatBotActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Add initial message.
+     *
+     * @param chat the chat
+     * @param msg  the msg
+     */
     public void addInitialMessage(ChatFutures chat, Content msg){
         ListenableFuture<GenerateContentResponse> response = chat.sendMessage(msg);
 

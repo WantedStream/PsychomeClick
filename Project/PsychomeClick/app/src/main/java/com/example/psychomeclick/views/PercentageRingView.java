@@ -7,6 +7,9 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * The type Percentage ring view.
+ */
 public class PercentageRingView extends View {
 
     private int percentage;
@@ -16,16 +19,34 @@ public class PercentageRingView extends View {
     private RectF innerRingBounds;
     private RectF outerRingBounds;
 
+    /**
+     * Instantiates a new Percentage ring view.
+     *
+     * @param context the context
+     */
     public PercentageRingView(Context context) {
         super(context);
         init();
     }
 
+    /**
+     * Instantiates a new Percentage ring view.
+     *
+     * @param context the context
+     * @param attrs   the attrs
+     */
     public PercentageRingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
+    /**
+     * Instantiates a new Percentage ring view.
+     *
+     * @param context      the context
+     * @param attrs        the attrs
+     * @param defStyleAttr the def style attr
+     */
     public PercentageRingView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
@@ -71,6 +92,11 @@ public class PercentageRingView extends View {
         canvas.drawText(text, centerX, centerY + (textPaint.getTextSize() / 3), textPaint);
     }
 
+    /**
+     * Sets percentage.
+     *
+     * @param percentage the percentage
+     */
     public void setPercentage(int percentage) {
         this.percentage = percentage;
         invalidate();

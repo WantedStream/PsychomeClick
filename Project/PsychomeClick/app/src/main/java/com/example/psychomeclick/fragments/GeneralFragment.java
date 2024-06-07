@@ -39,6 +39,9 @@ public class GeneralFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Instantiates a new General fragment.
+     */
     public GeneralFragment() {
         // Required empty public constructor
     }
@@ -51,7 +54,7 @@ public class GeneralFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment GeneralFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static GeneralFragment newInstance(String param1, String param2) {
         GeneralFragment fragment = new GeneralFragment();
         Bundle args = new Bundle();
@@ -78,6 +81,12 @@ public class GeneralFragment extends Fragment {
         makeStuff(v);
         return v;
     }
+
+    /**
+     * Make stuff.
+     *
+     * @param v the v
+     */
     public void makeStuff(View v){
         RecyclerView recyclerView = v.findViewById(R.id.recycler);
         recyclerView.setLayoutManager( new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));

@@ -21,12 +21,41 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import java.util.HashMap;
 
 
-
+/**
+ * The type Sign up activity.
+ */
 public class SignUpActivity extends AppCompatActivity {
 
-    EditText userNameEt,emailEt,phoneEt,passwordEt,RepeatPasswordEt;
+    /**
+     * The User name et.
+     */
+    EditText userNameEt, /**
+     * The Email et.
+     */
+    emailEt, /**
+     * The Phone et.
+     */
+    phoneEt, /**
+     * The Password et.
+     */
+    passwordEt, /**
+     * The Repeat password et.
+     */
+    RepeatPasswordEt;
 
-    TextView emailErrors,phoneErrors,usernameErrors,passwordErrors;
+    /**
+     * The Email errors.
+     */
+    TextView emailErrors, /**
+     * The Phone errors.
+     */
+    phoneErrors, /**
+     * The Username errors.
+     */
+    usernameErrors, /**
+     * The Password errors.
+     */
+    passwordErrors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

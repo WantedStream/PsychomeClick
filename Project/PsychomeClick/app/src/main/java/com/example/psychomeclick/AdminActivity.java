@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import com.example.psychomeclick.fragments.AddQuestionFragment;
 import com.example.psychomeclick.fragments.QuestionListFragment;
 
+/**
+ * The type Admin activity.
+ */
 public class AdminActivity extends AppCompatActivity {
 
     @Override
@@ -52,6 +55,11 @@ public class AdminActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Change color of button.
+     *
+     * @param b the b
+     */
     public void changeColorOfButton(Button b){
         this.findViewById(R.id.plus_layout).setBackground(null);
         this.findViewById(R.id.question_layout).setBackground(null);

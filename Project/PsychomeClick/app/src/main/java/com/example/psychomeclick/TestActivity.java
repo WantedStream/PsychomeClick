@@ -26,14 +26,50 @@ import com.google.gson.JsonPrimitive;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Test activity.
+ */
 public class TestActivity extends AppCompatActivity {
 
-    ImageButton backbtn,prevbtn,nextbtn;
+    /**
+     * The Backbtn.
+     */
+    ImageButton backbtn, /**
+     * The Prevbtn.
+     */
+    prevbtn, /**
+     * The Nextbtn.
+     */
+    nextbtn;
+    /**
+     * The Img 0.
+     */
     ImageView img0;
-    BorderTogglingButton img1,img2,img3,img4;
+    /**
+     * The Img 1.
+     */
+    BorderTogglingButton img1, /**
+     * The Img 2.
+     */
+    img2, /**
+     * The Img 3.
+     */
+    img3, /**
+     * The Img 4.
+     */
+    img4;
 
+    /**
+     * The User questions.
+     */
     JsonArray userQuestions;
+    /**
+     * The Subject.
+     */
     String subject;
+    /**
+     * The Current index.
+     */
     int currentIndex;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +204,13 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Delete from list json array.
+     *
+     * @param qid  the qid
+     * @param list the list
+     * @return the json array
+     */
     public JsonArray deleteFromList(String qid,JsonArray list){
         for (JsonElement q:list) {
             if(q.getAsJsonArray().get(0).getAsString().equals(qid)){
@@ -178,6 +221,12 @@ public class TestActivity extends AppCompatActivity {
         }
         return null;
     }
+
+    /**
+     * Update user progress.
+     *
+     * @param updateImages the update images
+     */
     public void updateUserProgress(Boolean updateImages) {
         JsonObject newProgress= FirebaseManager.userData.getJsonProgress().getAsJsonObject();
         newProgress.add(subject, userQuestions);
@@ -207,6 +256,9 @@ public class TestActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Prev question.
+     */
     public void prevQuestion(){
         currentIndex=currentIndex-1;
         updateToggleBoxes();
@@ -214,12 +266,20 @@ public class TestActivity extends AppCompatActivity {
         updateImages();
 
     }
+
+    /**
+     * Next question.
+     */
     public void nextQuestion(){
           currentIndex=currentIndex+1;
           updateToggleBoxes();
           updateButtonStatus();
           updateImages();
     }
+
+    /**
+     * Update toggle boxes.
+     */
     public void updateToggleBoxes(){
         img1.disable();
         img2.disable();
@@ -232,6 +292,10 @@ public class TestActivity extends AppCompatActivity {
             case 4:img4.toggleBorder();break;
         }
     }
+
+    /**
+     * Update button status.
+     */
     public void updateButtonStatus(){
         if(currentIndex>0){
             prevbtn.setVisibility(View.VISIBLE);
@@ -248,7 +312,11 @@ public class TestActivity extends AppCompatActivity {
         }
 
     }
-        public void updateImages() {
+
+    /**
+     * Update images.
+     */
+    public void updateImages() {
             for (int i = 0; i <= 4; i++) {
                 StorageReference fileRef0 = FirebaseManager.firebaseStorage.getReference().child("QuestionStorage/" +userQuestions.get(currentIndex).getAsJsonArray().get(0).getAsString()+"/images"+i);
                 switch(i){

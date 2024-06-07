@@ -58,6 +58,9 @@ public class AddQuestionFragment extends Fragment {
     private RadioGroup rGroup;
     private Spinner subjectSpinner;
 
+    /**
+     * Instantiates a new Add question fragment.
+     */
     public AddQuestionFragment() {
         // Required empty public constructor
     }
@@ -70,7 +73,7 @@ public class AddQuestionFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment AddQuestionFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static AddQuestionFragment newInstance(String param1, String param2) {
         AddQuestionFragment fragment = new AddQuestionFragment();
         Bundle args = new Bundle();
@@ -168,6 +171,12 @@ public class AddQuestionFragment extends Fragment {
         });
     }
 
+    /**
+     * Add questionto db.
+     *
+     * @param correctAnswer the correct answer
+     * @param subject       the subject
+     */
     public void addQuestiontoDB(String correctAnswer,String subject){
         int[] counter=new int[1];
         HashMap<String, Object> q = new HashMap<>();

@@ -21,10 +21,27 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
+/**
+ * The type Start activity.
+ *
+ * @param <T> the type parameter
+ */
 public class StartActivity<T> extends Activity {
+    /**
+     * The Pull question finished.
+     */
     boolean pullQuestionFinished = false;
+    /**
+     * The Login finished.
+     */
     boolean loginFinished = false;
+    /**
+     * The Next intent.
+     */
     Intent nextIntent;
+    /**
+     * The Pull question to map thread.
+     */
     Thread pullQuestionToMapThread = new Thread(() -> {
         FirebaseManager.db.collection("Questions").get().addOnCompleteListener((t)->{
             for (DocumentSnapshot doc: t.getResult().getDocuments()) {
@@ -35,7 +52,10 @@ public class StartActivity<T> extends Activity {
         });
     });
 
-        Thread loginThread = new Thread(() -> {
+    /**
+     * The Login thread.
+     */
+    Thread loginThread = new Thread(() -> {
             Map<String,String> emailAndPass = getUserFromShared(getSharedPreferences(PrefLocaltion,MODE_PRIVATE));
             if(emailAndPass==null){
                 //never logged in or created an account
@@ -98,6 +118,13 @@ public class StartActivity<T> extends Activity {
             finish();
         }
     }
+
+    /**
+     * Get user from shared map.
+     *
+     * @param sp the sp
+     * @return the map
+     */
     public static Map<String,String> getUserFromShared(SharedPreferences sp){
         Gson gson = new Gson();
         String json = sp.getString("currentUser", null);

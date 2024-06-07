@@ -19,11 +19,19 @@ import com.example.psychomeclick.model.Message;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Chat adapter.
+ */
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
     private List<Message> messages;
     private Context context;
 
+    /**
+     * Instantiates a new Chat adapter.
+     *
+     * @param context the context
+     */
     public ChatAdapter(Context context) {
         this.context = context;
         this.messages = new ArrayList<>();
@@ -47,16 +55,42 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         return messages.size();
     }
 
+    /**
+     * Add message.
+     *
+     * @param message the message
+     */
     public void addMessage(Message message) {
         messages.add(message);
         notifyItemInserted(messages.size() - 1);
     }
 
+    /**
+     * The type Message view holder.
+     */
     class MessageViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Message text.
+         */
         TextView messageText;
+        /**
+         * The Icon image.
+         */
         ImageView iconImage;
+        /**
+         * The Parent.
+         */
         RelativeLayout parent;
+        /**
+         * The Grad.
+         */
         boolean grad=true;
+
+        /**
+         * Instantiates a new Message view holder.
+         *
+         * @param itemView the item view
+         */
         MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.message_text);
@@ -64,6 +98,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             parent= itemView.findViewById(R.id.parent);
         }
 
+        /**
+         * Bind.
+         *
+         * @param message the message
+         */
         void bind(Message message) {
 
             messageText.setText("");

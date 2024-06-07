@@ -23,6 +23,9 @@ import com.example.psychomeclick.R;
 import java.util.Locale;
 
 
+/**
+ * The type Stopper fragment.
+ */
 public class StopperFragment extends Fragment {
 
     private TextView stopperTv, infoTv, timerTv;
@@ -36,15 +39,25 @@ public class StopperFragment extends Fragment {
 
     private LinearLayout colorTv;
     private TextToSpeech textToSpeech;
+    /**
+     * The Is essay.
+     */
     boolean isEssay=false;
     private static final long essayDuration=30 * 60 * 1000;
     private static final long breakDuration=5 * 60 * 1000;
     private static final long sectionDuration=20 * 60 * 1000;
 
 
+    /**
+     * Instantiates a new Stopper fragment.
+     */
     public StopperFragment() {
         // Required empty public constructor
     }
+
+    /**
+     * The Paused.
+     */
     boolean paused=false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -17,6 +17,9 @@ import com.example.psychomeclick.R;
 
 import java.util.Random;
 
+/**
+ * The type Notification service.
+ */
 public class NotificationService extends Service {
     private static final String CHANNEL_ID = "NotificationChannel";
     private static final int NOTIFICATION_ID = 1001;
@@ -79,6 +82,9 @@ public class NotificationService extends Service {
         }
     }
 
+    /**
+     * The type Notification publisher.
+     */
     public static class NotificationPublisher extends BroadcastReceiver {
         private String[] notificationMessages = {
                 "dont forget to do a simulations! thats why we have a stopper...",

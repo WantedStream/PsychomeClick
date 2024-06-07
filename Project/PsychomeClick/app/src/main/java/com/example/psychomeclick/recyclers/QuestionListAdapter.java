@@ -20,9 +20,19 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
+/**
+ * The type Question list adapter.
+ */
 public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapter.DataViewHolder>{
     private List<String> dataList;
     private FragmentManager fragmentManager;
+
+    /**
+     * Instantiates a new Question list adapter.
+     *
+     * @param fragmentManager the fragment manager
+     * @param dataList        the data list
+     */
     public QuestionListAdapter(FragmentManager fragmentManager, List<String> dataList) {
         this.dataList = dataList;
         this.fragmentManager=fragmentManager;
@@ -59,10 +69,28 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
         return dataList.size();
     }
 
+    /**
+     * The type Data view holder.
+     */
     public static class DataViewHolder extends RecyclerView.ViewHolder {
+        /**
+         * The Text view.
+         */
         TextView textView;
+        /**
+         * The Image view.
+         */
         ImageView imageView;
+        /**
+         * The Btn.
+         */
         Button btn;
+
+        /**
+         * Instantiates a new Data view holder.
+         *
+         * @param itemView the item view
+         */
         public DataViewHolder(@NonNull View itemView) {
             super(itemView);
             System.out.println(itemView);

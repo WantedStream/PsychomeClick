@@ -17,11 +17,26 @@ import com.google.gson.Gson;
 
 import java.util.LinkedHashMap;
 
+/**
+ * The type Log in activity.
+ */
 public class LogInActivity extends AppCompatActivity {
 
-    EditText emailEt,passwordEt;
+    /**
+     * The Email et.
+     */
+    EditText emailEt, /**
+     * The Password et.
+     */
+    passwordEt;
 
-    TextView emailErrors,passwordErrors;
+    /**
+     * The Email errors.
+     */
+    TextView emailErrors, /**
+     * The Password errors.
+     */
+    passwordErrors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +64,14 @@ public class LogInActivity extends AppCompatActivity {
             finish();
         });
     }
+
+    /**
+     * Log in.
+     *
+     * @param email    the email
+     * @param password the password
+     * @param activity the activity
+     */
     public static void logIn(String email,String password, Activity activity){
         Context context=activity.getApplicationContext();
         FirebaseManager.firebaseAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(authResultTask -> {
@@ -66,6 +89,14 @@ public class LogInActivity extends AppCompatActivity {
         });
 
 }
+
+    /**
+     * Save share ref.
+     *
+     * @param email    the email
+     * @param password the password
+     * @param sp       the sp
+     */
     public static void saveShareRef(String email,String password, SharedPreferences sp){
             SharedPreferences.Editor prefsEditor = sp.edit();
             Gson gson = new Gson();

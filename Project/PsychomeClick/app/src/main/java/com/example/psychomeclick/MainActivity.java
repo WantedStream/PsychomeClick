@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override

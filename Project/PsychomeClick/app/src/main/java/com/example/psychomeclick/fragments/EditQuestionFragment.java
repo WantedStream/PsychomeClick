@@ -45,7 +45,6 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  * Use the {@link EditQuestionFragment#newInstance} factory method to
  * create an instance of this fragment.
- *
  */
 public class EditQuestionFragment extends Fragment {
 
@@ -72,7 +71,7 @@ public class EditQuestionFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment EditQuestionFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static EditQuestionFragment newInstance(String param1) {
         EditQuestionFragment fragment = new EditQuestionFragment();
         Bundle args = new Bundle();
@@ -81,6 +80,9 @@ public class EditQuestionFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Instantiates a new Edit question fragment.
+     */
     public EditQuestionFragment() {
         // Required empty public constructor
     }

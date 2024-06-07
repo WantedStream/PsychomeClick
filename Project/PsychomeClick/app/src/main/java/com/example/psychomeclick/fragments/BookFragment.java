@@ -28,6 +28,9 @@ public class BookFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    /**
+     * Instantiates a new Book fragment.
+     */
     public BookFragment() {
         // Required empty public constructor
     }
@@ -40,7 +43,7 @@ public class BookFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment BookFragment.
      */
-    // TODO: Rename and change types and number of parameters
+// TODO: Rename and change types and number of parameters
     public static BookFragment newInstance(String param1, String param2) {
         BookFragment fragment = new BookFragment();
         Bundle args = new Bundle();

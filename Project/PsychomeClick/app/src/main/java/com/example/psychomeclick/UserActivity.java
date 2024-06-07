@@ -25,6 +25,9 @@ import com.example.psychomeclick.fragments.GeneralFragment;
 import com.google.gson.Gson;
 import java.util.LinkedHashMap;
 
+/**
+ * The type User activity.
+ */
 public class UserActivity extends AppCompatActivity{
 
     @Override
@@ -95,6 +98,10 @@ public class UserActivity extends AppCompatActivity{
 
         super.onStart();
     }
+
+    /**
+     * Create stuff.
+     */
     public void createStuff(){
         FirebaseManager.db.collection("Users").document(FirebaseManager.firebaseAuth.getCurrentUser().getUid()).get().addOnCompleteListener(userTask -> {
             String name=userTask.getResult().getString("username").toString();
@@ -117,7 +124,11 @@ public class UserActivity extends AppCompatActivity{
     }
 
 
-
+    /**
+     * Delete user from shared.
+     *
+     * @param sp the sp
+     */
     public static void deleteUserFromShared(SharedPreferences sp){
         SharedPreferences.Editor prefsEditor = sp.edit();
         Gson gson = new Gson();
@@ -130,6 +141,11 @@ public class UserActivity extends AppCompatActivity{
     }
 
 
+    /**
+     * Change color of button.
+     *
+     * @param b the b
+     */
     public void changeColorOfButton(ImageButton b){
        this.findViewById(R.id.circle_layout).setBackground(null);
         this.findViewById(R.id.vi_layout).setBackground(null);
